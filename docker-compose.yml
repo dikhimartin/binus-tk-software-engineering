@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mysql:
+      image: mysql:5.7
+      container_name: dev_mysql
+      volumes:
+        - mysql_data:/var/lib/mysql
+      environment:
+        - TZ=Asia/Jakarta
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=${DB_NAME:-laravel}
+        - MYSQL_USER=${DB_USER:-user}
+        - MYSQL_PASSWORD=${DB_PASS:-user}
+      ports: 
+        - 33306:3306
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: dev_pma
+      links:
+        - mysql
+      environment:
+        PMA_HOST: mysql
+        PMA_PORT: 3306
+        PMA_ARBITRARY: 1
+      restart: always
+      ports:
+        - 8080:80
+  myapp:
+    image: myapp
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_DATABASE=laravel
+    command: >
+      sh -c "composer install && php artisan serve --host=0.0.0.0 --port=8000"
+    volumes:
+      - "./project:/app"
+    depends_on:
+      - mysql
+      - phpmyadmin
+volumes:
+  mysql_data:
+    driver: local
