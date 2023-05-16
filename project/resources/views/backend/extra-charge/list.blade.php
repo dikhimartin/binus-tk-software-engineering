@@ -611,7 +611,14 @@
 							'name': {
 								validators: {
 									notEmpty: {
-										message: `Name {{ __('main.is_required') }}`
+										message: `{{ __('main.name') }} {{ __('main.is_required') }}`
+									}
+								}
+							},
+							'price': {
+								validators: {
+									notEmpty: {
+										message: `{{ __('main.price') }} {{ __('main.is_required') }}`
 									}
 								}
 							}
@@ -696,10 +703,21 @@
 							submitButton.disabled = false;
 						},
 						error: function (jqXHR, textStatus, errorThrown) {
-							if (jqXHR.responseJSON.status.message != undefined){
-								errorThrown = jqXHR.responseJSON.status.message;
+							let errorMessage = "An error occurred.";
+							if (jqXHR.responseJSON && jqXHR.responseJSON.status && jqXHR.responseJSON.status.message) {
+								const errorMessages = jqXHR.responseJSON.status.message;
+
+								// Construct the error message dynamically
+								const errorFields = Object.keys(errorMessages);
+								if (errorFields.length > 0) {
+									errorMessage = "The following errors occurred: \n";
+									
+									errorFields.forEach((field) => {
+										errorMessage += `${field}: ${errorMessages[field]}\n`;
+									});
+								}
 							}
-							ToastrError(errorThrown);
+							ToastrError(errorMessage);
 							submitButton.removeAttribute('data-kt-indicator');
 							submitButton.disabled = false;
 						}

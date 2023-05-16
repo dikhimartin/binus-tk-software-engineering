@@ -192,6 +192,19 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	Route::put('/extra-charges/{id}','ExtraChargeController@update');
 	Route::delete('/extra-charges/{id}','ExtraChargeController@delete');
 	Route::post('/extra-charges/delete/batch','ExtraChargeController@delete_batch');
+	
+	/*
+	 |--------------------------------------------------------------------------
+	 | Module Room
+	 |--------------------------------------------------------------------------
+	*/	
+	Route::get('/room','RoomController@index');
+	Route::get('/rooms','RoomController@get_data');
+	Route::get('/rooms/{id}','RoomController@detail');
+	Route::post('/rooms','RoomController@create');
+	Route::put('/rooms/{id}','RoomController@update');
+	Route::delete('/rooms/{id}','RoomController@delete');
+	Route::post('/rooms/delete/batch','RoomController@delete_batch');
 });
 
 

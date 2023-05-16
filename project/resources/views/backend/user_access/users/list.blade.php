@@ -701,7 +701,7 @@
 							'name': {
 								validators: {
 									notEmpty: {
-										message: `Name {{ __('main.is_required') }}`
+										message: `{{ __('main.name') }} {{ __('main.is_required') }}`
 									}
 								}
 							},
@@ -726,7 +726,7 @@
 							'username': {
 								validators: {
 									notEmpty: {
-										message: `Username {{ __('main.is_required') }}`
+										message: `User{{ __('main.name') }} {{ __('main.is_required') }}`
 									},
 									stringLength: {
 										min: 6,

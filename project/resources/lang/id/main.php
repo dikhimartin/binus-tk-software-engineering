@@ -124,6 +124,7 @@ return [
 
     // Room
     'room' => 'Ruangan',
+    'room_image' => 'Gambar Ruangan',
     'room_list' => 'Daftar Ruangan',
 
     // Transaction

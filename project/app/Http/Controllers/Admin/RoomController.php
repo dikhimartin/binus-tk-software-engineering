@@ -6,21 +6,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
-use App\Product;
+use App\Room;
+use App\RoomType;
 use App\Asset;
-use App\ProductType;
 use App\Traits\RespondsWithHttpStatus;
 use Yajra\DataTables\Facades\DataTables;
 
 
-class ProductController extends Controller
+class RoomController extends Controller
 {
     use RespondsWithHttpStatus;
     
-    private $controller = 'product';
+    private $controller = 'room';
 
     private function title(){
-        return __('main.product_list');
+        return __('main.room_list');
     }
 
     public function __construct() {
@@ -31,9 +31,10 @@ class ProductController extends Controller
         if (!Auth::user()->can($this->controller.'-list')){
             return view('backend.errors.401')->with(['url' => '/admin']);
         }
-        $product_type = ProductType::where("status","=", 0)->get();
 
-        return view('backend.'.$this->controller.'.list', compact('product_type'))->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
+        $room_type = RoomType::where("status","=", 0)->get();
+
+        return view('backend.'.$this->controller.'.list', compact('room_type'))->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
     }
 
     public function get_data(Request $request){
@@ -41,16 +42,16 @@ class ProductController extends Controller
             return $this->unauthorizedAccessModule();
         }        
 
-        $product = new Product;
-        $datas = $product->get_data();
+        $room = new Room;
+        $datas = $room->get_data();
 
         return DataTables::of($datas)
         ->filter(function ($query) use ($request) {
             $query->when($request->has('search.value'), function ($q) use ($request) {
                 $value = $request->input('search.value');
                 $q->where(function ($query) use ($value) {
-                    $query->where('products.name', 'like', "%$value%")
-                        ->orWhere('products.status', 'like', "%$value%");
+                    $query->where('rooms.name', 'like', "%$value%")
+                        ->orWhere('rooms.status', 'like', "%$value%");
                 });
             });
         })
@@ -64,15 +65,13 @@ class ProductController extends Controller
     public function validate_data(Request $request, $id = null){
         $rules = [
             'name' => 'required',
-            'product_type_id' => 'required',
-            'purchase_price' => 'required',
-            'selling_price' => 'required',
+            'price' => 'required',
+            'status' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
     
         return $validator;
-    }
-
+    }    
     
     public function create(Request $request){
         if (!Auth::user()->can($this->controller.'-create')){
@@ -84,45 +83,45 @@ class ProductController extends Controller
             return $this->badRequest($validator->errors());
         }
 
-        // set product assets
-        $product_asset = Asset::upload($request->file('asset_id'), "product");
-        if (!empty($product_asset) && $product_asset['status'] == 'error') {
-            return $this->badRequest($product_asset['message']);
+        // set room assets
+        $asset = Asset::upload($request->file('asset_id'), "room");
+        if (!empty($asset) && $asset['status'] == 'error') {
+            return $this->badRequest($asset['message']);
         }
         
         $data = $request->all();
-        if (!empty($product_asset['data'])) {
-            $data['asset_id'] = $product_asset['data']->id;
+        if (!empty($asset['data'])) {
+            $data['asset_id'] = $asset['data']->id;
         }
 
-        $res = Product::create($data);
+        $res = Room::create($data);
         return $this->created($res, null);
     }
 
     public function update(Request $request, $id){
         if (!Auth::user()->can($this->controller.'-edit')){
             return $this->unauthorizedAccessModule();
-        }       
-        
+        }        
+
         $validator = $this->validate_data($request, $id);
         if ($validator->fails()) {
             return $this->badRequest($validator->errors());
         }   
 
-        $res = Product::find($id);
+        $res = Room::find($id);
         if(!$res){
             return $this->errorNotFound(null);
         }     
 
-        // set product assets
-        $product_asset = Asset::upload($request->file('asset_id'), "product");
-        if (!empty($product_asset) && $product_asset['status'] == 'error') {
-            return $this->badRequest($product_asset['message']);
+        // set room assets
+        $asset = Asset::upload($request->file('asset_id'), "product");
+        if (!empty($asset) && $asset['status'] == 'error') {
+            return $this->badRequest($asset['message']);
         }
         
         $data = $request->all();
-        if (!empty($product_asset['data'])) {
-            $data['asset_id'] = $product_asset['data']->id;
+        if (!empty($asset['data'])) {
+            $data['asset_id'] = $asset['data']->id;
         }
 
         $res->fill($data);
@@ -134,9 +133,8 @@ class ProductController extends Controller
         if (!Auth::user()->can($this->controller.'-edit')){
             return $this->unauthorizedAccessModule();
         }  
-
-        $product = new Product;
-        $datas = $product->get_data();
+        $room = new Room;
+        $datas = $room->get_data();
 
         $res = $datas->find($id);
         if(!$res){
@@ -151,7 +149,7 @@ class ProductController extends Controller
             return $this->unauthorizedAccessModule();
         }  
 
-        $res = Product::find($id);
+        $res = Room::find($id);
         if (!$res) {
             return $this->errorNotFound(null);
         }
@@ -170,7 +168,7 @@ class ProductController extends Controller
 
         $ids = $request->input('id');
         foreach ($ids as $id) {
-            $res = Product::find($id);
+            $res = Room::find($id);
             if (!$res) {
                 return $this->errorNotFound(null);
             }

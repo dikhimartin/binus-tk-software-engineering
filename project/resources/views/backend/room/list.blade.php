@@ -65,7 +65,7 @@
 					
 					@slot('button_slot')
 						<!--begin::Add data-->
-						@permission('room-type-create')
+						@permission('room-create')
 							<button type="button" class="btn btn-primary" onclick="add()">{{__('main.add_new')}}</button>
 						@endpermission
 					@endslot
@@ -82,6 +82,7 @@
 								</div>
 							</th>
 							<th>{{ __('main.name') }}</th>
+							<th>{{ __('main.price') }}</th>
 							<th>{{ __('main.description') }}</th>
 							<th>Status</th>
 							<th>{{ __('main.created_date') }}</th>
@@ -98,12 +99,42 @@
 			<!--begin::Modal Component-->
 			@component('backend.components.form-modal', ['modal_size' => 'modal-lg', 'modal_id' => $controller])
 				@section('form_modal')
+
+					<div class="fv-row mb-7">
+						<img style="display:none;" id="preview_room_asset" class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded" height="300" width="300"
+						src="{{ URL::asset('images/product.png') }}" >
+					</div>
+
 					<!--begin::Input group-->
+					<div class="fv-row mb-7">
+						<label class="d-block fw-semibold fs-6 mb-5">{{ __('main.room_image') }}</label>
+						<input type="file" class="dropzone" name="asset_id">
+						<div class="form-text">{{ __('main.allowed_file_types', ['value' => "png, jpg, jpeg"]) }}</div>
+						<div class="text-primary">{{ __('main.info_image_pixels', ['value' => "100 x 100"]) }}</div>
+					</div>
+
 					<div class="fv-row mb-7">
 						<label class="required fs-6 fw-semibold mb-2">{{ __('main.name') }}</label>
 						<input type="text" class="form-control" placeholder="{{ __('main.name') }}" name="name" />
 					</div>
+
+					<div class="fv-row mb-7">
+						<label class="required form-label fw-semibold">{{ __('main.room-type') }}</label>
+						<div data-table-filter="room_type">
+							<select name="room_type_id" class="form-select" data-dropdown-parent="#{{ $controller }}"  data-kt-select2="true" data-placeholder="{{ __('main.please_choose') }}" data-allow-clear="true">
+							<option value="">{{ __('main.please_choose') }}</option>
+							@foreach($room_type as $value)
+								<option value="{{ $value->id }}">{{ $value->name }}</option>
+							@endforeach
+							</select>
+						</div>
+					</div>					
 		
+					<div class="fv-row mb-7">
+						<label class="required fs-6 fw-semibold mb-2">{{ __('main.price') }}</label>
+						<input type="number" class="form-control" placeholder="{{ __('main.price') }}" name="price" />
+					</div>
+
 					<div class="fv-row mb-7">
 						<label class="fs-6 fw-semibold mb-2">{{ __('main.description') }}</label>
 						<textarea class="form-control" rows="3" name="description" placeholder="{{ __('main.description') }}"></textarea>
@@ -139,7 +170,7 @@
 	<script>
 		"use strict";
 
-		const URL_API = `{{ url('admin/room-types') }}`
+		const URL_API = `{{ url('admin/rooms') }}`
 
 		// Function definition
 		function add() {
@@ -151,6 +182,8 @@
 
 			// Set method
 			$('input[name="_method"]').val('post');
+
+			$("#preview_room_asset").hide();
 
 			// Show the modal
 			$('#{{ $controller  }}_trigger').modal('show');
@@ -178,8 +211,21 @@
 						const data = response.data;
 
 						$('input[name="name"]').val(data.name);
+						$('input[name="price"]').val(data.price);
 						$('textarea[name="description"]').val(data.description);
-						
+
+						$('select[name="room_type_id"]').val(data.room_type_id).trigger('change').attr('data-placeholder', data.room_type_id);
+
+
+						// Set Product Asset
+						var path = `{{ config('app.url') }}`;
+						var product_asset = path + '/images/product.png';
+						if (data.assets_relative_path != null){
+							product_asset = path + '/' + data.assets_relative_path; 
+							$("#preview_room_asset").show();
+						}						
+						$("#preview_room_asset").attr('src', product_asset);
+
 						// Set the radio button value based on the status value
 						if (data.status === 0) {
 							$('input[value="0"][name="status"]').prop('checked', true);
@@ -224,7 +270,11 @@
 					},
 					columns: [
 						{ data: 'id' },
-						{ data: 'name' },
+						{ 
+							data: 'name',
+							width: '30%' 
+						},
+						{ data: 'price' },
 						{ data: 'description' },
 						{ data: 'status' },
 						{ data: 'created_at' },
@@ -242,14 +292,47 @@
 									</div>`;
 							}
 						},
-						{
+						{	
 							targets: 1,
+							createdCell: function (td, cellData, rowData, row, col) {
+								$(td).addClass('d-flex align-items-center');
+							},
 							render: function (data, type, row) {
-								return `<a href="javascript:void(0)" onclick="edit('`+ row.id +`')" class="text-gray-800 text-hover-primary mb-1">`+ row.name +`</a>`;
+								var path = `{{ config('app.url') }}`;
+								var room_assets = path + '/images/product.png';
+								if (row.assets_relative_path != null){
+									room_assets = path + '/' + row.assets_relative_path; 
+								}
+
+								var action = '';
+								if (row["role_id"] != 1){
+									action = `onclick="edit('`+ row.id +`')"`;
+								}
+
+								var html = `<div class="symbol symbol-50px overflow-hidden me-3">
+									<a href="javascript:void(0)" `+ action +`>
+										<div class="symbol-label">
+											<img src="`+ room_assets +`" alt="`+ row.name +`" class="w-100">
+										</div>
+									</a>
+								</div>`;
+									
+								html += `<div class="d-flex flex-column">
+											<a href="javascript:void(0)" `+ action +` class="text-gray-800 text-hover-primary mb-1">`+ row.name +`</a>
+											<span>`+ row.room_type_name +`</span>
+										</div>`;
+
+								return html;
 							}
 						},
 						{
-							targets: 3,
+							targets: 2,
+							render: function (data, type, row) {
+								return IDRCurrency(row.price);
+							}
+						},
+						{
+							targets: 4,
 							render: function (data) {
 								var labelClass = data == 0 ? 'primary' : 'danger';
 								var labelText = data == 0 ? '{{ __('main.active') }}' : '{{ __('main.non-active') }}';
@@ -277,7 +360,7 @@
 									<!--begin::Menu-->
 									<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
 										<!--begin::Menu item-->
-										@permission('room-type-edit')
+										@permission('room-edit')
 											<div class="menu-item px-3">
 												<a href="javascript:void(0)" onclick="edit('`+ data["id"] +`')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
 													{{ __('main.edit') }}
@@ -286,7 +369,7 @@
 										@endpermission
 
 										<!--begin::Menu item-->
-										@permission('room-type-delete')
+										@permission('room-delete')
 											<div class="menu-item px-3">
 												<a href="javascript:void(0)" class="menu-link px-3" data-kt-docs-table-filter="delete_row">
 													{{ __('main.delete') }}
@@ -598,6 +681,20 @@
 								validators: {
 									notEmpty: {
 										message: `{{ __('main.name') }} {{ __('main.is_required') }}`
+									}
+								}
+							},
+							'room_type_id': {
+								validators: {
+									notEmpty: {
+										message: `{{ __('main.room-type') }} {{ __('main.is_required') }}`
+									}
+								}
+							},
+							'price': {
+								validators: {
+									notEmpty: {
+										message: `{{ __('main.price') }} {{ __('main.is_required') }}`
 									}
 								}
 							}

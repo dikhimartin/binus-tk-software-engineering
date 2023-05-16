@@ -597,7 +597,7 @@
 							'name': {
 								validators: {
 									notEmpty: {
-										message: `Name {{ __('main.is_required') }}`
+										message: `{{ __('main.name') }} {{ __('main.is_required') }}`
 									}
 								}
 							}
