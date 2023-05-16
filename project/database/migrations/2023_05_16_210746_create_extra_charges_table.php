@@ -18,6 +18,7 @@ class CreateExtraChargesTable extends Migration
             $table->string('name');
             $table->text('description')->nullable(true);
             $table->integer('status');
+            $table->decimal('price', 10, 2);
             $table->uuid('creator_id')->nullable(true)->index();
             $table->uuid('modifier_id')->nullable(true)->index();
             $table->integer('sort')->nullable();

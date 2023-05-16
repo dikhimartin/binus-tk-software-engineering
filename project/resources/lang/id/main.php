@@ -84,6 +84,7 @@ return [
     'master_data' => 'Master Data',
     'search' => 'Cari',
     'show' => 'Lihat',
+    'price' => 'Harga',
 
     // Profile
     'profile' =>'Profil saya',

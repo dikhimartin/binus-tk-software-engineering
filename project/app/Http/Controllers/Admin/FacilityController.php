@@ -71,7 +71,7 @@ class FacilityController extends Controller
         }        
 
         $res = Facility::find($id);
-        if($res == null){
+        if (!$res) {
             return $this->errorNotFound(null);
         }     
         $data = $request->input();
@@ -86,7 +86,7 @@ class FacilityController extends Controller
         }  
 
         $res = Facility::find($id);
-        if($res == null){
+        if (!$res) {
             return $this->errorNotFound(null);
         }        
         return $this->ok($res, null);

@@ -11,7 +11,7 @@ class ExtraCharge extends Model
 
     protected $table = 'extra_charges';
     protected $fillable = [
-        'name', 'description','status'
+        'name', 'price', 'description','status'
     ];
        
     public $incrementing = false;

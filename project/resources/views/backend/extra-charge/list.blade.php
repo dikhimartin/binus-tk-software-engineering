@@ -82,6 +82,7 @@
 								</div>
 							</th>
 							<th>{{ __('main.name') }}</th>
+							<th>{{ __('main.price') }}</th>
 							<th>{{ __('main.description') }}</th>
 							<th>Status</th>
 							<th>{{ __('main.created_date') }}</th>
@@ -104,6 +105,11 @@
 						<input type="text" class="form-control" placeholder="{{ __('main.name') }}" name="name" />
 					</div>
 		
+					<div class="fv-row mb-7">
+						<label class="required fs-6 fw-semibold mb-2">{{ __('main.price') }}</label>
+						<input type="number" class="form-control" placeholder="{{ __('main.price') }}" name="price" />
+					</div>
+
 					<div class="fv-row mb-7">
 						<label class="fs-6 fw-semibold mb-2">{{ __('main.description') }}</label>
 						<textarea class="form-control" rows="3" name="description" placeholder="{{ __('main.description') }}"></textarea>
@@ -178,6 +184,7 @@
 						const data = response.data;
 
 						$('input[name="name"]').val(data.name);
+						$('input[name="price"]').val(data.price);
 						$('textarea[name="description"]').val(data.description);
 						
 						// Set the radio button value based on the status value
@@ -225,6 +232,7 @@
 					columns: [
 						{ data: 'id' },
 						{ data: 'name' },
+						{ data: 'price' },
 						{ data: 'description' },
 						{ data: 'status' },
 						{ data: 'created_at' },
@@ -249,7 +257,13 @@
 							}
 						},
 						{
-							targets: 3,
+							targets: 2,
+							render: function (data, type, row) {
+								return IDRCurrency(row.price);
+							}
+						},
+						{
+							targets: 4,
 							render: function (data) {
 								var labelClass = data == 0 ? 'primary' : 'danger';
 								var labelText = data == 0 ? '{{ __('main.active') }}' : '{{ __('main.non-active') }}';

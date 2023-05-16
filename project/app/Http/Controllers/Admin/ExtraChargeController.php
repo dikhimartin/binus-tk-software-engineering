@@ -43,6 +43,7 @@ class ExtraChargeController extends Controller
                     $query->where(function ($query) use ($request) {
                         $value = $request->input('search.value');
                         $query->where('name', 'like', "%$value%")
+                            ->orWhere('price', 'like', "%$value%")
                             ->orWhere('status', 'like', "%$value%")
                             ->orWhere('description', 'like', "%$value%");
                     });
@@ -71,7 +72,7 @@ class ExtraChargeController extends Controller
         }        
 
         $res = ExtraCharge::find($id);
-        if($res == null){
+        if (!$res) {
             return $this->errorNotFound(null);
         }     
         $data = $request->input();
@@ -86,7 +87,7 @@ class ExtraChargeController extends Controller
         }  
 
         $res = ExtraCharge::find($id);
-        if($res == null){
+        if (!$res) {
             return $this->errorNotFound(null);
         }        
         return $this->ok($res, null);
