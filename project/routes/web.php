@@ -79,92 +79,119 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	Route::post('/user_access/roles/delete/batch','RoleController@delete_batch');
 	Route::get('/user_access/roles/{id}','RoleController@detail');
 
-	/*
-	 |--------------------------------------------------------------------------
-	 | Module SAMPLE
-	 |--------------------------------------------------------------------------
-	*/	
-	Route::get('/sample','SampleController@index');
-	Route::get('/samples','SampleController@get_data');
-	Route::get('/samples/{id}','SampleController@detail');
-	Route::post('/samples','SampleController@create');
-	Route::put('/samples/{id}','SampleController@update');
-	Route::delete('/samples/{id}','SampleController@delete');
-	Route::post('/samples/delete/batch','SampleController@delete_batch');
 
 	/*
 	 |--------------------------------------------------------------------------
 	 | Module Customer
 	 |--------------------------------------------------------------------------
 	*/	
-	Route::get('/customer','CustomersController@index');
-	Route::get('/customers','CustomersController@get_data');
-	Route::get('/customers/{id}','CustomersController@detail');
-	Route::post('/customers','CustomersController@create');
-	Route::put('/customers/{id}','CustomersController@update');
-	Route::delete('/customers/{id}','CustomersController@delete');
-	Route::post('/customers/delete/batch','CustomersController@delete_batch');
+	// Route::get('/customer','CustomersController@index');
+	// Route::get('/customers','CustomersController@get_data');
+	// Route::get('/customers/{id}','CustomersController@detail');
+	// Route::post('/customers','CustomersController@create');
+	// Route::put('/customers/{id}','CustomersController@update');
+	// Route::delete('/customers/{id}','CustomersController@delete');
+	// Route::post('/customers/delete/batch','CustomersController@delete_batch');
 
 	/*
 	 |--------------------------------------------------------------------------
 	 | Module Staff
 	 |--------------------------------------------------------------------------
 	*/	
-	Route::get('/staff','StaffController@index');
-	Route::get('/staffs','StaffController@get_data');
-	Route::get('/staffs/{id}','StaffController@detail');
-	Route::post('/staffs','StaffController@create');
-	Route::put('/staffs/{id}','StaffController@update');
-	Route::delete('/staffs/{id}','StaffController@delete');
-	Route::post('/staffs/delete/batch','StaffController@delete_batch');
+	// Route::get('/staff','StaffController@index');
+	// Route::get('/staffs','StaffController@get_data');
+	// Route::get('/staffs/{id}','StaffController@detail');
+	// Route::post('/staffs','StaffController@create');
+	// Route::put('/staffs/{id}','StaffController@update');
+	// Route::delete('/staffs/{id}','StaffController@delete');
+	// Route::post('/staffs/delete/batch','StaffController@delete_batch');
 	
 	/*
 	 |--------------------------------------------------------------------------
 	 | Module product Type
 	 |--------------------------------------------------------------------------
 	*/	
-	Route::get('/product-type','ProductTypeController@index');
-	Route::get('/product-types','ProductTypeController@get_data');
-	Route::get('/product-types/{id}','ProductTypeController@detail');
-	Route::post('/product-types','ProductTypeController@create');
-	Route::put('/product-types/{id}','ProductTypeController@update');
-	Route::delete('/product-types/{id}','ProductTypeController@delete');
-	Route::post('/product-types/delete/batch','ProductTypeController@delete_batch');
+	// Route::get('/product-type','ProductTypeController@index');
+	// Route::get('/product-types','ProductTypeController@get_data');
+	// Route::get('/product-types/{id}','ProductTypeController@detail');
+	// Route::post('/product-types','ProductTypeController@create');
+	// Route::put('/product-types/{id}','ProductTypeController@update');
+	// Route::delete('/product-types/{id}','ProductTypeController@delete');
+	// Route::post('/product-types/delete/batch','ProductTypeController@delete_batch');
 
 	/*
 	 |--------------------------------------------------------------------------
 	 | Module product
 	 |--------------------------------------------------------------------------
 	*/	
-	Route::get('/product','ProductController@index');
-	Route::get('/products','ProductController@get_data');
-	Route::get('/products/{id}','ProductController@detail');
-	Route::post('/products','ProductController@create');
-	Route::put('/products/{id}','ProductController@update');
-	Route::delete('/products/{id}','ProductController@delete');
-	Route::post('/products/delete/batch','ProductController@delete_batch');
+	// Route::get('/product','ProductController@index');
+	// Route::get('/products','ProductController@get_data');
+	// Route::get('/products/{id}','ProductController@detail');
+	// Route::post('/products','ProductController@create');
+	// Route::put('/products/{id}','ProductController@update');
+	// Route::delete('/products/{id}','ProductController@delete');
+	// Route::post('/products/delete/batch','ProductController@delete_batch');
 	
 	/*
 	 |--------------------------------------------------------------------------
 	 | Module transaction
 	 |--------------------------------------------------------------------------
 	*/	
-	Route::get('/transaction','TransactionController@index');
-	Route::get('/transactions','TransactionController@get_data');
-	Route::get('/transactions/{id}/detail','TransactionController@detail');
-	Route::put('/transactions/{id}/update_status','TransactionController@update_status');
-	Route::delete('/transactions/{id}','TransactionController@delete');
-	Route::post('/transactions/delete/batch','TransactionController@delete_batch');
+	// Route::get('/transaction','TransactionController@index');
+	// Route::get('/transactions','TransactionController@get_data');
+	// Route::get('/transactions/{id}/detail','TransactionController@detail');
+	// Route::put('/transactions/{id}/update_status','TransactionController@update_status');
+	// Route::delete('/transactions/{id}','TransactionController@delete');
+	// Route::post('/transactions/delete/batch','TransactionController@delete_batch');
 
 	/*
 	 |--------------------------------------------------------------------------
 	 | Module Report
 	 |--------------------------------------------------------------------------
 	*/	
-	Route::get('/report/transaction','ReportTransactionController@index');
-	Route::get('/report/transactions','ReportTransactionController@get_data');
-	Route::get('/report/product','ReportProductController@index');
-	Route::get('/report/product/best_selling','ReportProductController@get_best_selling_product');
+	// Route::get('/report/transaction','ReportTransactionController@index');
+	// Route::get('/report/transactions','ReportTransactionController@get_data');
+	// Route::get('/report/product','ReportProductController@index');
+	// Route::get('/report/product/best_selling','ReportProductController@get_best_selling_product');
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | Module Room Type
+	 |--------------------------------------------------------------------------
+	*/	
+	Route::get('/room-type','RoomTypeController@index');
+	Route::get('/room-types','RoomTypeController@get_data');
+	Route::get('/room-types/{id}','RoomTypeController@detail');
+	Route::post('/room-types','RoomTypeController@create');
+	Route::put('/room-types/{id}','RoomTypeController@update');
+	Route::delete('/room-types/{id}','RoomTypeController@delete');
+	Route::post('/room-types/delete/batch','RoomTypeController@delete_batch');
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | Module Facility
+	 |--------------------------------------------------------------------------
+	*/	
+	Route::get('/facility','FacilityController@index');
+	Route::get('/facilities','FacilityController@get_data');
+	Route::get('/facilities/{id}','FacilityController@detail');
+	Route::post('/facilities','FacilityController@create');
+	Route::put('/facilities/{id}','FacilityController@update');
+	Route::delete('/facilities/{id}','FacilityController@delete');
+	Route::post('/facilities/delete/batch','FacilityController@delete_batch');
+	
+	/*
+	 |--------------------------------------------------------------------------
+	 | Module Extra Charge
+	 |--------------------------------------------------------------------------
+	*/	
+	Route::get('/extra-charge','ExtraChargeController@index');
+	Route::get('/extra-charges','ExtraChargeController@get_data');
+	Route::get('/extra-charges/{id}','ExtraChargeController@detail');
+	Route::post('/extra-charges','ExtraChargeController@create');
+	Route::put('/extra-charges/{id}','ExtraChargeController@update');
+	Route::delete('/extra-charges/{id}','ExtraChargeController@delete');
+	Route::post('/extra-charges/delete/batch','ExtraChargeController@delete_batch');
 });
 
 

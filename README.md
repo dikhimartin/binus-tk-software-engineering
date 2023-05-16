@@ -98,7 +98,7 @@ Buka browser pada URL  http://localhost:8000, untuk mengakses aplikasi.
 - Masuk ke aplikasi source
 
   ```shell
-  cd dashboard
+  cd binus-final-exam-web-developer
   ```
 
 - Copy file environtment

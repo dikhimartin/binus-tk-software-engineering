@@ -33,18 +33,9 @@ class RolesTableSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'name' => 'Staff',
-                'display_name' => 'Staff',
+                'name' => 'User',
+                'display_name' => 'user',
                 'description' => 'pengguna yang memiliki hak akses yang lebih rendah daripada Super Admin. Mereka dapat mengakses dan mengelola beberapa fitur dalam sistem sesuai dengan wewenang yang diberikan oleh Super Admin, seperti mengelola pengguna dan memodifikasi konten tertentu.',
-                'status' => 0,
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'id' => 4,
-                'name' => 'Pembeli',
-                'display_name' => 'Pembeli',
-                'description' => 'pengguna yang tidak memiliki hak akses khusus dalam sistem dan biasanya hanya dapat mengakses fitur dasar yang tersedia untuk publik seperti membaca informasi umum atau mengakses halaman depan situs web. Mereka tidak dapat melakukan perubahan atau modifikasi dalam sistem.',
                 'status' => 0,
                 'created_at' => now(),
                 'updated_at' => now()

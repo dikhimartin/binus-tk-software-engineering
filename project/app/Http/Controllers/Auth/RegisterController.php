@@ -84,7 +84,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $guest_role = 4; // guest
+        $guest_role = 3; // guest
 
         $email = $data['email'];
         $username = Str::before($email, '@'); // Generate username from email

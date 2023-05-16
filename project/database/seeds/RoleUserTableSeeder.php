@@ -25,12 +25,6 @@ class RoleUserTableSeeder extends Seeder
                 'user_id' => 'dd7cd604-d317-11ed-afa1-0242ac120004',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'role_id' => 4,
-                'user_id' => 'dd7cd604-d317-11ed-afa1-0242ac120005',
-                'created_at' => now(),
-                'updated_at' => now(),
             ]
         ]);
 

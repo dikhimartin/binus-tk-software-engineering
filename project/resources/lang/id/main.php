@@ -109,33 +109,26 @@ return [
     'sample' => 'Sample',
     'sample_list' => 'Daftar Sample',
 
-    // Customer
-    'customer' => 'Pembeli',
-    'customer_list' => 'Daftar Pembeli',
-    'place_of_birth' => 'Tempat Lahir',
-    'date_of_birth' => 'Tanggal Lahir',
-    'gender' => 'Jenis Kelamin',
+    // Room Type
+    'room-type' => 'Jenis Ruangan',
+    'room-type_list' => 'Daftar Jenis Ruangan',
 
-    // Staff
-    'staff' => 'Staff',
-    'staff_list' => 'Daftar Staff',
+    // facility
+    'facility' => 'Fasilitas',
+    'facility_list' => 'Daftar Fasilitas',
 
-    // Product Type
-    'product-type' => 'Jenis Barang',
-    'product-type_list' => 'Daftar Jenis Barang',
+    // Extra Charge
+    'extra-charge' => 'Biaya Tambahan',
+    'extra-charge_list' => 'Daftar Biaya Tambahan',
 
-    // Product
-    'product' => 'Barang',
-    'product_image' => 'Gambar Barang',
-    'product_list' => 'Daftar Barang',
-    'purchase_price' => 'Harga Beli',
-    'selling_price' => 'Harga Jual',
-    'stock' => 'Stok',
+    // Room
+    'room' => 'Ruangan',
+    'room_list' => 'Daftar Ruangan',
 
     // Transaction
-    'transaction' => 'Penjualan',
-    'transaction_detail' => 'Detail Penjualan',
-    'transaction_list' => 'Daftar Penjualan',
+    'transaction' => 'Transaksi',
+    'transaction_detail' => 'Detail Transaksi',
+    'transaction_list' => 'Daftar Transaksi',
     'transaction_date' => 'Tanggal Transaksi',
     'pending' => 'Menunggu',
     'reject' => 'Ditolak',
@@ -144,5 +137,4 @@ return [
     // Report
     'report' => 'Laporan',
     'transaction-report' => 'Laporan Transaksi',
-    'product-report' => 'Laporan Produk',
 ];

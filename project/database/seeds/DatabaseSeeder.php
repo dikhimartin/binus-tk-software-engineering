@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
             RoleUserTableSeeder::class,
-            ProductTypesTableSeeder::class,
             ProvinceSeeder::class,
             CitySeeder::class,
             SubdistrictSeeder::class,

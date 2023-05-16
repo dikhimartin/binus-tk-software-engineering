@@ -41,8 +41,8 @@
                     </a>
                 </div>
 
-                @if ($user->can('product-type-list') || $user->can('product-list') || $user->can('customer-list') || $user->can('staff-list') )
-                    <div data-kt-menu-trigger="click" class="menu-item {{ in_array($sidebarActive, ['product','product-type','customer', 'staff']) ? 'here show menu-accordion' : '' }}">
+                @if ($user->can('room-type-list') || $user->can('facility-list') || $user->can('extra-charge-list') || $user->can('room-list') )
+                    <div data-kt-menu-trigger="click" class="menu-item {{ in_array($sidebarActive, ['room-type','facility','extra-charge', 'room']) ? 'here show menu-accordion' : '' }}">
                         <!--begin:Menu link-->
                         <span class="menu-link ">
                             <span class="menu-icon">
@@ -52,52 +52,52 @@
                             <span class="menu-arrow"></span>
                         </span>
                         <!--begin:Menu sub-->
-                        @if ($user->can('product-type-list'))
+                        @if ($user->can('room-type-list'))
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
-                                    <a class="menu-link {!! $sidebarActive == 'product-type' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/product-type' ))}}">
+                                    <a class="menu-link {!! $sidebarActive == 'room-type' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/room-type' ))}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">{{ __('main.product-type') }}</span>
+                                        <span class="menu-title">{{ __('main.room-type') }}</span>
                                     </a>
                                 </div>
                             </div>
                         @endif
                         <!--begin:Menu sub-->
-                        @if ($user->can('product-list'))
+                        @if ($user->can('facility-list'))
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
-                                    <a class="menu-link {!! $sidebarActive == 'product' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/product' ))}}">
+                                    <a class="menu-link {!! $sidebarActive == 'facility' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/facility' ))}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">{{ __('main.product') }}</span>
+                                        <span class="menu-title">{{ __('main.facility') }}</span>
                                     </a>
                                 </div>
                             </div>
                         @endif
                         <!--begin:Menu sub-->
-                        @if ($user->can('customer-list'))
+                        @if ($user->can('extra-charge-list'))
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
-                                    <a class="menu-link {!! $sidebarActive == 'customer' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/customer' ))}}">
+                                    <a class="menu-link {!! $sidebarActive == 'extra-charge' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/extra-charge' ))}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">{{ __('main.customer') }}</span>
+                                        <span class="menu-title">{{ __('main.extra-charge') }}</span>
                                     </a>
                                 </div>
                             </div>
                         @endif
-                        @if ($user->can('staff-list'))
+                        @if ($user->can('room-list'))
                             <div class="menu-sub menu-sub-accordion">
                                 <div class="menu-item">
-                                    <a class="menu-link {!! $sidebarActive == 'staff' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/staff' ))}}">
+                                    <a class="menu-link {!! $sidebarActive == 'room' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/room' ))}}">
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">{{ __('main.staff') }}</span>
+                                        <span class="menu-title">{{ __('main.room') }}</span>
                                     </a>
                                 </div>
                             </div>
@@ -135,16 +135,6 @@
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">{{ __('main.transaction-report') }}</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="menu-sub menu-sub-accordion">
-                            <div class="menu-item">
-                                <a class="menu-link {!! $sidebarActive == 'product-report' ? ' active' : '' !!}" href="{{ LaravelLocalization::getLocalizedURL(LaravelLocalization::getCurrentLocale(),URL::to( 'admin/report/product' ))}}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">{{ __('main.product-report') }}</span>
                                 </a>
                             </div>
                         </div>
