@@ -106,7 +106,7 @@
 		
 					<div class="fv-row mb-7">
 						<label class="fs-6 fw-semibold mb-2">{{ __('main.description') }}</label>
-						<textarea class="form-control" rows="3" name="description" placeholder="{{ __('main.description') }}"></textarea>
+						<textarea class="form-control" rows="3" name="description" data-kt-autosize="true" placeholder="{{ __('main.description') }}"></textarea>
 					</div>
 					
 					<!--begin::Options-->

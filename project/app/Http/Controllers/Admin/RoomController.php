@@ -65,6 +65,7 @@ class RoomController extends Controller
     public function validate_data(Request $request, $id = null){
         $rules = [
             'name' => 'required',
+            'area' => 'required',
             'price' => 'required',
             'status' => 'required',
         ];

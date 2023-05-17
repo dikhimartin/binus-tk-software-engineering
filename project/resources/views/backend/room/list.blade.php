@@ -99,13 +99,11 @@
 			<!--begin::Modal Component-->
 			@component('backend.components.form-modal', ['modal_size' => 'modal-lg', 'modal_id' => $controller])
 				@section('form_modal')
-
 					<div class="fv-row mb-7">
 						<img style="display:none;" id="preview_room_asset" class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded" height="300" width="300"
 						src="{{ URL::asset('images/product.png') }}" >
 					</div>
 
-					<!--begin::Input group-->
 					<div class="fv-row mb-7">
 						<label class="d-block fw-semibold fs-6 mb-5">{{ __('main.room_image') }}</label>
 						<input type="file" class="dropzone" name="asset_id">
@@ -128,19 +126,32 @@
 							@endforeach
 							</select>
 						</div>
-					</div>					
-		
+					</div>		
+
+					<div class="fv-row mb-7">
+						<label class="required fs-6 fw-semibold mb-2">{{ __('main.area') }}</label>
+						<input type="number" class="form-control" placeholder="{{ __('main.area') }}" name="area" />
+						<div class="text-muted mt-1">
+							luas kamar dalam meter persegi (m²)
+						</div>
+					</div>
+
 					<div class="fv-row mb-7">
 						<label class="required fs-6 fw-semibold mb-2">{{ __('main.price') }}</label>
 						<input type="number" class="form-control" placeholder="{{ __('main.price') }}" name="price" />
 					</div>
 
 					<div class="fv-row mb-7">
+						<label class="form-label">{{ __('main.facility') }}</label>
+						<input class="form-control" name="facility" id="kt_tagify"/>
+					</div>
+
+
+					<div class="fv-row mb-7">
 						<label class="fs-6 fw-semibold mb-2">{{ __('main.description') }}</label>
-						<textarea class="form-control" rows="3" name="description" placeholder="{{ __('main.description') }}"></textarea>
+						<textarea class="form-control" rows="3" name="description" data-kt-autosize="true" placeholder="{{ __('main.description') }}"></textarea>
 					</div>
 					
-					<!--begin::Options-->
 					<div class="fv-row mb-7">
 						<label class="fs-6 fw-semibold mb-2">Status</label>
 						<div class="d-flex">
@@ -169,6 +180,31 @@
 	<script src="{{ URL::asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 	<script>
 		"use strict";
+
+		var input = document.querySelector("#kt_tagify");
+
+		// Make an AJAX request to retrieve the tag suggestions
+		$.ajax({
+			url: "{{ url('admin/facilities') }}", // Replace with your API endpoint URL
+			method: "GET",
+			success: function(response) {
+				var data = response.data;
+
+				// Extract the tag names from the response data
+				var tagNames = data.map(function(item) {
+					return item.name;
+				});
+
+				// Initialize Tagify component with the retrieved tag suggestions
+				new Tagify(input, {
+					whitelist: tagNames, // Set the tag suggestions
+					enforceWhitelist: true // Only allow tags from the suggestions
+				});
+			},
+			error: function(xhr, status, error) {
+				console.error(error);
+			}
+		});
 
 		const URL_API = `{{ url('admin/rooms') }}`
 
@@ -211,9 +247,9 @@
 						const data = response.data;
 
 						$('input[name="name"]').val(data.name);
+						$('input[name="area"]').val(data.area);
 						$('input[name="price"]').val(data.price);
 						$('textarea[name="description"]').val(data.description);
-
 						$('select[name="room_type_id"]').val(data.room_type_id).trigger('change').attr('data-placeholder', data.room_type_id);
 
 
@@ -244,6 +280,7 @@
 				}
 			});	
 		}
+		
 
 		// Class definition
 		var KTDatatablesServerSide = function () {
@@ -329,6 +366,18 @@
 							targets: 2,
 							render: function (data, type, row) {
 								return IDRCurrency(row.price);
+							}
+						},
+						{
+							targets: 3,
+							render: function (data, type, row) {
+								if (row.description !== undefined && row.description != null && row.description !== "") {
+									var limit = row.description.length;
+									if (limit > 0) {
+										return limitTextByDot(row.description, limit);
+									}
+								}
+								return "-";
 							}
 						},
 						{
@@ -671,7 +720,6 @@
 		
 			// Init form inputs
 			var handleForm = function () {
-
 				// Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
 				validator = FormValidation.formValidation(
 					form,
@@ -688,6 +736,13 @@
 								validators: {
 									notEmpty: {
 										message: `{{ __('main.room-type') }} {{ __('main.is_required') }}`
+									}
+								}
+							},
+							'area': {
+								validators: {
+									notEmpty: {
+										message: `{{ __('main.area') }} {{ __('main.is_required') }}`
 									}
 								}
 							},

@@ -20,9 +20,6 @@ class CreateRoomsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable(true);
             $table->integer('status');
-            $table->uuid('province_id')->nullable();
-            $table->uuid('city_id')->nullable();
-            $table->uuid('subdistrict_id')->nullable();
             $table->text('area')->nullable();
             $table->decimal('price', 10, 2);
             $table->uuid('creator_id')->nullable(true)->index();
