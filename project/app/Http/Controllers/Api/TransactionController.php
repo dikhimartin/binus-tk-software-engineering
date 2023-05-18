@@ -28,7 +28,7 @@ class TransactionController extends Controller
         return $validator;
     }    
 
-
+    // TODO : MASIH KURANG UNTUK PERHITUNGAN DI FRONT END MENGENAI RUANGAN X JUMLAH HARI
     public function reservation(Request $request){
         $validator = $this->validate_data($request);
         if ($validator->fails()) {
