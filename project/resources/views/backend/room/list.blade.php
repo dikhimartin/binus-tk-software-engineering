@@ -192,9 +192,6 @@
 			// Reset the form
 			KTModalForm.resetForm();
 
-			// Remove existing data from CKEditor
-			ckEditorInstance.setData('');
-
 			// Set text
 			$('#{{ $controller  }}_submit_text').text(`{{ __('main.save') }}`);
 			$('#{{ $controller  }}_header_title').text(`{{ __('main.create_new') }}`);
@@ -233,12 +230,13 @@
 						$('input[name="area"]').val(data.area);
 						$('input[name="price"]').val(data.price);
 						$('select[name="room_type_id"]').val(data.room_type_id).trigger('change').attr('data-placeholder', data.room_type_id);
-
+						
+						// Remove existing data from CKEditor
+						ckEditorInstance.setData('');
 						if(data.description != null) {
-							// Remove existing data from CKEditor
-							ckEditorInstance.setData('');
 							// Set new data to CKEditor
 							ckEditorInstance.setData(data.description);
+							$('textarea[name="description"]').val(data.description);
 						}
 
 						var facilities = [];
@@ -887,7 +885,8 @@
 					selects.forEach(select => {
 						$(select).val('').trigger('change');
 					});
-				}				
+				}		
+				ckEditorInstance.setData('');
 			}
 
 			return {
