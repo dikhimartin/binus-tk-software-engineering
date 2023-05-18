@@ -22,8 +22,7 @@ Route::get('/logout', function () {
 
 Route::group(array('prefix' => LaravelLocalization::setLocale() . '/api', 'namespace' => 'Api'), function () {
 	Route::get('/rooms','RoomController@get_data');
-	// Route::get('/products','ProductController@get_data');
-	// Route::post('/transaction/order','TransactionController@order');
+	Route::post('/transaction/reservation','TransactionController@reservation');
 });
 
 Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'namespace' => 'Admin'), function () {

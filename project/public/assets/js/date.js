@@ -19,10 +19,36 @@ function formatDate(dateString) {
 
   var KTDatePickerLinked = function () {
     const linkedPicker1Element = document.getElementById("kt_td_picker_linked_1");
-    const linked1 = new tempusDominus.TempusDominus(linkedPicker1Element);
+    const linked1 = new tempusDominus.TempusDominus(linkedPicker1Element, {
+        display: {
+            viewMode: "calendar",
+            components: {
+                decades: true,
+                year: true,
+                month: true,
+                date: true,
+                hours: false,
+                minutes: false,
+                seconds: false
+            }
+        }
+    });
     const linked2 = new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_linked_2"), {
+        display: {
+            viewMode: "calendar",
+            components: {
+                decades: true,
+                year: true,
+                month: true,
+                date: true,
+                hours: false,
+                minutes: false,
+                seconds: false
+            }
+        },
         useCurrent: false,
     });
+    
   
     //using event listeners
     linkedPicker1Element.addEventListener(tempusDominus.Namespace.events.change, (e) => {

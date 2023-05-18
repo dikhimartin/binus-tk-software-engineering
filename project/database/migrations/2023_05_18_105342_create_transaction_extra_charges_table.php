@@ -15,7 +15,7 @@ class CreateTransactionExtraChargesTable extends Migration
     {
         Schema::create('transaction_extra_charges', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('transaction_detail_id')->index();
+            $table->uuid('transaction_id')->index();
             $table->uuid('extra_charge_id')->index();
             $table->integer('quantity');
             $table->decimal('price', 10, 2);

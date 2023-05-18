@@ -38,7 +38,7 @@
 
                 <!--begin::Sidebar-->
                 <div class="flex-row-auto w-xl-550px">
-                    <form class="form" id="form_cart_order" enctype="multipart/form-data">
+                    <form class="form" id="form_reservation_order" enctype="multipart/form-data">
                         <meta name="csrf-token" content="{{ csrf_token() }}">
                         <div class="card card-flush bg-body">
                             <div class="card-header pt-5">
@@ -394,9 +394,9 @@
 
         // Send data to server
         function SendOrder() {
-            var formData = new FormData(document.querySelector('#form_cart_order'));
+            var formData = new FormData(document.querySelector('#form_reservation_order'));
             $.ajax({
-                url : "/api/transaction/order",
+                url : "/api/transaction/reservation",
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -408,14 +408,25 @@
                 success: function(response){
                     var messages = "Pembelian berhasil";
                     ToastrSuccess(messages);
-                    clear_item();
-                    getRoomList();
+                    // clear_item();
+                    // getRoomList();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.responseJSON.status.message != undefined){
-                        errorThrown = jqXHR.responseJSON.status.message;
+                    let errorMessage = "An error occurred.";
+                    if (jqXHR.responseJSON && jqXHR.responseJSON.status && jqXHR.responseJSON.status.message) {
+                        const errorMessages = jqXHR.responseJSON.status.message;
+
+                        // Construct the error message dynamically
+                        const errorFields = Object.keys(errorMessages);
+                        if (errorFields.length > 0) {
+                            errorMessage = "The following errors occurred: \n";
+                            
+                            errorFields.forEach((field) => {
+                                errorMessage += `${errorMessages[field]}\n`;
+                            });
+                        }
                     }
-                    ToastrError(errorThrown);
+                    ToastrError(errorMessage);
                 }
             }); 
         }	        

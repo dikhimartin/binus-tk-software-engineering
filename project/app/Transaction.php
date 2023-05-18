@@ -22,7 +22,6 @@ class Transaction extends Model
         'description',
         'creator_id',
         'modifier_id',
-        'sort'
     ];
 
     public $incrementing = false;
@@ -43,7 +42,10 @@ class Transaction extends Model
                 abort(500, $e->getMessage());
             }
             if (empty($model->sort)) {
-                $model->sort = "generate_sort_by_count_trx_record"; 
+                // $model->sort = "generate_sort_by_count_trx_record"; 
+            }
+            if (empty($model->customer_id)) {
+                $model->customer_id = Auth::id(); 
             }
             if (empty($model->transaction_date)) {
                 $model->transaction_date = now(); 
