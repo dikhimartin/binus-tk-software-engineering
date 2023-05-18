@@ -35,62 +35,169 @@
                         <div id="room-list-container" class="row"></div>
                     </div>
                 </div>
+
+                <!--begin::Sidebar-->
+                <div class="flex-row-auto w-xl-550px">
+                    <form class="form" id="form_cart_order" enctype="multipart/form-data">
+                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                        <div class="card card-flush bg-body">
+                            <div class="card-header pt-5">
+                                <h3 class="card-title fw-bold text-gray-800 fs-2qx">Pemesanan Kamar</h3>
+                                <div class="card-toolbar">
+                                    <a href="javascript:void(0)" id="button_cancel" onclick="cancel_book_room()" class="btn btn-sm btn-light-danger fs-4" style="display:none;">Batalkan Pesanan</a>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="separator my-5"></div>
+                                <!-- Hotel information -->
+                                <div id="hotel_information"></div>
+
+                                <!-- input data -->
+                                <div id="input_data" style="display:none">
+                                    <!-- Check-in and Check-out -->
+                                    <div class="row mb-5">
+                                        <div class="col-sm-6" id="kt_td_picker_linked_1" >
+                                            <label for="kt_td_picker_linked_1_input" class="form-label required">{{ __('main.check_in') }}</label>
+                                            <div class="input-group log-event" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                <input name="check_in_date" placeholder="{{ __('main.date') }} {{ __('main.check_in') }}" id="kt_td_picker_linked_1_input" type="text" class="form-control" data-td-target="#kt_td_picker_linked_1"/>
+                                                <span class="input-group-text" data-td-target="#kt_td_picker_linked_1" data-td-toggle="datetimepicker">
+                                                    <i class="fa fa-duotone fa-calendar"></i>  
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6" id="kt_td_picker_linked_2" >
+                                            <label for="kt_td_picker_linked_2_input" class="form-label required">{{ __('main.check_out') }}</label>
+                                            <div class="input-group log-event" data-td-target-input="nearest" data-td-target-toggle="nearest">
+                                                <input name="check_out_date" placeholder="{{ __('main.date') }} {{ __('main.check_out') }}" id="kt_td_picker_linked_2_input" type="text" class="form-control" data-td-target="#kt_td_picker_linked_2"/>
+                                                <span class="input-group-text" data-td-target="#kt_td_picker_linked_2" data-td-toggle="datetimepicker">
+                                                    <i class="fa fa-duotone fa-calendar"></i>  
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Extra Charge -->
+                                    <div class="text-muted fw-semibold">
+                                        Punya permintaan khusus? Ajukan permintaan Anda dan properti akan berusaha memenuhinya. 
+                                        (Permintaan khusus tidak dijamin dan dapat dikenakan biaya) 
+                                    </div>
+                                    <div class="fw-semibold fs-5 mt-5">
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-primary">Pilh Extra Charge</a>
+                                    </div>
+                                    <div class="table-responsive mb-8">
+                                        <table class="table align-middle gs-0 gy-4 my-0">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th class="min-w-125px"></th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="item-cart">
+                                            <tr data-id="39a20bb9-b0cd-41d5-8f51-3ee186549528">
+                                                <input type="hidden" name="product_id[]" value="39a20bb9-b0cd-41d5-8f51-3ee186549528">
+                                                <input id="product_price_39a20bb9-b0cd-41d5-8f51-3ee186549528" type="hidden" name="product_price[]" value="70100">
+                                                <td class="pe-0">
+                                                    <div class="d-flex align-items-center">
+                                                    <img src="https://tk3.binusassignment.tech/storage/product/P-1683277920-HMIEnlz1Bx.jpg" class="w-50px h-50px rounded-3 me-3" alt="">
+                                                    <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">Anggur Red Felipe</span>
+                                                    </div>
+                                                </td>
+                                                <td class="pe-0">
+                                                    <div class="input-qty input-group input-group-sm">
+                                                        <button class="btn btn-sm btn-outline-secondary" onclick="decreased_qty('39a20bb9-b0cd-41d5-8f51-3ee186549528')" type="button" data-quantity="minus" data-field="quantity">
+                                                            <i class="fa fa-duotone fa-minus"></i>
+                                                        </button>
+                                                        <input type="text" id="quantity_39a20bb9-b0cd-41d5-8f51-3ee186549528" onkeyup="input_qty('39a20bb9-b0cd-41d5-8f51-3ee186549528')" name="quantity[]" class="form-control input-number text-center" value="1" min="1" max="90">
+                                                        <button class="btn btn-sm btn-outline-secondary" onclick="increased_qty('39a20bb9-b0cd-41d5-8f51-3ee186549528')" type="button" data-quantity="plus" data-field="quantity">
+                                                            <i class="fa fa-duotone fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span class="fw-bold text-primary fs-2" id="sub_price_39a20bb9-b0cd-41d5-8f51-3ee186549528" data-sub-price="70100.00">Rp&nbsp;70.100</span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <a href="javascript:void(0)" onclick="remove_item('39a20bb9-b0cd-41d5-8f51-3ee186549528')" class="btn btn-sm btn-danger">x
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex flex-stack bg-success rounded-3 p-6 mb-11">
+                                    <div class="fs-6 fw-bold text-white">
+                                        <span class="d-block fs-2qx lh-1">Total</span>
+                                    </div>
+                                    <div class="fs-6 fw-bold text-white text-end">
+                                        <span class="d-block fs-2qx lh-1" id="grant-total"></span>
+                                    </div>
+                                </div>
+                                <div class="m-0">
+                                    <a href="javascript:void(0)" onclick="SendOrder()" class="btn btn-primary fs-1 w-100 py-4">Pesan Sekarang</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>        
             </div>
         </div>
+
     </div>
 
     <!--begin::Modal Component-->
     @component('backend.components.modal', ['modal_size' => 'modal-lg', 'is_header' => false, 'modal_id' => 'modal_book_room'])
         @section('modal_content')
-            <div class="mb-5 text-center">
-                <h1 class="mb-2" id="room_name"></h1>
-                <div class="separator my-10"></div>
-                <img id="preview_room_asset" 
-                     class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mt-1" 
-                     height="300" width="100%" 
-                     src="http://localhost:8000/storage/room/P-1684384790-J4DNCnJ1UB.webp">
-            </div>
-            <div class="card-body">
-                <!--begin::Info Kamar-->
-                <div class="mb-13">
-                    <h4 class="text-gray-700 w-bolder mb-0">Harga</h4>
-                    <div class="my-2">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="text-primary text-end fw-bold fs-1" id="room_price"></div>
+            <div id="book_preview" room-id="it-dynamic-value">
+                <div class="mb-5 text-center">
+                    <h1 class="mb-2" id="room_name"></h1>
+                    <h2 class="mb-2 text-muted mb-5 fw-semibold" id="room_type"></h2>
+                    <div class="separator my-10"></div>
+                    <img id="preview_room_asset" 
+                        class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mt-1" 
+                        height="300" width="100%" 
+                        src="http://localhost:8000/storage/room/P-1684384790-J4DNCnJ1UB.webp">
+                </div>
+                <div class="card-body">
+                    <!--begin::Info Kamar-->
+                    <div class="mb-13">
+                        <h4 class="text-gray-700 w-bolder mb-0">Harga</h4>
+                        <div class="my-2">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="text-primary text-end fw-bold fs-1" id="room_price" value="0"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!--begin::Info Kamar-->
-                <div class="mb-8">
-                    <h4 class="text-gray-700 w-bolder mb-0">Info Kamar</h4>
-                    <div class="my-2">
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="bullet bg-primary me-3"></span>
-                            <div class="text-gray-600 fw-semibold fs-6" id="room_area"></div>
+                    <!--begin::Info Kamar-->
+                    <div class="mb-8">
+                        <h4 class="text-gray-700 w-bolder mb-0">Info Kamar</h4>
+                        <div class="my-2">
+                            <div class="d-flex align-items-center mb-3">
+                                <span class="bullet bg-primary me-3"></span>
+                                <div class="text-gray-600 fw-semibold fs-6" id="room_area"></div>
+                            </div>
                         </div>
                     </div>
+
+                    <!--begin::Fasilitas Kamar-->
+                    <div class="mb-8">
+                        <h4 class="text-gray-700 w-bolder mb-0">Fasilitas Kamar</h4>
+                        <div class="my-2" id="facilities-list"></div>
+                    </div>
+
+                    <!--begin::Description -->
+                    <div class="mb-7">
+                        <h4 class="text-gray-700 w-bolder mb-3">Deskripsi Kamar</h4>
+                        <div class="fw-semibold fs-6 text-gray-600" id="room_description"></div>
+                    </div>
                 </div>
-
-                <!--begin::Fasilitas Kamar-->
-                <div class="mb-8">
-                    <h4 class="text-gray-700 w-bolder mb-0">Fasilitas Kamar</h4>
-                    <div class="my-2" id="facilities-list"></div>
-                </div>
-
-                <!--begin::Description -->
-                <div class="mb-7">
-                    <h4 class="text-gray-700 w-bolder mb-3">Deskripsi Kamar</h4>
-                    <div class="fw-semibold fs-6 text-gray-600" id="room_description"></div>
-                </div>
-
-                <div class="separator my-10"></div>
-
-
             </div>
         @endsection
         @section('modal_footer')
-            <a href="javascript:void(0)" class="btn btn-primary">Pesan Sekarang</a>
+            <a href="javascript:void(0)" id="button_book_room" onclick="book_room(this)" class="btn btn-primary">Lanjutkan Pemesanan</a>
         @endsection        
     @endcomponent
 
@@ -105,6 +212,31 @@
 
         $(document).ready(function() {
             getRoomList();
+
+            const linkedPicker1Element = document.getElementById("kt_td_picker_linked_1");
+            const linked1 = new tempusDominus.TempusDominus(linkedPicker1Element);
+            const linked2 = new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_linked_2"), {
+                useCurrent: false,
+            });
+
+            //using event listeners
+            linkedPicker1Element.addEventListener(tempusDominus.Namespace.events.change, (e) => {
+                linked2.updateOptions({
+                    restrictions: {
+                    minDate: e.detail.date,
+                    },
+                });
+            });
+
+            //using subscribe method
+            const subscription = linked2.subscribe(tempusDominus.Namespace.events.change, (e) => {
+                linked1.updateOptions({
+                    restrictions: {
+                    maxDate: e.date,
+                    },
+                });
+            });
+
         });
 
         // define throttling function
@@ -136,7 +268,7 @@
 
                 // loop through the item data and add new cards to the container
                 response.data.data.forEach(item => {
-                    var action = `onclick="book_room(this)"`;
+                    var action = `onclick="review_room(this)"`;
 
                     var path = `{{ config('app.url') }}`;
                     var room_assets = path + '/images/product.png';
@@ -167,7 +299,7 @@
             });
         };
 
-        function book_room(element){
+        function review_room(element){
             // Get data
             var room_id = element.id;
 
@@ -177,9 +309,19 @@
 				type: "GET",
 				dataType: "JSON",             
 				success: function(response){
+                    var divElement = document.getElementById('book_preview');
+                    var buttonElement = document.getElementById('button_book_room');
+                    
 					if (response.status.code === 200) {
-						const data = response.data;
+                        const data = response.data;
+
+                        divElement.setAttribute('room-id', data.id);
+                        divElement.querySelector('#room_price').setAttribute('value', data.price);
+                        
+                        buttonElement.setAttribute('onclick', "book_room('" + data.id + "')");
+
                         $("#room_name").text(data.name);
+                        $("#room_type").text(data.room_type_name);
                         $("#room_price").text(IDRCurrency(data.price));
                         $("#room_area").text(`${data.area} m2`);
                         $("#room_description").html(data.description);
@@ -226,6 +368,50 @@
 					ToastrError(errorThrown);
 				}
 			});	
+        }
+
+        function book_room(id){
+            var element = document.querySelector('[room-id="' + id + '"]');
+
+            var roomName = element.querySelector('#room_name').textContent;
+            var roomType = element.querySelector('#room_type').textContent;
+            var roomPrice = element.querySelector('#room_price').textContent;
+            var roomPriceVal = element.querySelector('#room_price').getAttribute('value');
+            var previewRoomAsset = element.querySelector('#preview_room_asset').getAttribute('src');
+            var roomDescription = element.querySelector('#room_description').textContent;
+
+            var html = `
+                <h2 class="mb-0">${roomName}</h2>
+                <input type="hidden" name="room_id" value="${id}">
+                <input type="hidden" name="room_price" value="${roomPriceVal}">
+                <p class="text-muted mb-5 fw-semibold">${roomType}</p>
+                <img class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mb-6" height="200" width="100%" src="${previewRoomAsset}">
+                <div class="mb-10">
+                <h4 class="text-gray-700 w-bolder mb-0">Harga</h4>
+                <div class="my-2">
+                    <div class="d-flex align-items-center mb-3">
+                    <div class="text-primary text-end fw-bold fs-1">${roomPrice}</div>
+                    </div>
+                </div>
+                </div>
+                <div class="separator my-5"></div>
+            `;
+
+            var hotelInformation = document.getElementById('hotel_information');
+            hotelInformation.innerHTML = html;   
+
+            // console.log(element);
+            $('#modal_book_room').modal('hide');	
+            $('#input_data').show();
+            $('#button_cancel').show();
+        }
+        
+        function cancel_book_room(){
+            var hotelInformation = document.getElementById('hotel_information');
+            hotelInformation.innerHTML = '';   
+            $('#input_data').hide();
+            $('#button_cancel').hide();
+            ToastrError("Pemesanaan dibatalkan");
         }
 
         // define function to handle search query input

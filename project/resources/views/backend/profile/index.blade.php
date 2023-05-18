@@ -131,7 +131,7 @@
                 </div>
             </form>
             <!--begin::Modal Component-->
-            @component('backend.components.modal', ['modal_size' => 'modal-md', 'modal_id' => 'modal_confirm_password'])
+            @component('backend.components.modal', ['modal_size' => 'modal-md', 'is_header'    => true, 'modal_id' => 'modal_confirm_password'])
                 @section('modal_content')
                 <div class="fv-row mb-7">
                     <label class="fs-6 fw-semibold mb-2">{{ __('passwords.old_password') }}</label>

@@ -85,6 +85,7 @@ return [
     'search' => 'Cari',
     'show' => 'Lihat',
     'price' => 'Harga',
+    'date' => 'Tanggal',
 
     // Profile
     'profile' =>'Profil saya',
@@ -111,8 +112,8 @@ return [
     'sample_list' => 'Daftar Sample',
 
     // Room Type
-    'room-type' => 'Jenis Ruangan',
-    'room-type_list' => 'Daftar Jenis Ruangan',
+    'room-type' => 'Jenis Kamar',
+    'room-type_list' => 'Daftar Jenis Kamar',
 
     // facility
     'facility' => 'Fasilitas',
@@ -123,16 +124,18 @@ return [
     'extra-charge_list' => 'Daftar Biaya Tambahan',
 
     // Room
-    'room' => 'Ruangan',
-    'room_image' => 'Gambar Ruangan',
+    'room' => 'Kamar',
+    'room_image' => 'Gambar Kamar',
     'area' => 'Area',
-    'room_list' => 'Daftar Ruangan',
+    'room_list' => 'Daftar Kamar',
 
     // Transaction
     'transaction' => 'Transaksi',
     'transaction_detail' => 'Detail Transaksi',
     'transaction_list' => 'Daftar Transaksi',
     'transaction_date' => 'Tanggal Transaksi',
+    'check_in' => 'Check-in',
+    'check_out' => 'Check-out',
     'pending' => 'Menunggu',
     'reject' => 'Ditolak',
     'finish' => 'Selesai',
