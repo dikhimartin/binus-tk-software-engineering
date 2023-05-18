@@ -53,7 +53,7 @@
                                 <div id="hotel_information"></div>
 
                                 <!-- input data -->
-                                <div id="input_data" style="display:show">
+                                <div id="input_data" style="display:none">
                                     <!-- Check-in and Check-out -->
                                     <div class="row mb-5">
                                         <div class="col-sm-6" id="kt_td_picker_linked_1" >
@@ -93,35 +93,7 @@
                                                     <th></th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="item-cart">
-                                            <tr data-id="39a20bb9-b0cd-41d5-8f51-3ee186549528">
-                                                <input type="hidden" name="product_id[]" value="39a20bb9-b0cd-41d5-8f51-3ee186549528">
-                                                <input id="product_price_39a20bb9-b0cd-41d5-8f51-3ee186549528" type="hidden" name="product_price[]" value="70100">
-                                                <td class="pe-0">
-                                                    <div class="d-flex align-items-center">
-                                                    <img src="https://tk3.binusassignment.tech/storage/product/P-1683277920-HMIEnlz1Bx.jpg" class="w-50px h-50px rounded-3 me-3" alt="">
-                                                    <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">Anggur Red Felipe</span>
-                                                    </div>
-                                                </td>
-                                                <td class="pe-0">
-                                                    <div class="input-qty input-group input-group-sm">
-                                                        <button class="btn btn-sm btn-outline-secondary" onclick="decreased_qty('39a20bb9-b0cd-41d5-8f51-3ee186549528')" type="button" data-quantity="minus" data-field="quantity">
-                                                            <i class="fa fa-duotone fa-minus"></i>
-                                                        </button>
-                                                        <input type="text" id="quantity_39a20bb9-b0cd-41d5-8f51-3ee186549528" onkeyup="input_qty('39a20bb9-b0cd-41d5-8f51-3ee186549528')" name="quantity[]" class="form-control input-number text-center" value="1" min="1" max="90">
-                                                        <button class="btn btn-sm btn-outline-secondary" onclick="increased_qty('39a20bb9-b0cd-41d5-8f51-3ee186549528')" type="button" data-quantity="plus" data-field="quantity">
-                                                            <i class="fa fa-duotone fa-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                                <td class="text-end">
-                                                    <span class="fw-bold text-primary fs-2" id="sub_price_39a20bb9-b0cd-41d5-8f51-3ee186549528" data-sub-price="70100.00">Rp&nbsp;70.100</span>
-                                                </td>
-                                                <td class="text-end">
-                                                    <a href="javascript:void(0)" onclick="remove_item('39a20bb9-b0cd-41d5-8f51-3ee186549528')" class="btn btn-sm btn-danger">x</a>
-                                                </td>
-                                            </tr>
-                                            </tbody>
+                                            <tbody id="item-cart"></tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -378,6 +350,7 @@
             $('#modal_book_room').modal('hide');	
             $('#input_data').show();
             $('#button_cancel').show();
+            accumulate_grand_total();
         }
         
         function cancel_book_room(){
@@ -385,6 +358,7 @@
             hotelInformation.innerHTML = '';   
             $('#input_data').hide();
             $('#button_cancel').hide();
+            clear_item();
             ToastrError("Pemesanaan dibatalkan");
         }
 
@@ -393,6 +367,16 @@
             $('#modal_extra_charge').modal('show');	
         }
 
+        function accumulate_grand_total(){
+            let totalPrice = 0;
+            let subPrices = document.querySelectorAll('#item-cart [data-sub-price]');
+            let roomPrice =  parseInt($('input[name="room_price"]').val());
+            subPrices.forEach(function(subPrice) {
+                totalPrice += parseInt(subPrice.dataset.subPrice);
+            });
+            totalPrice += roomPrice;
+            $("#grant-total").text(IDRCurrency(totalPrice));
+        }
 
         // define function to handle search query input
         const handleSearchQuery = () => {
