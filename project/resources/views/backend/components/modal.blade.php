@@ -44,37 +44,38 @@
     </div>
 </div>
 
-
-@push('private_js')
-    <script>
-        var KTModalDefault = function () {
-            var cancelButton;
-            var closeButton;
-            var form;
-        
-            // Init form inputs
-            var handleModal = function () {
-                closeButton.addEventListener('click', function(e){
-                    e.preventDefault();
-                    form.reset(); // Reset form	
-                    $('#{{ $modal_id }}').modal('hide');
-                })
-            }
-
-            return {
-                // Public functions
-                init: function () {
-                    // Elements
-                    form = document.querySelector('#{{ $modal_id }}_form');
-                    closeButton = form.querySelector('#{{ $modal_id }}_close');
-                    handleModal();
+@if($is_header)
+    @push('private_js')
+        <script>
+            var KTModalDefault = function () {
+                var cancelButton;
+                var closeButton;
+                var form;
+                
+                // Init form inputs
+                var handleModal = function () {
+                    closeButton.addEventListener('click', function(e){
+                        e.preventDefault();
+                        form.reset(); // Reset form	
+                        $('#{{ $modal_id }}').modal('hide');
+                    })
                 }
-            };
-        }();
 
-        // On document ready
-        KTUtil.onDOMContentLoaded(function () {
-            KTModalDefault.init();
-        });
-    </script>
-@endpush
+                return {
+                    // Public functions
+                    init: function () {
+                        // Elements
+                        form = document.querySelector('#{{ $modal_id }}_form');
+                        closeButton = form.querySelector('#{{ $modal_id }}_close');
+                        handleModal();
+                    }
+                };
+            }();
+
+            // On document ready
+            KTUtil.onDOMContentLoaded(function () {
+                KTModalDefault.init();
+            });
+        </script>
+    @endpush
+@endif

@@ -43,10 +43,10 @@
     @component('backend.components.modal', ['modal_size' => 'modal-lg', 'is_header' => false, 'modal_id' => 'modal_book_room'])
         @section('modal_content')
             <div class="mb-5 text-center">
-                <h1 class="mb-3">Delux King</h1>
+                <h1 class="mb-2" id="room_name"></h1>
                 <div class="separator my-10"></div>
                 <img id="preview_room_asset" 
-                     class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mt-5" 
+                     class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mt-1" 
                      height="300" width="100%" 
                      src="http://localhost:8000/storage/room/P-1684384790-J4DNCnJ1UB.webp">
             </div>
@@ -56,7 +56,7 @@
                     <h4 class="text-gray-700 w-bolder mb-0">Harga</h4>
                     <div class="my-2">
                         <div class="d-flex align-items-center mb-3">
-                            <div class="text-primary text-end fw-bold fs-1">Rp. 1000.000</div>
+                            <div class="text-primary text-end fw-bold fs-1" id="room_price"></div>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                     <div class="my-2">
                         <div class="d-flex align-items-center mb-3">
                             <span class="bullet bg-primary me-3"></span>
-                            <div class="text-gray-600 fw-semibold fs-6">37.0 m2</div>
+                            <div class="text-gray-600 fw-semibold fs-6" id="room_area"></div>
                         </div>
                     </div>
                 </div>
@@ -75,26 +75,13 @@
                 <!--begin::Fasilitas Kamar-->
                 <div class="mb-8">
                     <h4 class="text-gray-700 w-bolder mb-0">Fasilitas Kamar</h4>
-                    <div class="my-2">
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="bullet bg-primary me-3"></span>
-                            <div class="text-gray-600 fw-semibold fs-6">AC</div>
-                        </div>
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="bullet bg-primary me-3"></span>
-                            <div class="text-gray-600 fw-semibold fs-6">Pembuat kopi / teh</div>
-                        </div>
-                        <div class="d-flex align-items-center mb-3">
-                            <span class="bullet bg-primary me-3"></span>
-                            <div class="text-gray-600 fw-semibold fs-6">Desk</div>
-                        </div>
-                    </div>
+                    <div class="my-2" id="facilities-list"></div>
                 </div>
 
                 <!--begin::Description -->
                 <div class="mb-7">
-                    <h4 class="text-gray-700 w-bolder mb-0">Deskripsi Kamar</h4>
-                    <p class="fw-semibold fs-6 text-gray-600">First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp.</p>
+                    <h4 class="text-gray-700 w-bolder mb-3">Deskripsi Kamar</h4>
+                    <div class="fw-semibold fs-6 text-gray-600" id="room_description"></div>
                 </div>
 
                 <div class="separator my-10"></div>
@@ -183,11 +170,62 @@
         function book_room(element){
             // Get data
             var room_id = element.id;
-            console.log("room_id :", room_id);
 
-            // $('#modal_book_room_header_title').text(`Pesan Kamar`);
-            // Show the modal
-            $('#modal_book_room').modal('show');	
+			// Fetching data
+			$.ajax({
+				url : "{{ url('admin/rooms') }}" + '/' + room_id,
+				type: "GET",
+				dataType: "JSON",             
+				success: function(response){
+					if (response.status.code === 200) {
+						const data = response.data;
+                        $("#room_name").text(data.name);
+                        $("#room_price").text(IDRCurrency(data.price));
+                        $("#room_area").text(`${data.area} m2`);
+                        $("#room_description").html(data.description);
+
+                        var facilities = data.facilities;
+                        var facilitiesList = document.getElementById('facilities-list');
+
+                        // Empty the existing list
+                        facilitiesList.innerHTML = '';
+
+                        if (facilities.length > 0) {
+                            for (var i = 0; i < facilities.length; i++) {
+                                var facility = facilities[i];
+                                var listItem = document.createElement('div');
+                                listItem.className = 'd-flex align-items-center mb-3';
+                                listItem.innerHTML = `
+                                    <span class="bullet bg-primary me-3"></span>
+                                    <div class="text-gray-600 font-semibold text-sm">${facility.name}</div>
+                                `;
+                                facilitiesList.appendChild(listItem);
+                            }
+                        } else {
+                            facilitiesList.innerHTML = '<p>Tidak ada fasilitas yang tersedia.</p>';
+                        }
+
+
+
+						var path = `{{ config('app.url') }}`;
+						var room_assets = path + '/images/product.png';
+						if (data.assets_relative_path != null){
+							room_assets = path + '/' + data.assets_relative_path; 
+							$("#preview_room_asset").show();
+						}						
+						$("#preview_room_asset").attr('src', room_assets);
+
+						// Show the modal
+                        $('#modal_book_room').modal('show');	
+					}
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					if (jqXHR.responseJSON.status.message != undefined){
+						errorThrown = jqXHR.responseJSON.status.message;
+					}
+					ToastrError(errorThrown);
+				}
+			});	
         }
 
         // define function to handle search query input

@@ -152,7 +152,7 @@
 
 					<div class="fv-row mb-7">
 						<label class="fs-6 fw-semibold mb-2">{{ __('main.description') }}</label>
-						<textarea class="form-control" rows="3" name="description" data-kt-autosize="true" placeholder="{{ __('main.description') }}"></textarea>
+						<textarea  id="kt_docs_ckeditor_classic" class="form-control" rows="3" name="description" data-kt-autosize="true" placeholder="{{ __('main.description') }}"></textarea>
 					</div>
 					
 					<div class="fv-row mb-7">
@@ -181,6 +181,7 @@
 <!--begin::Vendors Javascript(used for this page only)-->
 @push('private_js')
 	<script src="{{ URL::asset('assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+	<script src="{{ URL::asset('assets/plugins/custom/ckeditor/ckeditor-classic.bundle.js') }}"></script>
 	<script>
 		"use strict";
 
@@ -190,6 +191,9 @@
 		function add() {
 			// Reset the form
 			KTModalForm.resetForm();
+
+			// Remove existing data from CKEditor
+			ckEditorInstance.setData('');
 
 			// Set text
 			$('#{{ $controller  }}_submit_text').text(`{{ __('main.save') }}`);
@@ -228,9 +232,15 @@
 						$('input[name="name"]').val(data.name);
 						$('input[name="area"]').val(data.area);
 						$('input[name="price"]').val(data.price);
-						$('textarea[name="description"]').val(data.description);
 						$('select[name="room_type_id"]').val(data.room_type_id).trigger('change').attr('data-placeholder', data.room_type_id);
-						
+
+						if(data.description != null) {
+							// Remove existing data from CKEditor
+							ckEditorInstance.setData('');
+							// Set new data to CKEditor
+							ckEditorInstance.setData(data.description);
+						}
+
 						var facilities = [];
 						if (data.facilities.length > 0) {
 							for (var i = 0; i < data.facilities.length; i++) {
@@ -268,7 +278,28 @@
 				}
 			});	
 		}
+
+		// Declare the ckEditorInstance variable outside the function
+		let ckEditorInstance; 
+		ClassicEditor
+			.create(document.querySelector('#kt_docs_ckeditor_classic'))
+			.then(editor => {
+				console.log(editor);
+
+				// Store the CKEditor instance for later use
+				ckEditorInstance = editor;
 		
+				// Handle keyup event on CKEditor
+				ckEditorInstance.editing.view.document.on('keyup', () => {
+					// Get the CKEditor value
+					const description = ckEditorInstance.getData();
+					// Set the CKEditor value to the hidden input field for submission
+					$('textarea[name="description"]').val(description);
+				});
+			})
+			.catch(error => {
+				console.error(error);
+		});
 
 		// Class definition
 		var KTDatatablesServerSide = function () {
@@ -879,7 +910,6 @@
 			KTDatatablesServerSide.init();
 
 			var input = document.querySelector("#kt_tagify");
-	
 			// Make an AJAX request to retrieve the tag suggestions
 			$.ajax({
 				url: "{{ url('admin/facilities') }}", // Replace with your API endpoint URL
@@ -905,7 +935,6 @@
 					console.error(error);
 				}
 			});
-
 		});
 	</script>
 @endpush
