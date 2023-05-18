@@ -118,8 +118,7 @@
                                                     <span class="fw-bold text-primary fs-2" id="sub_price_39a20bb9-b0cd-41d5-8f51-3ee186549528" data-sub-price="70100.00">Rp&nbsp;70.100</span>
                                                 </td>
                                                 <td class="text-end">
-                                                    <a href="javascript:void(0)" onclick="remove_item('39a20bb9-b0cd-41d5-8f51-3ee186549528')" class="btn btn-sm btn-danger">x
-                                                    </a>
+                                                    <a href="javascript:void(0)" onclick="remove_item('39a20bb9-b0cd-41d5-8f51-3ee186549528')" class="btn btn-sm btn-danger">x</a>
                                                 </td>
                                             </tr>
                                             </tbody>

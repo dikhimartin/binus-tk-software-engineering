@@ -25,6 +25,10 @@
 
 		const URL_API = `{{ url('admin/extra-charges') }}`
 
+        function add_extra_charge_to_cart(id){
+            console.log(id);
+        }
+
 		// Class definition
 		var KTDatatablesServerSide = function () {
 			// Shared variables
@@ -65,7 +69,10 @@
 							orderable: false,
 							className: 'text-end',
 							render: function (data, type, row) {
-								return '';
+								return `<a href="javascript:void(0)" 
+                                            onclick="add_extra_charge_to_cart('${data}')" 
+                                            class="btn btn-sm btn-success">+
+                                        </a>`;
 							},
 						},
 					],
