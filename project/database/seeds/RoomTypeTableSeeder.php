@@ -113,6 +113,15 @@ class RoomTypeTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'id' => Str::uuid(),
+                'name' => 'Superior',
+                'description' => 'Lorem ipsum dolor sit amet',
+                'status' => 0,
+                'sort' => 12,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);     
     }
 }

@@ -50,7 +50,7 @@ class ProductController extends Controller
                 $value = $request->input('search.value');
                 $q->where(function ($query) use ($value) {
                     $query->where('products.name', 'like', "%$value%")
-                        ->orWhere('products.status', 'like', "%$value%");
+                        ->orWhere('products.status', '=', $value);
                 });
             });
         })

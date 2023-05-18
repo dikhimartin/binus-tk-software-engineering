@@ -83,7 +83,7 @@
 							</th>
 							<th>{{ __('main.name') }}</th>
 							<th>{{ __('main.price') }}</th>
-							<th>{{ __('main.description') }}</th>
+							<th>{{ __('main.facility') }}</th>
 							<th>Status</th>
 							<th>{{ __('main.created_date') }}</th>
 							<th>{{ __('main.updated_date') }}</th>
@@ -297,10 +297,13 @@
 						{ data: 'id' },
 						{ 
 							data: 'name',
-							width: '30%' 
+							width: '20%' 
 						},
 						{ data: 'price' },
-						{ data: 'description' },
+						{ 
+							data: 'facilities',
+							width: '30%' 
+						},
 						{ data: 'status' },
 						{ data: 'created_at' },
 						{ data: 'updated_at' },
@@ -358,14 +361,15 @@
 						},
 						{
 							targets: 3,
+							orderable: false,
 							render: function (data, type, row) {
-								if (row.description !== undefined && row.description != null && row.description !== "") {
-									var limit = row.description.length;
-									if (limit > 0) {
-										return limitTextByDot(row.description, limit);
+								var facility = '';
+								if (data.length > 0) {
+									for (var i = 0; i < data.length; i++) {
+										facility += `<span class="badge badge-secondary">${data[i].name}</span>&nbsp;&nbsp;`;
 									}
 								}
-								return "-";
+								return facility;
 							}
 						},
 						{
