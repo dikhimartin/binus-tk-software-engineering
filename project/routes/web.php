@@ -13,16 +13,17 @@ Route::get('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
-Route::prefix('location')->group(function () {
-    Route::get('province', 'LocationController@province');
-    Route::get('city/{province_id}', 'LocationController@city');
-    Route::get('subdistrict/{city_id}', 'LocationController@subdistrict');
-    Route::get('village/{subdistrict_id}', 'LocationController@village');
-});
+// Route::prefix('location')->group(function () {
+//     Route::get('province', 'LocationController@province');
+//     Route::get('city/{province_id}', 'LocationController@city');
+//     Route::get('subdistrict/{city_id}', 'LocationController@subdistrict');
+//     Route::get('village/{subdistrict_id}', 'LocationController@village');
+// });
 
 Route::group(array('prefix' => LaravelLocalization::setLocale() . '/api', 'namespace' => 'Api'), function () {
-	Route::get('/products','ProductController@get_data');
-	Route::post('/transaction/order','TransactionController@order');
+	Route::get('/rooms','RoomController@get_data');
+	// Route::get('/products','ProductController@get_data');
+	// Route::post('/transaction/order','TransactionController@order');
 });
 
 Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'namespace' => 'Admin'), function () {

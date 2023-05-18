@@ -9,6 +9,7 @@ use App\Traits\RespondsWithHttpStatus;
 use PeterColes\Countries\CountriesFacade;
 use DB;
 use App\User;
+use App\Room;
 use Illuminate\Support\Facades\Auth;
 use Zizaco\Entrust\EntrustFacade as Entrust;
 
