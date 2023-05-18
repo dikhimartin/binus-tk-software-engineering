@@ -143,7 +143,8 @@
 
 		// Function definition
 		function add() {
-			$('#{{ $controller  }}')[0].reset();
+			// Reset the form
+			KTModalForm.resetForm();
 
 			// Set text
 			$('#{{ $controller  }}_submit_text').text(`{{ __('main.save') }}`);
@@ -158,7 +159,7 @@
 
 		function edit(id) {
 			// Reset the form
-			$('#{{ $controller  }}')[0].reset();
+			KTModalForm.resetForm();
 
 			// Set text
 			$('#{{ $controller  }}_submit_text').text(`{{ __('main.update') }}`);
@@ -299,10 +300,6 @@
 							},
 						},
 					],
-					// Add data-filter attribute
-					createdRow: function (row, data, dataIndex) {
-						$(row).find('td:eq(4)').attr('data-filter', data.CreditCardType);
-					}
 				});
 
 				table = dt.$;
@@ -704,6 +701,17 @@
 				}	
 			}
 
+			// Reset all select and form values
+			var resetForm = function () {
+				form.reset();
+				var selects = form.querySelectorAll('select');
+				if (selects !== null && selects !== undefined) {
+					selects.forEach(select => {
+						$(select).val('').trigger('change');
+					});
+				}		
+			}
+
 			return {
 				// Public functions
 				init: function () {
@@ -714,7 +722,8 @@
 					submitButton = form.querySelector('#{{ $controller  }}_submit');
 
 					handleForm();
-				}
+				},
+				resetForm: resetForm 
 			};
 		}();
 

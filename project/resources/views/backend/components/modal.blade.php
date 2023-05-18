@@ -27,18 +27,20 @@
                 @endif
 
                 <!--begin::Modal body-->
+                @isset($modal_content)
                 <div class="modal-body py-10 px-lg-17">
-                    <!--begin::Scroll-->
                     <div class="scroll-y me-n7 pe-7" id="{{ $modal_id }}_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#{{ $modal_id }}_header" data-kt-scroll-wrappers="#{{ $modal_id }}_scroll" data-kt-scroll-offset="300px">
-                        @yield('modal_content')	
+                        {!! $modal_content !!}
                     </div>
                 </div>
+                @endisset
+                
                 <!--begin::Modal footer-->
-                @if (View::hasSection('modal_footer'))
+                @isset($modal_footer)
                     <div class="modal-footer flex-center">
-                        @yield('modal_footer')
+                        {!! $modal_footer !!}
                     </div>
-                @endif
+                @endisset
             </form>
         </div>
     </div>

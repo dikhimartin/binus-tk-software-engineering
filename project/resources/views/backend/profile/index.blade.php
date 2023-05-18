@@ -132,17 +132,17 @@
             </form>
             <!--begin::Modal Component-->
             @component('backend.components.modal', ['modal_size' => 'modal-md', 'is_header'    => true, 'modal_id' => 'modal_confirm_password'])
-                @section('modal_content')
-                <div class="fv-row mb-7">
-                    <label class="fs-6 fw-semibold mb-2">{{ __('passwords.old_password') }}</label>
-                    <input type="password" class="form-control" name="confirm_password" />
-                </div>
-                @endsection
-                @section('modal_footer')
+                @slot('modal_content')
+                    <div class="fv-row mb-7">
+                        <label class="fs-6 fw-semibold mb-2">{{ __('passwords.old_password') }}</label>
+                        <input type="password" class="form-control" name="confirm_password" />
+                    </div>
+                @endslot
+                @slot('modal_footer')
                     <a href="javascript:void(0)" id="kt_user_confirm_password_submit" class="btn btn-primary">
                         <span class="indicator-label">{{ __('main.confirm') }}</span>
                     </a>
-                @endsection
+                @endslot
             @endcomponent
 		</div>
 	</div>

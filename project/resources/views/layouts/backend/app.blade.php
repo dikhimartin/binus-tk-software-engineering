@@ -66,6 +66,7 @@
 		<script src="{{ URL::asset('assets/js/currency.js') }}"></script>
 		<script src="{{ URL::asset('assets/js/date.js') }}"></script>
 		<script src="{{ URL::asset('assets/js/manipulate.js') }}"></script>
+		<script src="{{ URL::asset('assets/js/utility.js') }}"></script>
 		@stack('private_js')
 	</body>
 </html>

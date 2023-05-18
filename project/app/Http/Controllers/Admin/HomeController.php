@@ -38,6 +38,6 @@ class HomeController extends Controller
       $datas = $user->get_data();
       $data_user = $datas->find(Auth::user()->id);
 
-      return view('backend.home',compact('controller','page_active','pages_title','data_user'));
+      return view('backend.dashboard.index',compact('controller','page_active','pages_title','data_user'));
     }
 }

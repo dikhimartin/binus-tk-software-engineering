@@ -53,7 +53,7 @@
                                 <div id="hotel_information"></div>
 
                                 <!-- input data -->
-                                <div id="input_data" style="display:none">
+                                <div id="input_data" style="display:show">
                                     <!-- Check-in and Check-out -->
                                     <div class="row mb-5">
                                         <div class="col-sm-6" id="kt_td_picker_linked_1" >
@@ -82,7 +82,7 @@
                                         (Permintaan khusus tidak dijamin dan dapat dikenakan biaya) 
                                     </div>
                                     <div class="fw-semibold fs-5 mt-5">
-                                        <a href="javascript:void(0)" class="btn btn-sm btn-primary">Pilh Extra Charge</a>
+                                        <a href="javascript:void(0)" onclick="select_extra_charge()" class="btn btn-sm btn-primary">Pilh Extra Charge</a>
                                     </div>
                                     <div class="table-responsive mb-8">
                                         <table class="table align-middle gs-0 gy-4 my-0">
@@ -147,9 +147,9 @@
 
     </div>
 
-    <!--begin::Modal Component-->
+    <!--begin::Modal Room Review-->
     @component('backend.components.modal', ['modal_size' => 'modal-lg', 'is_header' => false, 'modal_id' => 'modal_book_room'])
-        @section('modal_content')
+        @slot('modal_content')
             <div id="book_preview" room-id="it-dynamic-value">
                 <div class="mb-5 text-center">
                     <h1 class="mb-2" id="room_name"></h1>
@@ -195,10 +195,18 @@
                     </div>
                 </div>
             </div>
-        @endsection
-        @section('modal_footer')
+        @endslot
+        @slot('modal_footer')
             <a href="javascript:void(0)" id="button_book_room" onclick="book_room(this)" class="btn btn-primary">Lanjutkan Pemesanan</a>
-        @endsection        
+        @endslot
+    @endcomponent
+
+    
+    <!--begin::Modal Extra Charge-->
+    @component('backend.components.modal', ['modal_size' => 'modal-lg', 'is_header' => true, 'modal_id' => 'modal_extra_charge'])
+        @slot('modal_content')
+            @include('backend.dashboard.shared.extra-charge')
+        @endslot
     @endcomponent
 
 @endsection
@@ -212,41 +220,8 @@
 
         $(document).ready(function() {
             getRoomList();
-
-            const linkedPicker1Element = document.getElementById("kt_td_picker_linked_1");
-            const linked1 = new tempusDominus.TempusDominus(linkedPicker1Element);
-            const linked2 = new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_linked_2"), {
-                useCurrent: false,
-            });
-
-            //using event listeners
-            linkedPicker1Element.addEventListener(tempusDominus.Namespace.events.change, (e) => {
-                linked2.updateOptions({
-                    restrictions: {
-                    minDate: e.detail.date,
-                    },
-                });
-            });
-
-            //using subscribe method
-            const subscription = linked2.subscribe(tempusDominus.Namespace.events.change, (e) => {
-                linked1.updateOptions({
-                    restrictions: {
-                    maxDate: e.date,
-                    },
-                });
-            });
-
+            KTDatePickerLinked();
         });
-
-        // define throttling function
-        function throttle(func, delay) {
-            let timeoutId;
-            return function(...args) {
-                clearTimeout(timeoutId);
-                timeoutId = setTimeout(() => func.apply(this, args), delay);
-            };
-        }
 
         // define function to get product list from API
         const getRoomList = () => {
@@ -413,6 +388,12 @@
             $('#button_cancel').hide();
             ToastrError("Pemesanaan dibatalkan");
         }
+
+        function select_extra_charge(){
+            $("#modal_extra_charge_header_title").text("{{ __('main.please_choose') }} Extra Charge")
+            $('#modal_extra_charge').modal('show');	
+        }
+
 
         // define function to handle search query input
         const handleSearchQuery = () => {

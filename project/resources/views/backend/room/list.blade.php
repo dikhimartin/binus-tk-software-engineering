@@ -452,10 +452,6 @@
 							},
 						},
 					],
-					// Add data-filter attribute
-					createdRow: function (row, data, dataIndex) {
-						$(row).find('td:eq(4)').attr('data-filter', data.CreditCardType);
-					}
 				});
 
 				table = dt.$;

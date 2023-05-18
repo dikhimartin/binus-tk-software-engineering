@@ -98,7 +98,7 @@
 
 				<!--begin::Modal Component-->
 				@component('backend.components.modal', ['modal_size' => 'modal-lg', 'is_header' => true, 'modal_id' => 'modal_permission'])
-					@section('modal_content')
+					@slot('modal_content')
 						<div class="d-flex flex-column gap-5">
 							<div class="d-flex flex-column gap-1">
 								<p class="fw-bold text-primary fs-5">{{__('main.name_group')}}</p>
@@ -115,7 +115,7 @@
 								</div>
 							</div>
 						</div>
-					@endsection
+					@endslot
 				@endcomponent
 
 			</div>
