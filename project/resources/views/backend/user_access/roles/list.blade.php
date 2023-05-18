@@ -97,7 +97,7 @@
 				</div>
 
 				<!--begin::Modal Component-->
-				@component('backend.components.modal', ['modal_size' => 'modal-lg', 'modal_id' => 'modal_permission'])
+				@component('backend.components.modal', ['modal_size' => 'modal-lg', 'is_header' => true, 'modal_id' => 'modal_permission'])
 					@section('modal_content')
 						<div class="d-flex flex-column gap-5">
 							<div class="d-flex flex-column gap-1">
@@ -114,7 +114,6 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
 					@endsection
 				@endcomponent

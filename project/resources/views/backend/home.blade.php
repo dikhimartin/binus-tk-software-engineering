@@ -38,6 +38,75 @@
             </div>
         </div>
     </div>
+
+    <!--begin::Modal Component-->
+    @component('backend.components.modal', ['modal_size' => 'modal-lg', 'is_header' => false, 'modal_id' => 'modal_book_room'])
+        @section('modal_content')
+            <div class="mb-5 text-center">
+                <h1 class="mb-3">Delux King</h1>
+                <div class="separator my-10"></div>
+                <img id="preview_room_asset" 
+                     class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mt-5" 
+                     height="300" width="100%" 
+                     src="http://localhost:8000/storage/room/P-1684384790-J4DNCnJ1UB.webp">
+            </div>
+            <div class="card-body">
+                <!--begin::Info Kamar-->
+                <div class="mb-13">
+                    <h4 class="text-gray-700 w-bolder mb-0">Harga</h4>
+                    <div class="my-2">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="text-primary text-end fw-bold fs-1">Rp. 1000.000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--begin::Info Kamar-->
+                <div class="mb-8">
+                    <h4 class="text-gray-700 w-bolder mb-0">Info Kamar</h4>
+                    <div class="my-2">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="bullet bg-primary me-3"></span>
+                            <div class="text-gray-600 fw-semibold fs-6">37.0 m2</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--begin::Fasilitas Kamar-->
+                <div class="mb-8">
+                    <h4 class="text-gray-700 w-bolder mb-0">Fasilitas Kamar</h4>
+                    <div class="my-2">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="bullet bg-primary me-3"></span>
+                            <div class="text-gray-600 fw-semibold fs-6">AC</div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="bullet bg-primary me-3"></span>
+                            <div class="text-gray-600 fw-semibold fs-6">Pembuat kopi / teh</div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="bullet bg-primary me-3"></span>
+                            <div class="text-gray-600 fw-semibold fs-6">Desk</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--begin::Description -->
+                <div class="mb-7">
+                    <h4 class="text-gray-700 w-bolder mb-0">Deskripsi Kamar</h4>
+                    <p class="fw-semibold fs-6 text-gray-600">First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp.</p>
+                </div>
+
+                <div class="separator my-10"></div>
+
+
+            </div>
+        @endsection
+        @section('modal_footer')
+            <a href="javascript:void(0)" class="btn btn-primary">Pesan Sekarang</a>
+        @endsection        
+    @endcomponent
+
 @endsection
 
 <!--begin::Vendors Javascript(used for this page only)-->
@@ -80,7 +149,7 @@
 
                 // loop through the item data and add new cards to the container
                 response.data.data.forEach(item => {
-                    var action = `onclick="add_to_cart(this)"`;
+                    var action = `onclick="book_room(this)"`;
 
                     var path = `{{ config('app.url') }}`;
                     var room_assets = path + '/images/product.png';
@@ -110,6 +179,16 @@
                 $('#room-list-container').html('<p>kamar tidak dapat ditemukan.</p>');
             });
         };
+
+        function book_room(element){
+            // Get data
+            var room_id = element.id;
+            console.log("room_id :", room_id);
+
+            // $('#modal_book_room_header_title').text(`Pesan Kamar`);
+            // Show the modal
+            $('#modal_book_room').modal('show');	
+        }
 
         // define function to handle search query input
         const handleSearchQuery = () => {
