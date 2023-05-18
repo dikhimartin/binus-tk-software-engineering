@@ -143,7 +143,10 @@
 
 					<div class="fv-row mb-7">
 						<label class="form-label">{{ __('main.facility') }}</label>
-						<input class="form-control" name="facility" id="kt_tagify"/>
+						<input class="form-control" value="" placeholder="{{ __('main.facility') }}"  name="facility" id="kt_tagify"/>
+						<div class="text-muted mt-1">
+							ketik arah panah bawah (⇩). untuk melihat sugesti fasilitas
+						</div>						
 					</div>
 
 
@@ -181,36 +184,12 @@
 	<script>
 		"use strict";
 
-		var input = document.querySelector("#kt_tagify");
-
-		// Make an AJAX request to retrieve the tag suggestions
-		$.ajax({
-			url: "{{ url('admin/facilities') }}", // Replace with your API endpoint URL
-			method: "GET",
-			success: function(response) {
-				var data = response.data;
-
-				// Extract the tag names from the response data
-				var tagNames = data.map(function(item) {
-					return item.name;
-				});
-
-				// Initialize Tagify component with the retrieved tag suggestions
-				new Tagify(input, {
-					whitelist: tagNames, // Set the tag suggestions
-					enforceWhitelist: true // Only allow tags from the suggestions
-				});
-			},
-			error: function(xhr, status, error) {
-				console.error(error);
-			}
-		});
-
 		const URL_API = `{{ url('admin/rooms') }}`
 
 		// Function definition
 		function add() {
-			$('#{{ $controller  }}')[0].reset();
+			// Reset the form
+			KTModalForm.resetForm();
 
 			// Set text
 			$('#{{ $controller  }}_submit_text').text(`{{ __('main.save') }}`);
@@ -227,7 +206,7 @@
 
 		function edit(id) {
 			// Reset the form
-			$('#{{ $controller  }}')[0].reset();
+			KTModalForm.resetForm();
 
 			// Set text
 			$('#{{ $controller  }}_submit_text').text(`{{ __('main.update') }}`);
@@ -251,6 +230,14 @@
 						$('input[name="price"]').val(data.price);
 						$('textarea[name="description"]').val(data.description);
 						$('select[name="room_type_id"]').val(data.room_type_id).trigger('change').attr('data-placeholder', data.room_type_id);
+						
+						var facilities = [];
+						if (data.facilities.length > 0) {
+							for (var i = 0; i < data.facilities.length; i++) {
+								facilities.push(data.facilities[i].name);
+							}
+						}
+						$('input[name="facility"]').val(facilities.join(', '));
 
 
 						// Set Product Asset
@@ -268,6 +255,7 @@
 						} else {
 							$('input[value="1"][name="status"]').prop('checked', true);
 						}
+
 						// Show the modal
 						$('#{{ $controller  }}_trigger').modal('show');				
 					}
@@ -853,7 +841,18 @@
 							submitButton.disabled = false;
 						}
 					}); 
-				}	
+				}									
+			}
+
+			// Reset all select and form values
+			var resetForm = function () {
+				form.reset();
+				var selects = form.querySelectorAll('select');
+				if (selects !== null && selects !== undefined) {
+					selects.forEach(select => {
+						$(select).val('').trigger('change');
+					});
+				}				
 			}
 
 			return {
@@ -864,9 +863,9 @@
 
 					form = document.querySelector('#{{ $controller  }}');
 					submitButton = form.querySelector('#{{ $controller  }}_submit');
-
 					handleForm();
-				}
+				},
+				resetForm: resetForm 
 			};
 		}();
 
@@ -874,6 +873,35 @@
 		KTUtil.onDOMContentLoaded(function () {
 			KTModalForm.init();
 			KTDatatablesServerSide.init();
+
+			var input = document.querySelector("#kt_tagify");
+	
+			// Make an AJAX request to retrieve the tag suggestions
+			$.ajax({
+				url: "{{ url('admin/facilities') }}", // Replace with your API endpoint URL
+				method: "GET",
+				success: function(response) {
+					var data = response.data;
+	
+					// Extract the tag names from the response data
+					var tagNames = data.map(function(item) {
+						return item.name;
+					});
+	
+					// Initialize Tagify component with the retrieved tag suggestions
+					if (input) {
+						new Tagify(input, {
+							whitelist: tagNames,
+							enforceWhitelist: true
+						});
+					}
+	
+				},
+				error: function(xhr, status, error) {
+					console.error(error);
+				}
+			});
+
 		});
 	</script>
 @endpush

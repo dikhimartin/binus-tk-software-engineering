@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Room;
 use App\RoomType;
+use App\Facility;
+use App\RoomFacility;
 use App\Asset;
 use App\Traits\RespondsWithHttpStatus;
 use Yajra\DataTables\Facades\DataTables;
@@ -95,8 +97,25 @@ class RoomController extends Controller
             $data['asset_id'] = $asset['data']->id;
         }
 
-        $res = Room::create($data);
-        return $this->created($res, null);
+        // Create the Room
+        $room = Room::create($data);
+
+        $facilities = json_decode($data['facility']);
+        if (!empty($facilities)) {
+            foreach ($facilities as $facility) {
+                // Find the Facility model by name (case-insensitive) and retrieve its ID
+                $facilityModel = Facility::whereRaw('LOWER(name) = ?', strtolower($facility->value))->first();
+                
+                if ($facilityModel) {
+                    RoomFacility::create([
+                        'room_id' => $room->id,
+                        'facility_id' => $facilityModel->id,
+                    ]);
+                }
+            }
+        }
+
+        return $this->created($room, null);
     }
 
     public function update(Request $request, $id){
@@ -109,10 +128,10 @@ class RoomController extends Controller
             return $this->badRequest($validator->errors());
         }   
 
-        $res = Room::find($id);
-        if(!$res){
+        $room = Room::find($id);
+        if (!$room) {
             return $this->errorNotFound(null);
-        }     
+        }
 
         // set room assets
         $asset = Asset::upload($request->file('asset_id'), "product");
@@ -124,10 +143,31 @@ class RoomController extends Controller
         if (!empty($asset['data'])) {
             $data['asset_id'] = $asset['data']->id;
         }
-
-        $res->fill($data);
-        $res->save();        
-        return $this->ok($res, null);
+    
+        // Update the Room attributes
+        $room->fill($data);
+        $room->save();
+    
+        // Delete existing RoomFacility records for the room
+        RoomFacility::where('room_id', $room->id)->delete();
+    
+        // Create new RoomFacility pivot records
+        $facilities = json_decode($data['facility']);
+        if (!empty($facilities)) {
+            foreach ($facilities as $facility) {
+                // Find the Facility model by name (case-insensitive) and retrieve its ID
+                $facilityModel = Facility::whereRaw('LOWER(name) = ?', strtolower($facility->value))->first();
+                
+                if ($facilityModel) {
+                    RoomFacility::create([
+                        'room_id' => $room->id,
+                        'facility_id' => $facilityModel->id,
+                    ]);
+                }
+            }
+        }
+    
+        return $this->ok($room, null);
     }
     
     public function detail($id){

@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
             RoomTypeTableSeeder::class,
             FacilityTableSeeder::class,
             ExtraChargeTableSeeder::class,
-            ProvinceSeeder::class,
-            CitySeeder::class,
-            SubdistrictSeeder::class,
+            // ProvinceSeeder::class,
+            // CitySeeder::class,
+            // SubdistrictSeeder::class,
         ]);
     }
 }

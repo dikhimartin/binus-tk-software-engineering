@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\Facility;
 use App\Traits\RespondsWithHttpStatus;
@@ -31,6 +33,19 @@ class FacilityController extends Controller
 
         return view('backend.'.$this->controller.'.list')->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
     }
+
+    public function validate_data(Request $request, $id = null){
+        $rules = [
+            'name' => [
+                'required',
+                Rule::unique('facilities')->ignore($id)
+            ],
+            'status' => 'required',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        return $validator;
+    }    
+
 
     public function get_data(Request $request){
         if (!Auth::user()->can($this->controller.'-list')){
@@ -60,6 +75,11 @@ class FacilityController extends Controller
             return $this->unauthorizedAccessModule();
         }  
 
+        $validator = $this->validate_data($request);
+        if ($validator->fails()) {
+            return $this->badRequest($validator->errors());
+        }
+
         $data = $request->all();
         $res = Facility::create($data);
         return $this->created($res, null);
@@ -69,6 +89,11 @@ class FacilityController extends Controller
         if (!Auth::user()->can($this->controller.'-edit')){
             return $this->unauthorizedAccessModule();
         }        
+
+        $validator = $this->validate_data($request, $id);
+        if ($validator->fails()) {
+            return $this->badRequest($validator->errors());
+        }
 
         $res = Facility::find($id);
         if (!$res) {

@@ -61,7 +61,9 @@ class Room extends Model
         });
     }
 
-
+    public function facilities(){
+        return $this->belongsToMany(Facility::class, 'room_facilities', 'room_id', 'facility_id');
+    }
 
     // Query Builder version
     public function get_data(){
@@ -82,7 +84,7 @@ class Room extends Model
             'rooms.updated_at') 
         ->leftjoin('assets', 'rooms.asset_id', '=', 'assets.id')
         ->leftjoin('room_types', 'rooms.room_type_id', '=', 'room_types.id')
-        ->orderBy('room_type_name', 'desc'); 
+        ->with('facilities'); // Load the Room Facility relationship
         return $data;
     }    
     

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use App\RoomType;
 use App\Traits\RespondsWithHttpStatus;
@@ -54,11 +56,29 @@ class RoomTypeController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
-    
+
+
+    public function validate_data(Request $request, $id = null){
+        $rules = [
+            'name' => [
+                'required',
+                Rule::unique('room_types')->ignore($id)
+            ],
+            'status' => 'required',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        return $validator;
+    }    
+
     public function create(Request $request){
         if (!Auth::user()->can($this->controller.'-create')){
             return $this->unauthorizedAccessModule();
         }  
+
+        $validator = $this->validate_data($request);
+        if ($validator->fails()) {
+            return $this->badRequest($validator->errors());
+        }
 
         $data = $request->all();
         $res = RoomType::create($data);
@@ -69,6 +89,11 @@ class RoomTypeController extends Controller
         if (!Auth::user()->can($this->controller.'-edit')){
             return $this->unauthorizedAccessModule();
         }        
+
+        $validator = $this->validate_data($request, $id);
+        if ($validator->fails()) {
+            return $this->badRequest($validator->errors());
+        }
 
         $res = RoomType::find($id);
         if (!$res) {
