@@ -251,7 +251,7 @@
 
 			// Fetching data
 			$.ajax({
-				url : "{{ url('admin/rooms') }}" + '/' + room_id,
+				url : "{{ url('api/rooms') }}" + '/' + room_id,
 				type: "GET",
 				dataType: "JSON",             
 				success: function(response){
@@ -351,6 +351,7 @@
             $('#input_data').show();
             $('#button_cancel').show();
             accumulate_grand_total();
+            clear_item();
         }
         
         function cancel_book_room(){
@@ -359,7 +360,7 @@
             $('#input_data').hide();
             $('#button_cancel').hide();
             clear_item();
-            ToastrError("Pemesanaan dibatalkan");
+            ToastrWarning("Pemesanaan dibatalkan");
         }
 
         function select_extra_charge(){

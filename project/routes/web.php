@@ -22,6 +22,8 @@ Route::get('/logout', function () {
 
 Route::group(array('prefix' => LaravelLocalization::setLocale() . '/api', 'namespace' => 'Api'), function () {
 	Route::get('/rooms','RoomController@get_data');
+	Route::get('/extra-charges','ExtraChargeController@get_data');
+	Route::get('/rooms/{id}','RoomController@detail');
 	Route::post('/transaction/reservation','TransactionController@reservation');
 });
 
@@ -79,59 +81,6 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	Route::post('/user_access/roles/delete/batch','RoleController@delete_batch');
 	Route::get('/user_access/roles/{id}','RoleController@detail');
 
-
-	/*
-	 |--------------------------------------------------------------------------
-	 | Module Customer
-	 |--------------------------------------------------------------------------
-	*/	
-	// Route::get('/customer','CustomersController@index');
-	// Route::get('/customers','CustomersController@get_data');
-	// Route::get('/customers/{id}','CustomersController@detail');
-	// Route::post('/customers','CustomersController@create');
-	// Route::put('/customers/{id}','CustomersController@update');
-	// Route::delete('/customers/{id}','CustomersController@delete');
-	// Route::post('/customers/delete/batch','CustomersController@delete_batch');
-
-	/*
-	 |--------------------------------------------------------------------------
-	 | Module Staff
-	 |--------------------------------------------------------------------------
-	*/	
-	// Route::get('/staff','StaffController@index');
-	// Route::get('/staffs','StaffController@get_data');
-	// Route::get('/staffs/{id}','StaffController@detail');
-	// Route::post('/staffs','StaffController@create');
-	// Route::put('/staffs/{id}','StaffController@update');
-	// Route::delete('/staffs/{id}','StaffController@delete');
-	// Route::post('/staffs/delete/batch','StaffController@delete_batch');
-	
-	/*
-	 |--------------------------------------------------------------------------
-	 | Module product Type
-	 |--------------------------------------------------------------------------
-	*/	
-	// Route::get('/product-type','ProductTypeController@index');
-	// Route::get('/product-types','ProductTypeController@get_data');
-	// Route::get('/product-types/{id}','ProductTypeController@detail');
-	// Route::post('/product-types','ProductTypeController@create');
-	// Route::put('/product-types/{id}','ProductTypeController@update');
-	// Route::delete('/product-types/{id}','ProductTypeController@delete');
-	// Route::post('/product-types/delete/batch','ProductTypeController@delete_batch');
-
-	/*
-	 |--------------------------------------------------------------------------
-	 | Module product
-	 |--------------------------------------------------------------------------
-	*/	
-	// Route::get('/product','ProductController@index');
-	// Route::get('/products','ProductController@get_data');
-	// Route::get('/products/{id}','ProductController@detail');
-	// Route::post('/products','ProductController@create');
-	// Route::put('/products/{id}','ProductController@update');
-	// Route::delete('/products/{id}','ProductController@delete');
-	// Route::post('/products/delete/batch','ProductController@delete_batch');
-	
 	/*
 	 |--------------------------------------------------------------------------
 	 | Module transaction

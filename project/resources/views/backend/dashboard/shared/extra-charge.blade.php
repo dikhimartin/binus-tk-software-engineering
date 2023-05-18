@@ -23,7 +23,7 @@
 	<script>
 		"use strict";
 
-		const URL_API = `{{ url('admin/extra-charges') }}`
+		const URL_API = `{{ url('api/extra-charges') }}`
 
         function add_extra_charge_to_cart(element){
             var extra_charge_id  = element.getAttribute('data-id');

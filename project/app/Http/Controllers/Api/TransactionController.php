@@ -108,22 +108,5 @@ class TransactionController extends Controller
         return $this->created($transaction, null);
     }
 
-    function convertAndCalculateDays($dateString){
-        $carbonDate = Carbon::createFromFormat('m/d/Y, h:i A', $dateString);
-        $formattedDate = $carbonDate->format('Y-m-d H:i:s');
-        $checkInDate = $carbonDate->format('Y-m-d');
-    
-        // Calculate the days based on check-in and check-out date
-        $checkOutDate = $carbonDate->copy()->addDays($numberOfDays);
-        $numberOfDays = $carbonDate->diffInDays($checkOutDate);
-    
-        return [
-            'formatted_date' => $formattedDate,
-            'check_in_date' => $checkInDate,
-            'check_out_date' => $checkOutDate,
-            'number_of_days' => $numberOfDays,
-        ];
-    }
-
     
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Room;
 use App\Traits\RespondsWithHttpStatus;
@@ -34,6 +33,17 @@ class RoomController extends Controller
             $query->where('rooms.status', '!=', 1);
         })
         ->make(true);
+    }
+
+    public function detail($id){
+        $room = new Room;
+        $datas = $room->get_data();
+
+        $res = $datas->find($id);
+        if(!$res){
+            return $this->errorNotFound(null);
+        }    
+        return $this->ok($res, null);
     }
 
 }

@@ -31,6 +31,10 @@ var ToastrError = function (messages) {
     toastr.error(messages);
 }
 
+var ToastrWarning = function (messages) {
+    toastr.options = TOASTR_OPTIONS;
+    toastr.warning(messages);
+}
 
 // ToastrErrorValidation
 var ToastrErrorValidation = function (jqXHR) {
