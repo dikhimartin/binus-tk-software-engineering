@@ -14,6 +14,52 @@
 @section('content')
     <!--begin::Toolbar Component-->
 	@component('backend.components.toolbar', ['pages_title' => $pages_title, 'sub_menu' => null, 'sub_menu_link' => null])
+		@slot('filter_slot')
+			<!--begin::Menu 1-->
+			<div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
+				<!--begin::Header-->
+				<div class="px-7 py-5">
+					<div class="fs-4 text-dark fw-bold">{{ __('main.filter_options')}}</div>
+				</div>
+				<!--begin::Separator-->
+				<div class="separator border-gray-200"></div>
+				<!--begin::Content-->
+				<div class="px-7 py-5" data-table-filter="form">
+					<!--begin::Range date-->
+					<div class="mb-10">
+						<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.room-type') }}:</label>
+						<div data-table-filter="room_type">
+							<select id="room_type" name="room_type_id" class="form-select form-select-solid" data-kt-select2="true" data-placeholder="{{ __('main.all') }}" data-allow-clear="true">
+							<option value="">{{ __('main.all') }}</option>
+								@foreach($room_types as $value)
+									<option value="{{ $value->id }}">{{ $value->name }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+
+					<!--begin::Range date-->
+					<div class="mb-10">
+						<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.transaction_date') }}:</label>
+						<div class="input-group">
+							<input class="form-control form-control-solid rounded rounded-end-0" placeholder="Rentang tanggal" id="kt_ecommerce_sales_flatpickr" />
+							<button class="btn btn-icon btn-light" id="kt_ecommerce_sales_flatpickr_clear">
+								<span class="svg-icon svg-icon-2">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<rect opacity="0.5" x="7.05025" y="15.5356" width="12" height="2" rx="1" transform="rotate(-45 7.05025 15.5356)" fill="currentColor" />
+										<rect x="8.46447" y="7.05029" width="12" height="2" rx="1" transform="rotate(45 8.46447 7.05029)" fill="currentColor" />
+									</svg>
+								</span>
+							</button>
+						</div>
+					</div>
+					<div class="d-flex justify-content-end">
+						<button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-docs-table-filter="reset">{{ __('main.reset') }}</button>
+						<button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-docs-table-filter="filter">{{ __('main.apply') }}</button>
+					</div>
+				</div>
+			</div>
+		@endslot
 	@endcomponent	
 
 	<!--begin::Content-->
@@ -25,52 +71,6 @@
 
 				<!--begin::Header Datatable Component -->
 				@component('backend.components.datatable-header')
-					@slot('filter_slot')
-						<!--begin::Menu 1-->
-						<div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
-							<!--begin::Header-->
-							<div class="px-7 py-5">
-								<div class="fs-4 text-dark fw-bold">{{ __('main.filter_options')}}</div>
-							</div>
-							<!--begin::Separator-->
-							<div class="separator border-gray-200"></div>
-							<!--begin::Content-->
-							<div class="px-7 py-5" data-table-filter="form">
-								<!--begin::Range date-->
-								<div class="mb-10">
-									<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.room-type') }}:</label>
-									<div data-table-filter="room_type">
-										<select id="room_type" name="room_type_id" class="form-select form-select-solid" data-kt-select2="true" data-placeholder="{{ __('main.all') }}" data-allow-clear="true">
-										<option value="">{{ __('main.all') }}</option>
-											@foreach($room_types as $value)
-												<option value="{{ $value->id }}">{{ $value->name }}</option>
-											@endforeach
-										</select>
-									</div>
-								</div>
-
-								<!--begin::Range date-->
-								<div class="mb-10">
-									<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.transaction_date') }}:</label>
-									<div class="input-group">
-										<input class="form-control form-control-solid rounded rounded-end-0" placeholder="Rentang tanggal" id="kt_ecommerce_sales_flatpickr" />
-										<button class="btn btn-icon btn-light" id="kt_ecommerce_sales_flatpickr_clear">
-											<span class="svg-icon svg-icon-2">
-												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<rect opacity="0.5" x="7.05025" y="15.5356" width="12" height="2" rx="1" transform="rotate(-45 7.05025 15.5356)" fill="currentColor" />
-													<rect x="8.46447" y="7.05029" width="12" height="2" rx="1" transform="rotate(45 8.46447 7.05029)" fill="currentColor" />
-												</svg>
-											</span>
-										</button>
-									</div>
-								</div>
-								<div class="d-flex justify-content-end">
-									<button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-docs-table-filter="reset">{{ __('main.reset') }}</button>
-									<button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-docs-table-filter="filter">{{ __('main.apply') }}</button>
-								</div>
-							</div>
-						</div>
-					@endslot
 				@endcomponent
 					
 				<div class="card-body pt-0">
