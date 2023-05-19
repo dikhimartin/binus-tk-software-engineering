@@ -31,15 +31,7 @@ class ReportTransactionController extends Controller
             return view('backend.errors.401')->with(['url' => '/admin']);
         }
 
-        $room_types = RoomType::whereIn('id', function ($query) {
-            $query->select('room_type_id')
-                ->from('transaction_details')
-                ->join('rooms', 'transaction_details.room_id', '=', 'rooms.id')
-                ->distinct();
-        })->get();
-
-
-        return view('backend.'.$this->permission.'.'.$this->controller.'.index', compact('room_types'))->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
+        return view('backend.'.$this->permission.'.'.$this->controller.'.index')->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
     }
 
     public function get_data(Request $request){

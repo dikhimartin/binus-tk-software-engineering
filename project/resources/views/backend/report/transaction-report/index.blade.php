@@ -27,19 +27,6 @@
 				<div class="px-7 py-5" data-table-filter="form">
 					<!--begin::Range date-->
 					<div class="mb-10">
-						<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.room-type') }}:</label>
-						<div data-table-filter="room_type">
-							<select id="room_type" name="room_type_id" class="form-select form-select-solid" data-kt-select2="true" data-placeholder="{{ __('main.all') }}" data-allow-clear="true">
-							<option value="">{{ __('main.all') }}</option>
-								@foreach($room_types as $value)
-									<option value="{{ $value->id }}">{{ $value->name }}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
-
-					<!--begin::Range date-->
-					<div class="mb-10">
 						<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.transaction_date') }}:</label>
 						<div class="input-group">
 							<input class="form-control form-control-solid rounded rounded-end-0" placeholder="Rentang tanggal" id="kt_ecommerce_sales_flatpickr" />
@@ -402,7 +389,6 @@
 			// generateFilter 
 			var generateFilter = () => {
 				const filters = [
-					{ name: "room_type_id", selector: '[data-table-filter="room_type"] select[name="room_type_id"]' },
 					{ name: "start_date", value: startDate },
 					{ name: "end_date", value: endDate },
 				];
@@ -472,38 +458,31 @@
 					type: 'column'
 				},
 				title: {
-					text: 'Monthly Average Rainfall'
+					text: 'Laporan start_date to end_date'
 				},
 				subtitle: {
-					text: 'Source: WorldClimate.com'
+					text: 'Room Type'
 				},
 				xAxis: {
 					categories: [
-						'Jan',
-						'Feb',
-						'Mar',
-						'Apr',
-						'May',
-						'Jun',
-						'Jul',
-						'Aug',
-						'Sep',
-						'Oct',
-						'Nov',
-						'Dec'
+						'Deluxe',
+						'Executive',
+						'Superior',
+						'Family',
+						'Suite',
 					],
 					crosshair: true
 				},
 				yAxis: {
 					min: 0,
 					title: {
-						text: 'Rainfall (mm)'
+						text: 'Total Transaction (IDR)'
 					}
 				},
 				tooltip: {
 					headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
 					pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-						'<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+						'<td style="padding:0"><b>{point.y:.1f} IDR</b></td></tr>',
 					footerFormat: '</table>',
 					shared: true,
 					useHTML: true
@@ -515,25 +494,16 @@
 					}
 				},
 				series: [{
-					name: 'Tokyo',
-					data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
-						194.1, 95.6, 54.4]
+					name: 'total_room_price',
+					data: [49.9, 71.5, 106.4, 129.2, 144.0]
 
 				}, {
-					name: 'New York',
-					data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5,
-						106.6, 92.3]
+					name: 'total_extra_charge',
+					data: [83.6, 78.8, 98.5, 93.4, 106.0]
 
 				}, {
-					name: 'London',
-					data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3,
-						51.2]
-
-				}, {
-					name: 'Berlin',
-					data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8,
-						51.1]
-
+					name: 'final_total',
+					data: [48.9, 38.8, 39.3, 41.4, 47.0]
 				}]
 			});
 		}
