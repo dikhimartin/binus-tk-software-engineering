@@ -386,8 +386,8 @@
 					dateFormat: "Y-m-d",
 					mode: "range",
 					onChange: function (selectedDates, dateStr, instance) {
-						startDate = selectedDates[0] ? selectedDates[0].toISOString().split('T')[0] : '';
-						endDate = selectedDates[1] ? selectedDates[1].toISOString().split('T')[0] : '';
+						startDate = selectedDates[0] ? formatDateFilterRange(selectedDates[0]) : '';
+						endDate = selectedDates[1] ? formatDateFilterRange(selectedDates[1]) : '';
 					}
 				});
 			}
