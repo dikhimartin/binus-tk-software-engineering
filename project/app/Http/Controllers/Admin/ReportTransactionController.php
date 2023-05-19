@@ -88,6 +88,4 @@ class ReportTransactionController extends Controller
 
         return $this->ok($res, null);
     }
-
-
 }
