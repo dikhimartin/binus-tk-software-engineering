@@ -35,16 +35,35 @@
 							<!--begin::Separator-->
 							<div class="separator border-gray-200"></div>
 							<!--begin::Content-->
-							<div class="px-7 py-5">
-								<!--begin::Input group-->
+							<div class="px-7 py-5" data-table-filter="form">
+								<!--begin::Range date-->
 								<div class="mb-10">
-									<!--begin::Label-->
-									<label class="form-label fs-5 fw-semibold mb-3">Status:</label>
-									<!--begin::Options-->
-									<div class="d-flex flex-column flex-wrap fw-semibold" data-kt-docs-table-filter="status_transaction">
+									<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.room-type') }}:</label>
+									<div data-table-filter="room_type">
+										<select id="room_type" name="room_type_id" class="form-select form-select-solid" data-kt-select2="true" data-placeholder="{{ __('main.all') }}" data-allow-clear="true">
+										<option value="">{{ __('main.all') }}</option>
+											@foreach($room_types as $value)
+												<option value="{{ $value->id }}">{{ $value->name }}</option>
+											@endforeach
+										</select>
 									</div>
 								</div>
-								<!--begin::Actions-->
+
+								<!--begin::Range date-->
+								<div class="mb-10">
+									<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.transaction_date') }}:</label>
+									<div class="input-group">
+										<input class="form-control form-control-solid rounded rounded-end-0" placeholder="Rentang tanggal" id="kt_ecommerce_sales_flatpickr" />
+										<button class="btn btn-icon btn-light" id="kt_ecommerce_sales_flatpickr_clear">
+											<span class="svg-icon svg-icon-2">
+												<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<rect opacity="0.5" x="7.05025" y="15.5356" width="12" height="2" rx="1" transform="rotate(-45 7.05025 15.5356)" fill="currentColor" />
+													<rect x="8.46447" y="7.05029" width="12" height="2" rx="1" transform="rotate(45 8.46447 7.05029)" fill="currentColor" />
+												</svg>
+											</span>
+										</button>
+									</div>
+								</div>
 								<div class="d-flex justify-content-end">
 									<button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-docs-table-filter="reset">{{ __('main.reset') }}</button>
 									<button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-docs-table-filter="filter">{{ __('main.apply') }}</button>
@@ -166,7 +185,8 @@
 			// Shared variables
 			var table;
 			var dt;
-			var filterStatus;
+			var flatpickr;
+			var startDate, endDate;
 
 			// Private functions
 			var initDatatable = function () {
@@ -326,6 +346,35 @@
 				});
 			}
 
+			// Init flatpickr --- more info: https://flatpickr.js.org/getting-started/
+			var initFlatpickr = () => {
+				const element = document.querySelector('#kt_ecommerce_sales_flatpickr');
+				flatpickr = $(element).flatpickr({
+					altInput: true,
+					altFormat: "d/m/Y",
+					dateFormat: "Y-m-d",
+					mode: "range",
+					onChange: function (selectedDates, dateStr, instance) {
+						startDate = selectedDates[0] ? selectedDates[0].toISOString().split('T')[0] : '';
+						endDate = selectedDates[1] ? selectedDates[1].toISOString().split('T')[0] : '';
+					}
+				});
+			}
+
+			var clearFlatPickr = () =>{
+				startDate = "";
+				endDate = "";
+				flatpickr.clear();
+			}
+
+			// Handle clear flatpickr
+			var handleClearFlatpickr = () => {
+				const clearButton = document.querySelector('#kt_ecommerce_sales_flatpickr_clear');
+				clearButton.addEventListener('click', e => {
+					clearFlatPickr()
+				});
+			}
+
 			// Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
 			var handleSearchDatatable = function () {
 				const filterSearch = document.querySelector('[data-kt-docs-table-filter="search"]');
@@ -334,41 +383,63 @@
 				});
 			}
 
+			// generateFilter 
+			var generateFilter = () => {
+				const filters = [
+					{ name: "room_type_id", selector: '[data-table-filter="room_type"] select[name="room_type_id"]' },
+					{ name: "start_date", value: startDate },
+					{ name: "end_date", value: endDate },
+				];
+				const queryParams = filters.map((filter) => {
+					var	value = document.querySelector(filter.selector)?.value ?? "";
+					if (filter.value != undefined && value == ""){
+						value = filter.value;
+					}
+					return `${filter.name}=${value}`;
+				});
+				return `?${queryParams.join("&")}`;
+			}
+
 			// Filter Datatable
 			var handleFilterDatatable = () => {
 				// Select filter options
-				filterStatus = document.querySelectorAll('[data-kt-docs-table-filter="status_transaction"] [name="status_transaction"]');
 				const filterButton = document.querySelector('[data-kt-docs-table-filter="filter"]');
-
 				// Filter datatable on submit
 				filterButton.addEventListener('click', function () {
-					// Get filter values
-					let statusValue = '';
-
-					// Get status value
-					filterStatus.forEach(r => {
-						if (r.checked) {
-							statusValue = r.value;
-						}
-
-						// Reset status value if "All" is selected
-						if (statusValue === 'all') {
-							statusValue = '';
-						}
-					});
-
-					// Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
-					dt.search(statusValue).draw();
+					dt.ajax.url(URL_API + generateFilter()).load();
 				});
 			}
 
+			// Reset Filter
+			var handleResetForm = () => {
+				// Select reset button
+				const resetButton = document.querySelector('[data-kt-docs-table-filter="reset"]');
+				// Reset datatable
+				resetButton.addEventListener('click', function () {
+					clearFlatPickr()
+
+					// Select filter options
+					const filterForm = document.querySelector('[data-table-filter="form"]');
+					const selectOptions = filterForm.querySelectorAll('select');
+
+					// Reset select2 values -- more info: https://select2.org/programmatic-control/add-select-clear-items
+					selectOptions.forEach(select => {
+						$(select).val('').trigger('change');
+					});
+
+					dt.ajax.url(URL_API).load();
+				});
+			}
 
 			// Public methods
 			return {
 				init: function () {
 					initDatatable();
+					initFlatpickr();
 					handleSearchDatatable();
 					handleFilterDatatable();
+					handleClearFlatpickr();
+					handleResetForm();
 				},
 				refresh: function () {
 					dt.draw();

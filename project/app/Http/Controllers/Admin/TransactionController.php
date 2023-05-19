@@ -37,7 +37,6 @@ class TransactionController extends Controller
                 ->distinct();
         })->get();
 
-
         return view('backend.'.$this->controller.'.list', compact('room_types'))->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
     }
 
@@ -55,8 +54,17 @@ class TransactionController extends Controller
                 $value = $request->input('search.value');
                 $q->where(function ($query) use ($value) {
                     $query->where('transactions.transaction_code', 'like', "%$value%")
-                        ->orWhere('transactions.transaction_date', 'like', "%$value%");
+                        ->orWhere('rooms.name', 'like', "%$value%")
+                        ->orWhere('booker.name', 'like', "%$value%");
                 });
+            });
+            $query->when($request->filled('room_type_id'), function ($q) use ($request) {
+                $q->where('room_type_id', '=', $request->input('room_type_id'));
+            });
+            $query->when($request->filled('start_date') && $request->filled('end_date'), function ($q) use ($request) {
+                $start_date = $request->input('start_date');
+                $end_date = $request->input('end_date');
+                $q->whereBetween('transactions.transaction_date', [$start_date, $end_date]);
             });
         })
         ->addColumn('action', function ($data) {
