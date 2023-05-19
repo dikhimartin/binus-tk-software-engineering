@@ -118,7 +118,7 @@
 					},
 					columns: [
 						{data: 'id' },
-						{data: 'transaction_code'},
+						{data: 'sort'},
 						{ 
 							data: 'room_name',
 							width: '20%' 
@@ -147,7 +147,7 @@
 								$(td).addClass('td-class');
 							},
 							render: function (data, type, row) {
-								return `<a href="javascript:void(0)" onclick="show_transaction_detail('${row.id}')">${data}</a>`;
+								return `<a href="javascript:void(0)" onclick="show_transaction_detail('${row.id}')">${row.transaction_code}</a>`;
 							}
 						},
 						{	
