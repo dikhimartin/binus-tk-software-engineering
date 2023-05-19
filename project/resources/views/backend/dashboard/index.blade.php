@@ -53,7 +53,7 @@
                                 <div id="hotel_information"></div>
 
                                 <!-- input data -->
-                                <div id="input_data" style="display:none">
+                                <div id="input_data" style="display:show">
                                     <!-- Check-in and Check-out -->
                                     <div class="row mb-5">
                                         <div class="col-sm-6" id="kt_td_picker_linked_1" >
@@ -74,8 +74,11 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        <div class="col-sm-6 mt-3">
+                                            <h5 class="text-primary fw-bold" id="number_of_day"></h5>
+                                        </div>
                                     </div>
-
+                                    
                                     <!-- Extra Charge -->
                                     <div class="text-muted fw-semibold">
                                         Punya permintaan khusus? Ajukan permintaan Anda dan properti akan berusaha memenuhinya. 
@@ -137,7 +140,7 @@
                         <h4 class="text-gray-700 w-bolder mb-0">Harga</h4>
                         <div class="my-2">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="text-primary text-end fw-bold fs-1" id="room_price" value="0"></div>
+                                <div class="text-orange text-end fw-bold fs-1" id="room_price" value="0"></div>
                             </div>
                         </div>
                     </div>
@@ -230,8 +233,8 @@
                                     <img class="card-img-top" src="${room_assets}" alt="${item.name}"  width="200" height="200">
                                     <div class="card-body card-hightlight" id="hightlight_id_${item.id}">
                                         <h5 class="card-title text-center product-name">${item.name}</h5>
-                                        <p class="card-text product text-center text-grey fw-semibold d-block fs-6 mt-n1">${item.room_type_name}</p>
-                                        <p class="card-text product-price text-center text-end fw-bold fs-1" price="${item.price}" >${formatted_price}</p>
+                                        <p class="card-text text-center text-grey fw-semibold d-block fs-6 mt-n1">${item.room_type_name}</p>
+                                        <p class="card-text text-orange text-center text-end fw-bold fs-1" price="${item.price}" >${formatted_price}</p>
                                     </div>
                                 </div>
                             </a>
@@ -336,7 +339,9 @@
                 <h4 class="text-gray-700 w-bolder mb-0">Harga</h4>
                 <div class="my-2">
                     <div class="d-flex align-items-center mb-3">
-                    <div class="text-primary text-end fw-bold fs-1">${roomPrice}</div>
+                    <div>
+                        <span class="text-orange text-end fw-bold fs-1">${roomPrice}</span> 
+                        <span class="text-end fw-bold">/kamar/malam</span>
                     </div>
                 </div>
                 </div>
@@ -346,7 +351,6 @@
             var hotelInformation = document.getElementById('hotel_information');
             hotelInformation.innerHTML = html;   
 
-            // console.log(element);
             $('#modal_book_room').modal('hide');	
             $('#input_data').show();
             $('#button_cancel').show();
@@ -355,12 +359,18 @@
         }
         
         function cancel_book_room(){
+            clear_booking();
+            ToastrWarning("Pemesanaan dibatalkan");
+        }
+
+        function clear_booking(){
             var hotelInformation = document.getElementById('hotel_information');
             hotelInformation.innerHTML = '';   
+            $("#number_of_day").text('');
             $('#input_data').hide();
             $('#button_cancel').hide();
+            $('#form_reservation_order').trigger('reset');
             clear_item();
-            ToastrWarning("Pemesanaan dibatalkan");
         }
 
         function select_extra_charge(){
@@ -371,7 +381,18 @@
         function accumulate_grand_total(){
             let totalPrice = 0;
             let subPrices = document.querySelectorAll('#item-cart [data-sub-price]');
+           
             let roomPrice =  parseInt($('input[name="room_price"]').val());
+            let checkInDate  =  $('input[name="check_in_date"]').val();
+            let checkOutDate =  $('input[name="check_out_date"]').val();
+            let numberOfDays   = calculateNumberOfDays(checkInDate, checkOutDate);
+            if (isNaN(numberOfDays) || numberOfDays === undefined || numberOfDays === null) {
+                numberOfDays = 1;
+            }
+            roomPrice = (roomPrice * numberOfDays);
+
+            $("#number_of_day").text(`${numberOfDays} Malam`);
+
             subPrices.forEach(function(subPrice) {
                 totalPrice += parseInt(subPrice.dataset.subPrice);
             });
@@ -384,6 +405,10 @@
             searchQuery = $('#search-query').val();
             getRoomList();
         };
+
+        $('input[name="check_in_date"], input[name="check_out_date"]').on('change', function() {
+            accumulate_grand_total();
+        });
 
         // attach event listener to search query input
         $('#search-query').on('input', throttle(function(event) {
@@ -407,10 +432,10 @@
                 },						
                 dataType: "JSON",
                 success: function(response){
-                    var messages = "Pembelian berhasil";
+                    var messages = "Reservasi kamar berhasil";
                     ToastrSuccess(messages);
-                    // clear_item();
-                    // getRoomList();
+                    clear_booking();
+                    getRoomList();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     let errorMessage = "An error occurred.";

@@ -11417,6 +11417,11 @@ textarea.form-control-lg {
   color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
 }
 
+.text-orange {
+  --bs-text-opacity: 1;
+  color: rgb(255, 94, 31 , var(--bs-text-opacity)) !important;
+}
+
 .text-secondary {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;

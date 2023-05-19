@@ -15,32 +15,41 @@ function formatDate(dateString) {
     var formattedDate = `${year}-${monthIndex}-${day}`;
   
     return formattedDate;
+}
+
+function calculateNumberOfDays(startDate, endDate) {
+    // Get the timestamps of the start date and end date
+    let startTimestamp = new Date(startDate).getTime();
+    let endTimestamp = new Date(endDate).getTime();
+  
+    // Calculate the difference in milliseconds
+    let difference = endTimestamp - startTimestamp;
+  
+    // Convert milliseconds to days
+    let numberOfDays = Math.floor(difference / (1000 * 60 * 60 * 24));
+  
+    return numberOfDays;
   }
 
-  var KTDatePickerLinked = function () {
+var KTDatePickerLinked = function () {
     const linkedPicker1Element = document.getElementById("kt_td_picker_linked_1");
-    const linked1 = new tempusDominus.TempusDominus(linkedPicker1Element, {
+
+    const linked1 = new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_linked_1"), {
         display: {
             viewMode: "calendar",
             components: {
-                decades: true,
-                year: true,
-                month: true,
-                date: true,
                 hours: false,
                 minutes: false,
                 seconds: false
             }
         }
     });
+
+
     const linked2 = new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_linked_2"), {
         display: {
             viewMode: "calendar",
             components: {
-                decades: true,
-                year: true,
-                month: true,
-                date: true,
                 hours: false,
                 minutes: false,
                 seconds: false
@@ -49,23 +58,22 @@ function formatDate(dateString) {
         useCurrent: false,
     });
     
-  
     //using event listeners
     linkedPicker1Element.addEventListener(tempusDominus.Namespace.events.change, (e) => {
         linked2.updateOptions({
             restrictions: {
-            minDate: e.detail.date,
+                minDate: e.detail.date,
             },
         });
-    });
-  
+    }); 
+    
     //using subscribe method
     const subscription = linked2.subscribe(tempusDominus.Namespace.events.change, (e) => {
         linked1.updateOptions({
             restrictions: {
-            maxDate: e.date,
+                maxDate: e.date,
             },
         });
     });
-  }
+}
 
