@@ -1,3 +1,15 @@
+function convertDateTime(dateTimeString) {
+    const dateTime = new Date(dateTimeString);
+    const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    return dateTime.toLocaleDateString('id-ID', options);
+}
+
+function convertDate(dateString) {
+      const dateOnly = new Date(dateString + 'T00:00:00');
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return dateOnly.toLocaleDateString('id-ID', options);
+}
+
 function formatDate(dateString) {
     var options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     var dateParts = dateString.split(' ');
@@ -16,6 +28,7 @@ function formatDate(dateString) {
   
     return formattedDate;
 }
+
 
 function calculateNumberOfDays(startDate, endDate) {
     // Get the timestamps of the start date and end date

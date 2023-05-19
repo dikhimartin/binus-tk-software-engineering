@@ -18,8 +18,8 @@ class CreateTransactionDetailsTable extends Migration
             $table->uuid('transaction_id')->index();
             $table->uuid('room_id')->index();
             $table->integer('days');
-            $table->datetime('check_in_date');
-            $table->datetime('check_out_date');
+            $table->date('check_in_date');
+            $table->date('check_out_date');
             $table->decimal('price', 10, 2);
             $table->decimal('sub_price', 10, 2);
             $table->integer('sort')->nullable();

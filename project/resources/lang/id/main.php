@@ -139,6 +139,8 @@ return [
     'transaction_date' => 'Tanggal Transaksi',
     'check_in' => 'Check-in',
     'check_out' => 'Check-out',
+    'number_of_days' => 'Jumlah hari',
+    'days' => 'Hari',
     'total_room_price' => 'Harga Kamar',
     'total_extra_charge' => 'Harga Extra Charge',
     'total_transaction' => 'Total Transaksi',

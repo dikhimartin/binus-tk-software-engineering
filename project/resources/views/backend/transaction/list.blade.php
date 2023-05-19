@@ -4,6 +4,11 @@
 <!--begin::Vendor Stylesheets(used for this page only)-->
 @push('private_css')
 	<link href="{{ URL::asset('assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+	<style>
+		.td-class{
+			vertical-align:top !important;
+		}
+	</style>
 @endpush
 
 @section('content')
@@ -60,6 +65,7 @@
 								</div>
 							</th>
 							<th>{{ __('main.transaction_code') }}</th>
+							<th>{{ __('main.room') }}</th>
 							<th>{{ __('main.booker') }}</th>
 							<th>{{ __('main.transaction_date') }}</th>
 							<th>{{ __('main.total_transaction') }}</th>
@@ -82,6 +88,10 @@
 		"use strict";
 
 		const URL_API = `{{ url('admin/transactions') }}`
+
+		function show_transaction_detail(id){
+			console.log(id);
+		}
 
 		// Class definition
 		var KTDatatablesServerSide = function () {
@@ -108,7 +118,11 @@
 					},
 					columns: [
 						{ data: 'id' },
-						{ data: 'transaction_code' },
+						{data: 'transaction_code'},
+						{ 
+							data: 'room_name',
+							width: '20%' 
+						},
 						{ data: 'booker_name' },
 						{ data: 'transaction_date' },
 						{ data: 'final_total' },
@@ -117,6 +131,9 @@
 					columnDefs: [
 						{
 							targets: 0,
+							createdCell: function (td, cellData, rowData, row, col) {
+								$(td).addClass('td-class');
+							},							
 							orderable: false,
 							render: function (data) {
 								return `<div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -124,11 +141,97 @@
 										</div>`;
 							}
 						},
+						{	
+							targets: 1,
+							createdCell: function (td, cellData, rowData, row, col) {
+								$(td).addClass('td-class');
+							},
+							render: function (data, type, row) {
+								return `<a href="javascript:void(0)" onclick="show_transaction_detail('${row.id}')">${data}</a>`;
+							}
+						},
+						{	
+							targets: 2,
+							createdCell: function (td, cellData, rowData, row, col) {
+								$(td).addClass('d-flex align-items-center');
+							},
+							render: function (data, type, row) {
+								var path = `{{ config('app.url') }}`;
+								var room_assets = path + '/images/product.png';
+								if (row.assets_relative_path != null){
+									room_assets = path + '/' + row.assets_relative_path; 
+								}
+
+								var action = `onclick="show_transaction_detail('${row.id}')"`;
+								var html = `<div class="symbol symbol-50px overflow-hidden me-3">
+									<a href="javascript:void(0)" `+ action +`>
+										<div class="symbol-label">
+											<img src="`+ room_assets +`" alt="`+ row.room_name +`" class="w-100">
+										</div>
+									</a>
+								</div>`;
+									
+								html += `<div class="d-flex flex-column">
+											<a href="javascript:void(0)" `+ action +` class="text-gray-800 text-hover-primary mb-1">`+ row.room_name +`</a>
+											<span>`+ row.room_type_name +`</span>
+										</div>`;
+
+								return html;
+							}
+						},
+						{	
+							targets: 3,
+							render: function (data, type, row) {
+								return `<a href="javascript:void(0)" class="text-dark fw-bold text-hover-primary d-block mb-1 fs-7">${data}</a>
+										<span class="text-muted fw-semibold text-muted d-block fs-8">{{ __('main.check_in') }}: </span>
+										<span class=" fw-semibold text-muted d-block fs-8 mb-2">${ convertDate(row.check_in_date) }</span>
+
+										<span class="text-muted fw-semibold text-muted d-block fs-8">{{ __('main.check_out') }}: </span>
+										<span class=" fw-semibold text-muted d-block fs-8 mb-2">${ convertDate(row.check_out_date) }</span>
+
+										<span class="text-muted fw-semibold text-muted d-block fs-8">{{ __('main.number_of_days') }}: </span>
+										<span class=" fw-semibold text-muted d-block fs-8">${ row.days } {{ __('main.days') }}</span>
+								`;
+							}
+						},	
+						{	
+							targets: 4,
+							createdCell: function (td, cellData, rowData, row, col) {
+								$(td).addClass('td-class');
+							},
+							render: function (data, type, row) {
+								return convertDateTime(data);
+							}
+						},
+						{	
+							targets: 5,
+							createdCell: function (td, cellData, rowData, row, col) {
+								$(td).addClass('td-class');
+							},
+							render: function (data, type, row) {
+								var html = '';
+								html += `<span  class="fw-bold text-orange d-block mb-1 fs-6">${IDRCurrency(data)}</span>`
+
+								if(parseInt(row.total_room_price) != 0){
+									html += `<span class="text-muted fw-semibold text-muted d-block fs-7">{{ __('main.total_room_price') }}: </span>`
+									html += `<span class=" fw-semibold text-muted d-block fs-8 mb-2">${ IDRCurrency(row.total_room_price) }</span>`
+								}
+
+								if(parseInt(row.total_extra_charge) != 0){
+									html += `<span class="text-muted fw-semibold text-muted d-block fs-7">{{ __('main.total_extra_charge') }}: </span>`
+									html += `<span class=" fw-semibold text-muted d-block fs-8 mb-2">${ IDRCurrency(row.total_extra_charge) }</span>`
+								}
+
+								return html;
+							}
+						},
 						{
 							targets: -1,
 							data: null,
 							orderable: false,
-							className: 'text-end',
+							createdCell: function (td, cellData, rowData, row, col) {
+								$(td).addClass('td-class text-end');
+							},
 							render: function (data, type, row) {
 								return `
 									<a href="javascript:void(0)" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
@@ -154,22 +257,6 @@
 											</div>
 										@endpermission
 
-										@permission('transaction-edit')
-											<div class="menu-item px-3">
-												<a href="javascript:void(0)" onclick="update_status('${data["id"]}', 'finish')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
-													{{ __('main.finish') }}
-												</a>
-											</div>
-										@endpermission
-										
-										@permission('transaction-edit')
-											<div class="menu-item px-3">
-												<a href="javascript:void(0)" onclick="update_status('${data["id"]}', 'reject')" class="menu-link px-3" data-kt-docs-table-filter="edit_row">
-													{{ __('main.reject') }}
-												</a>
-											</div>
-										@endpermission
-
 										<!--begin::Menu item-->
 										@permission('transaction-delete')
 											<div class="menu-item px-3">
@@ -184,10 +271,6 @@
 							},
 						},
 					],
-					// Add data-filter attribute
-					createdRow: function (row, data, dataIndex) {
-						$(row).find('td:eq(4)').attr('data-filter', data.CreditCardType);
-					}
 				});
 
 				table = dt.$;

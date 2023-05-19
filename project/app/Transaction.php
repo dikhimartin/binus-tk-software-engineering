@@ -92,6 +92,9 @@ class Transaction extends Model
              'transactions.transaction_code',
              'booker.name as booker_name',
              'rooms.name as room_name',
+             'room_assets.absolute_path as assets_absolute_path',
+             'room_assets.relative_path as assets_relative_path',
+             'room_assets.file_name as assets_name',
              'room_types.name as room_type_name',
              'transactions.transaction_date',
              'transaction_details.check_in_date',
@@ -107,6 +110,7 @@ class Transaction extends Model
             )
             ->leftjoin('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
             ->leftjoin('rooms', 'transaction_details.room_id', '=', 'rooms.id')
+            ->leftjoin('assets as room_assets', 'rooms.asset_id', '=', 'room_assets.id')
             ->leftjoin('users as booker', 'transactions.customer_id', '=', 'booker.id')
             ->leftjoin('room_types', 'rooms.room_type_id', '=', 'room_types.id');
     

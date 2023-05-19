@@ -361,11 +361,8 @@
 									room_assets = path + '/' + row.assets_relative_path; 
 								}
 
-								var action = '';
-								if (row["role_id"] != 1){
-									action = `onclick="edit('`+ row.id +`')"`;
-								}
-
+								var action = `onclick="edit('${row.id}')"`;
+								
 								var html = `<div class="symbol symbol-50px overflow-hidden me-3">
 									<a href="javascript:void(0)" `+ action +`>
 										<div class="symbol-label">
