@@ -65,6 +65,10 @@ class Room extends Model
         return $this->belongsToMany(Facility::class, 'room_facilities', 'room_id', 'facility_id');
     }
 
+    public function asset(){
+        return $this->belongsTo(Asset::class);
+    }
+
     // Query Builder version
     public function get_data(){
         $data = Room::select(

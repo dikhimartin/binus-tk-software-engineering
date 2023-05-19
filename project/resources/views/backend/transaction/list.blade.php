@@ -53,7 +53,7 @@
 						</div>
 					@endslot
 				@endcomponent
-				
+					
 				<div class="card-body pt-0">
 					<!--begin::Datatable-->
 					<table id="kt_datatable_server_side" class="table align-middle table-row-dashed fs-6 gy-5">
@@ -76,6 +76,16 @@
 						</tbody>
 					</table>
 				</div>
+
+				<!--begin::Modal Component-->
+				@component('backend.components.modal', ['modal_size' => 'modal-lg', 'is_header' => true, 'modal_id' => $controller])
+					@slot('modal_content')
+						<div class="d-flex flex-column gap-5">
+							<div class="table-responsive" id="transaction-detail"></div>
+						</div>
+					@endslot
+				@endcomponent
+
 			</div>
 		</div>
 	</div>
@@ -90,7 +100,70 @@
 		const URL_API = `{{ url('admin/transactions') }}`
 
 		function show_transaction_detail(id){
-			console.log(id);
+			$('#{{ $controller  }}_header_title').text(`{{ __('main.transaction_detail') }}`);
+			$.ajax({
+				url : URL_API + '/' + id + "/detail",
+				type: "GET",
+				dataType: "JSON",             
+				success: function(response){
+					if (response.status.code === 200) {
+						const data = response.data;
+
+						// Generate table
+						const table = $('<table>').addClass('table align-middle table-row-dashed fs-6 gy-5 mb-0');
+						const thead = $('<thead>').appendTo(table);
+						const tr = $('<tr>').addClass('text-start text-gray-400 fw-bold fs-7 text-uppercase gs-0').appendTo(thead);
+						$('<th>').text(`{{ __('main.extra-charge') }}`).appendTo(tr);
+						$('<th>').text(`{{ __('main.price') }}`).appendTo(tr);
+						$('<th>').text(`{{ __('main.quantity') }}`).appendTo(tr);
+						$('<th>').text(`{{ __('main.sub_price') }}`).appendTo(tr);
+						const tbody = $('<tbody>').appendTo(table);
+
+						// Looping data transaction extra charges
+						const transaction_extra_charge_list = data.transaction_extra_charges;
+						if (transaction_extra_charge_list.length > 0){
+							transaction_extra_charge_list.forEach(function(detail) {
+								const tr = $('<tr>').appendTo(tbody);
+								$('<td>').text(detail.extra_charge.name).appendTo(tr);
+								$('<td>').text(IDRCurrency(detail.price)).appendTo(tr);
+								$('<td>').text(detail.quantity).appendTo(tr);
+								$('<td>').text(IDRCurrency(detail.sub_price)).appendTo(tr);
+							});
+
+							// Calculate total
+							const totalQuantity = transaction_extra_charge_list.reduce(function (total, detail) {
+								return total + detail.quantity;
+							}, 0);
+							const totalPrice = transaction_extra_charge_list.reduce(function (total, detail) {
+								const subPrice = parseFloat(detail.sub_price.replace(/[^0-9.-]+/g, ''));
+								return total + subPrice;
+							}, 0);
+
+							// Add total row
+							const trTotal = $('<tr>').appendTo(tbody);
+							$('<td>').text('Total').appendTo(trTotal);
+							$('<td>').text('').appendTo(trTotal);
+							$('<td>').text(totalQuantity).appendTo(trTotal);
+							$('<td>').text(IDRCurrency(totalPrice)).appendTo(trTotal);
+						} else {
+							const tr = $('<tr>').appendTo(tbody);
+							$('<td class="text-center text-muted">').attr('colspan', '4').text(`{{ __('main.no_data_found') }}`).appendTo(tr);
+						}
+
+
+
+						$('#transaction-detail').empty().append(table);
+						$('#{{ $controller  }}').modal('show');	
+					}
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					if (jqXHR.responseJSON.status.message != undefined){
+						errorThrown = jqXHR.responseJSON.status.message;
+					}
+					ToastrError(errorThrown);
+				}
+			});	
+
 		}
 
 		// Class definition
@@ -320,7 +393,7 @@
 				});
 			}
 
-			// Delete customer
+			// Delete 
 			var handleDeleteRows = () => {
 				// Select all delete buttons
 				const deleteButtons = document.querySelectorAll('[data-kt-docs-table-filter="delete_row"]');
@@ -370,7 +443,6 @@
 														confirmButton: "btn fw-bold btn-primary",
 													}
 												}).then(function () {
-													// delete row data from server and re-draw datatable
 													dt.draw();
 												});
 											}

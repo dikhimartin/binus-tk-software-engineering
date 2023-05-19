@@ -63,7 +63,7 @@ class TransactionController extends Controller
             return $this->unauthorizedAccessModule();
         }  
 
-        $res = Transaction::with('transactionDetails.product')->find($id);
+        $res = Transaction::with('transactionDetails.room')->with('transactionExtraCharges.extra_charge')->find($id);
         if(!$res){
             return $this->errorNotFound(null);
         }

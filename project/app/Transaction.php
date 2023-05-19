@@ -117,5 +117,13 @@ class Transaction extends Model
         return $data;
     }
 
+    public function transactionDetails(){
+        return $this->hasOne(TransactionDetail::class);
+    }
+
+    public function transactionExtraCharges(){
+        return $this->hasMany(TransactionExtraCharge::class);
+    }
+
 
 }

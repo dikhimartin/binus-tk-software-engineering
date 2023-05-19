@@ -22,4 +22,9 @@ class TransactionExtraCharge extends Model
     public $incrementing = false;
 
     protected $keyType = 'uuid';
+
+    public function extra_charge() {
+        return $this->belongsTo('App\ExtraCharge');
+    }
+
 }

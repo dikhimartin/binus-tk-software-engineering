@@ -86,6 +86,9 @@ return [
     'show' => 'Lihat',
     'price' => 'Harga',
     'date' => 'Tanggal',
+    'quantity' => 'Kuantitas',
+    'sub_price' => 'Sub Harga',
+    'no_data_found' => 'Data tidak tersedia',
 
     // Profile
     'profile' =>'Profil saya',

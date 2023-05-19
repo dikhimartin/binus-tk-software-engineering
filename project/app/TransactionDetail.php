@@ -24,5 +24,10 @@ class TransactionDetail extends Model
     public $incrementing = false;
 
     protected $keyType = 'uuid';
+
+    public function room() {
+        return $this->belongsTo('App\Room');
+    }
+
 }
 
