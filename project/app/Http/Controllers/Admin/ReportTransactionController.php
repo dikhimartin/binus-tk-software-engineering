@@ -80,4 +80,9 @@ class ReportTransactionController extends Controller
 
         return $this->ok($res, null);
     }
+
+    public function chart(Request $request){
+        return $this->ok($request->all(), null);
+    }
+    
 }

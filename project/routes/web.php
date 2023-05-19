@@ -94,6 +94,7 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	Route::get('/report/transaction','ReportTransactionController@index');
 	Route::get('/report/transactions','ReportTransactionController@get_data');
 	Route::get('/report/transactions/{id}/detail','ReportTransactionController@detail');
+	Route::get('/report/transactions/chart','ReportTransactionController@chart');
 
 	/*
 	 |--------------------------------------------------------------------------

@@ -409,7 +409,7 @@
 				// Filter datatable on submit
 				filterButton.addEventListener('click', function () {
 					dt.ajax.url(URL_API + generateFilter()).load();
-					barChartReport();
+					barChartReport(startDate, endDate);
 				});
 			}
 
@@ -452,60 +452,86 @@
 		}();
 
 		// Bar Chart
-		var barChartReport = () => {
-			Highcharts.chart('bar-chart-transaction', {
-				chart: {
-					type: 'column'
+		var barChartReport = (startDate, endDate) => {
+			if (startDate == undefined){
+				startDate = "";
+			}
+			if (endDate == undefined){
+				endDate = "";
+			}
+			$.ajax({
+				url : URL_API + '/chart',
+				type: "GET",
+				dataType: "JSON",
+				data: {
+					"start_date":startDate,
+					"end_date":endDate
 				},
-				title: {
-					text: 'Laporan start_date to end_date'
+				headers:
+				{
+					'X-CSRF-Token': $('input[name="_token"]').val()
 				},
-				subtitle: {
-					text: 'Room Type'
-				},
-				xAxis: {
-					categories: [
-						'Deluxe',
-						'Executive',
-						'Superior',
-						'Family',
-						'Suite',
-					],
-					crosshair: true
-				},
-				yAxis: {
-					min: 0,
-					title: {
-						text: 'Total Transaction (IDR)'
+				success: function(response){
+					if (response.status.code === 200) {
+						Highcharts.chart('bar-chart-transaction', {
+							chart: {
+								type: 'column'
+							},
+							title: {
+								text: 'Laporan start_date to end_date'
+							},
+							subtitle: {
+								text: 'Room Type'
+							},
+							xAxis: {
+								categories: [
+									'Deluxe',
+									'Executive',
+									'Superior',
+									'Family',
+									'Suite',
+								],
+								crosshair: true
+							},
+							yAxis: {
+								min: 0,
+								title: {
+									text: 'Total Transaction (IDR)'
+								}
+							},
+							tooltip: {
+								headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+								pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+									'<td style="padding:0"><b>{point.y:.1f} IDR</b></td></tr>',
+								footerFormat: '</table>',
+								shared: true,
+								useHTML: true
+							},
+							plotOptions: {
+								column: {
+									pointPadding: 0.2,
+									borderWidth: 0
+								}
+							},
+							series: [{
+								name: 'total_room_price',
+								data: [49.9, 71.5, 106.4, 129.2, 144.0]
+			
+							}, {
+								name: 'total_extra_charge',
+								data: [83.6, 78.8, 98.5, 93.4, 106.0]
+			
+							}, {
+								name: 'final_total',
+								data: [48.9, 38.8, 39.3, 41.4, 47.0]
+							}]
+						});
 					}
 				},
-				tooltip: {
-					headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-					pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-						'<td style="padding:0"><b>{point.y:.1f} IDR</b></td></tr>',
-					footerFormat: '</table>',
-					shared: true,
-					useHTML: true
-				},
-				plotOptions: {
-					column: {
-						pointPadding: 0.2,
-						borderWidth: 0
-					}
-				},
-				series: [{
-					name: 'total_room_price',
-					data: [49.9, 71.5, 106.4, 129.2, 144.0]
-
-				}, {
-					name: 'total_extra_charge',
-					data: [83.6, 78.8, 98.5, 93.4, 106.0]
-
-				}, {
-					name: 'final_total',
-					data: [48.9, 38.8, 39.3, 41.4, 47.0]
-				}]
-			});
+				error: function (response){
+					ToastrError(response);
+				}
+			})    
 		}
 
 		// On document ready
