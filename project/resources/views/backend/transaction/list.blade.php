@@ -106,7 +106,7 @@
 					searchDelay: 500,
 					processing: true,
 					serverSide: true,
-					order: [[4, 'desc']],
+					order: [[1, 'desc']],
 					stateSave: true,
 					select: {
 						style: 'multi',
@@ -117,7 +117,7 @@
 						url: URL_API,
 					},
 					columns: [
-						{ data: 'id' },
+						{data: 'id' },
 						{data: 'transaction_code'},
 						{ 
 							data: 'room_name',
@@ -135,9 +135,9 @@
 								$(td).addClass('td-class');
 							},							
 							orderable: false,
-							render: function (data) {
+							render: function (data, type, row) {
 								return `<div class="form-check form-check-sm form-check-custom form-check-solid">
-											<input class="form-check-input" type="checkbox" value="${data}" />
+											<input class="form-check-input" type="checkbox" value="${row.id}" />
 										</div>`;
 							}
 						},
