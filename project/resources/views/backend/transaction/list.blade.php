@@ -35,13 +35,24 @@
 							<!--begin::Separator-->
 							<div class="separator border-gray-200"></div>
 							<!--begin::Content-->
-							<div class="px-7 py-5">
-								<!--begin::Input group-->
+							<div class="px-7 py-5" data-table-filter="form">
+								<!--begin::Range date-->
 								<div class="mb-10">
-									<!--begin::Label-->
+									<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.room-type') }}:</label>
+									<div data-table-filter="room_type">
+										<select id="room_type" name="room_type_id" class="form-select form-select-solid" data-kt-select2="true" data-placeholder="{{ __('main.all') }}" data-allow-clear="true">
+										<option value="">{{ __('main.all') }}</option>
+											@foreach($room_types as $value)
+												<option value="{{ $value->id }}">{{ $value->name }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+
+								<!--begin::Range date-->
+								<div class="mb-10">
 									<label class="form-label fs-5 fw-semibold mb-3">{{ __('main.transaction_date') }}:</label>
-									<!--begin::Flatpickr-->
-									<div class="input-group w-250px">
+									<div class="input-group">
 										<input class="form-control form-control-solid rounded rounded-end-0" placeholder="Rentang tanggal" id="kt_ecommerce_sales_flatpickr" />
 										<button class="btn btn-icon btn-light" id="kt_ecommerce_sales_flatpickr_clear">
 											<span class="svg-icon svg-icon-2">
@@ -395,7 +406,6 @@
 				});
 			}
 
-
 			// Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
 			var handleSearchDatatable = function () {
 				const filterSearch = document.querySelector('[data-kt-docs-table-filter="search"]');
@@ -407,11 +417,16 @@
 			// generateFilter 
 			var generateFilter = () => {
 				const filters = [
+					{ name: "room_type_id", selector: '[data-table-filter="room_type"] select[name="room_type_id"]' },
 					{ name: "start_date", value: startDate },
 					{ name: "end_date", value: endDate },
 				];
 				const queryParams = filters.map((filter) => {
-					return `${filter.name}=${filter.value}`;
+					var	value = document.querySelector(filter.selector)?.value ?? "";
+					if (filter.value != undefined && value == ""){
+						value = filter.value;
+					}
+					return `${filter.name}=${value}`;
 				});
 				return `?${queryParams.join("&")}`;
 			}
@@ -503,7 +518,17 @@
 				// Reset datatable
 				resetButton.addEventListener('click', function () {
 					clearFlatPickr()
-					dt.ajax.url(URL_API + generateFilter()).load();
+
+					// Select filter options
+					const filterForm = document.querySelector('[data-table-filter="form"]');
+					const selectOptions = filterForm.querySelectorAll('select');
+
+					// Reset select2 values -- more info: https://select2.org/programmatic-control/add-select-clear-items
+					selectOptions.forEach(select => {
+						$(select).val('').trigger('change');
+					});
+
+					dt.ajax.url(URL_API).load();
 				});
 			}
 

@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Staff;
-use App\Product;
+use App\RoomType;
 use App\Transaction;
 use App\TransactionDetail;
 use App\Traits\RespondsWithHttpStatus;
@@ -30,7 +29,16 @@ class TransactionController extends Controller
         if (!Auth::user()->can($this->controller.'-list')){
             return view('backend.errors.401')->with(['url' => '/admin']);
         }
-        return view('backend.'.$this->controller.'.list')->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
+
+        $room_types = RoomType::whereIn('id', function ($query) {
+            $query->select('room_type_id')
+                ->from('transaction_details')
+                ->join('rooms', 'transaction_details.room_id', '=', 'rooms.id')
+                ->distinct();
+        })->get();
+
+
+        return view('backend.'.$this->controller.'.list', compact('room_types'))->with(array('controller' => $this->controller, 'pages_title' => $this->title()));
     }
 
     public function get_data(Request $request){
