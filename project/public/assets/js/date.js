@@ -10,6 +10,12 @@ function convertDate(dateString) {
       return dateOnly.toLocaleDateString('id-ID', options);
 }
 
+function convertDateOnly(dateString) {
+      const dateOnly = new Date(dateString + 'T00:00:00');
+      const options = {year: 'numeric', month: 'long', day: 'numeric' };
+      return dateOnly.toLocaleDateString('id-ID', options);
+}
+
 function formatDate(dateString) {
     var options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     var dateParts = dateString.split(' ');
@@ -49,7 +55,7 @@ function calculateNumberOfDays(startDate, endDate) {
     let numberOfDays = Math.floor(difference / (1000 * 60 * 60 * 24));
   
     return numberOfDays;
-  }
+}
 
 var KTDatePickerLinked = function () {
     const linkedPicker1Element = document.getElementById("kt_td_picker_linked_1");

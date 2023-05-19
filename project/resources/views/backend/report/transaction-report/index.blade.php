@@ -464,8 +464,8 @@
 				type: "GET",
 				dataType: "JSON",
 				data: {
-					"start_date":startDate,
-					"end_date":endDate
+					"start_date": startDate,
+					"end_date"  : endDate
 				},
 				headers:
 				{
@@ -473,15 +473,19 @@
 				},
 				success: function(response){
 					if (response.status.code === 200) {
+						var title = `Laporan {{ __('main.transaction') }}`
+						if (startDate != "" && endDate != ""){
+							title = `Laporan {{ __('main.transaction') }} ${convertDateOnly(startDate)} - ${convertDateOnly(endDate)}`
+						}
 						Highcharts.chart('bar-chart-transaction', {
 							chart: {
 								type: 'column'
 							},
 							title: {
-								text: 'Laporan start_date to end_date'
+								text: title
 							},
 							subtitle: {
-								text: 'Room Type'
+								text: `{{ __('main.room-type') }}`
 							},
 							xAxis: {
 								categories: [
