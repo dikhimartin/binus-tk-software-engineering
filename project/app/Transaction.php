@@ -30,8 +30,7 @@ class Transaction extends Model
 
 
     // Before Create Hook
-    protected static function boot()
-    {
+    protected static function boot(){
         parent::boot();
 
         static::creating(function ($model) {
@@ -42,7 +41,10 @@ class Transaction extends Model
                 abort(500, $e->getMessage());
             }
             if (empty($model->sort)) {
-                // $model->sort = "generate_sort_by_count_trx_record"; 
+                $model->sort = $model->generateSort(); // call generateSort function
+            }
+            if (empty($model->transaction_code)) {
+                $model->transaction_code = $model->generateTransactionCode(); // call generateTransactionCode function
             }
             if (empty($model->customer_id)) {
                 $model->customer_id = Auth::id(); 
@@ -57,6 +59,27 @@ class Transaction extends Model
                 $model->modifier_id = Auth::id(); 
             }
         });
+    }
+
+    public function generateSort(){
+        // Example logic: Get the count of last transaction records and increment by 1
+        $lastRecord = static::orderBy('created_at', 'desc')->first();
+        $sort = $lastRecord ? $lastRecord->sort + 1 : 1;
+        
+        // Return the generated sort value
+        return $sort;
+    }
+
+    public function generateTransactionCode(){
+        $prefix = "RSV";
+        $date = now()->format('m-Y');
+        $sort = $this->sort;
+        
+        // Generate the transaction code with prefix, date, and sort value
+        $transactionCode = "{$prefix}-{$date}-{$sort}";
+        
+        // Return the generated transaction code
+        return $transactionCode;
     }
 
     public function transactionDetails(){

@@ -135,7 +135,7 @@
                 @slot('modal_content')
                     <div class="fv-row mb-7">
                         <label class="fs-6 fw-semibold mb-2">{{ __('passwords.old_password') }}</label>
-                        <input type="password" class="form-control" name="confirm_password" />
+                        <input type="password" class="form-control" name="confirm_password" autocomplete="new-password" />
                     </div>
                 @endslot
                 @slot('modal_footer')
