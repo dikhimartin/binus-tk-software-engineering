@@ -85,16 +85,15 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	Route::put('/transactions/{id}/update_status','TransactionController@update_status');
 	Route::delete('/transactions/{id}','TransactionController@delete');
 	Route::post('/transactions/delete/batch','TransactionController@delete_batch');
-
+	
 	/*
-	 |--------------------------------------------------------------------------
-	 | Module Report
-	 |--------------------------------------------------------------------------
+	|--------------------------------------------------------------------------
+	| Module Report
+	|--------------------------------------------------------------------------
 	*/	
-	// Route::get('/report/transaction','ReportTransactionController@index');
-	// Route::get('/report/transactions','ReportTransactionController@get_data');
-	// Route::get('/report/product','ReportProductController@index');
-	// Route::get('/report/product/best_selling','ReportProductController@get_best_selling_product');
+	Route::get('/report/transaction','ReportTransactionController@index');
+	Route::get('/report/transactions','ReportTransactionController@get_data');
+	Route::get('/report/transactions/{id}/detail','ReportTransactionController@detail');
 
 	/*
 	 |--------------------------------------------------------------------------
