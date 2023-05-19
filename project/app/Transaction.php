@@ -82,7 +82,36 @@ class Transaction extends Model
         return $transactionCode;
     }
 
-    public function transactionDetails(){
-        return $this->hasMany(TransactionDetail::class);
+    public function get_data(){
+        $data = Transaction::select(
+             'transactions.id',
+             'transactions.sort',
+             'booker.id as booker_id',
+             'rooms.id as room_id',
+             'room_types.id as room_type_id',
+             'transactions.transaction_code',
+             'booker.name as booker_name',
+             'rooms.name as room_name',
+             'room_types.name as room_type_name',
+             'transactions.transaction_date',
+             'transaction_details.check_in_date',
+             'transaction_details.check_out_date',
+             'transaction_details.days',
+             'transactions.total_room_price',
+             'transactions.total_extra_charge',
+             'transactions.final_total',
+             'transactions.created_at',
+             'transactions.updated_at',
+             'transactions.creator_id',
+             'transactions.modifier_id'
+            )
+            ->leftjoin('transaction_details', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->leftjoin('rooms', 'transaction_details.room_id', '=', 'rooms.id')
+            ->leftjoin('users as booker', 'transactions.customer_id', '=', 'booker.id')
+            ->leftjoin('room_types', 'rooms.room_type_id', '=', 'room_types.id');
+    
+        return $data;
     }
+
+
 }

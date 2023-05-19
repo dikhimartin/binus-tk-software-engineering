@@ -13,17 +13,10 @@ Route::get('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
-// Route::prefix('location')->group(function () {
-//     Route::get('province', 'LocationController@province');
-//     Route::get('city/{province_id}', 'LocationController@city');
-//     Route::get('subdistrict/{city_id}', 'LocationController@subdistrict');
-//     Route::get('village/{subdistrict_id}', 'LocationController@village');
-// });
-
 Route::group(array('prefix' => LaravelLocalization::setLocale() . '/api', 'namespace' => 'Api'), function () {
 	Route::get('/rooms','RoomController@get_data');
-	Route::get('/extra-charges','ExtraChargeController@get_data');
 	Route::get('/rooms/{id}','RoomController@detail');
+	Route::get('/extra-charges','ExtraChargeController@get_data');
 	Route::post('/transaction/reservation','TransactionController@reservation');
 });
 
@@ -86,12 +79,12 @@ Route::group(array('prefix' => LaravelLocalization::setLocale() . '/admin', 'nam
 	 | Module transaction
 	 |--------------------------------------------------------------------------
 	*/	
-	// Route::get('/transaction','TransactionController@index');
-	// Route::get('/transactions','TransactionController@get_data');
-	// Route::get('/transactions/{id}/detail','TransactionController@detail');
-	// Route::put('/transactions/{id}/update_status','TransactionController@update_status');
-	// Route::delete('/transactions/{id}','TransactionController@delete');
-	// Route::post('/transactions/delete/batch','TransactionController@delete_batch');
+	Route::get('/transaction','TransactionController@index');
+	Route::get('/transactions','TransactionController@get_data');
+	Route::get('/transactions/{id}/detail','TransactionController@detail');
+	Route::put('/transactions/{id}/update_status','TransactionController@update_status');
+	Route::delete('/transactions/{id}','TransactionController@delete');
+	Route::post('/transactions/delete/batch','TransactionController@delete_batch');
 
 	/*
 	 |--------------------------------------------------------------------------

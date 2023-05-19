@@ -120,8 +120,8 @@ return [
     'facility_list' => 'Daftar Fasilitas',
 
     // Extra Charge
-    'extra-charge' => 'Biaya Tambahan',
-    'extra-charge_list' => 'Daftar Biaya Tambahan',
+    'extra-charge' => 'Extra Charge',
+    'extra-charge_list' => 'Daftar Extra Charge',
 
     // Room
     'room' => 'Kamar',
@@ -130,15 +130,19 @@ return [
     'room_list' => 'Daftar Kamar',
 
     // Transaction
+    'booker' => 'Pemesan',
     'transaction' => 'Transaksi',
+    'transaction_code' => 'Kode Transaksi',
+    'transaction_code' => 'Kode Transaksi',
     'transaction_detail' => 'Detail Transaksi',
     'transaction_list' => 'Daftar Transaksi',
     'transaction_date' => 'Tanggal Transaksi',
     'check_in' => 'Check-in',
     'check_out' => 'Check-out',
-    'pending' => 'Menunggu',
-    'reject' => 'Ditolak',
-    'finish' => 'Selesai',
+    'total_room_price' => 'Harga Kamar',
+    'total_extra_charge' => 'Harga Extra Charge',
+    'total_transaction' => 'Total Transaksi',
+
 
     // Report
     'report' => 'Laporan',
