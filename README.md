@@ -53,6 +53,12 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
 
 
 
+## Laporan Pengerjaan : 
+
+![](https://i.imgur.com/28DtkEG.png)
+
+
+
 ## Module Aplikasi 
 
 - Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam website, antara lain :
