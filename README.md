@@ -56,6 +56,7 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
 ## Module Aplikasi 
 
 - Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam website, antara lain :
+  
   - Otentikasi dan Otorisasi
   - Registrasi
   - Menu
