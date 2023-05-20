@@ -30,6 +30,7 @@ class RoomController extends Controller
                     $query->where('rooms.name', 'like', "%$value%");
                 });
             });
+            $query->OrderBy('rooms.price', 'asc');
             $query->where('rooms.status', '!=', 1);
         })
         ->make(true);
