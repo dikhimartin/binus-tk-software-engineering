@@ -83,12 +83,18 @@ class ReportTransactionController extends Controller
 
     public function chart(Request $request){
         $roomTypes = RoomType::with([
-            'rooms.transactionDetails.transaction' => function ($query) {
+            'rooms.transactionDetails.transaction' => function ($query) use ($request) {
                 $query->selectRaw('*, 
                     SUM(total_room_price) as total_room_price,
                     SUM(total_extra_charge) as total_extra_charge,
                     SUM(final_total) as final_total')
                     ->groupBy('id');
+        
+                $query->when($request->filled('start_date') && $request->filled('end_date'), function ($q) use ($request) {
+                    $start_date = $request->input('start_date');
+                    $end_date = $request->input('end_date');
+                    $q->whereBetween('transactions.transaction_date', [$start_date, $end_date]);
+                });
             }
         ])->whereHas('rooms.transactionDetails')->get();
 
