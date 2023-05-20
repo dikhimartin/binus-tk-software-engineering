@@ -58,69 +58,69 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
 - Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam website, antara lain :
   
   
-  - #### **Otentikasi dan Otorisasi**
+  - ### **Otentikasi dan Otorisasi**
   
-    - ##### **Login** 
+    - #### **Login** 
   
       ![](https://i.imgur.com/dyPw8ZY.png)
   
-    - ##### **Registrasi**
+    - #### **Registrasi**
   
       ![](https://i.imgur.com/6FL2n6c.png)
   
-  - #### **Menu**
+  - ### **Menu**
   
-    - ##### **Dashboard**
+    - #### **Dashboard**
   
       ![](https://i.imgur.com/ZVQmxGU.png)
   
-      [^Demo :]: Registrasi dan Reservasi Kamar https://jam.dev/c/8a96664a-88e2-4dbd-b833-4aa4425cd0b1
+      Demo : 
+      Registrasi dan Reservasi Kamar : https://jam.dev/c/8a96664a-88e2-4dbd-b833-4aa4425cd0b1
   
-      
-  
-    - **Profil**
+    - #### **Profil**
   
       ![](https://i.imgur.com/uf4k7WS.png)
   
       
   
-    - **Master Data**
+    - #### **Master Data**
   
-      - **Jenis Kamar**
+      - ##### **Jenis Kamar**
   
         ![](https://i.imgur.com/gbFeSIp.png)
   
         
   
-      - **Fasilitas**
+      - ##### **Fasilitas**
   
         ![](https://i.imgur.com/d02uMsZ.png)
   
         
   
-      - **Extra Charge**
+      - ##### **Extra Charge**
   
         ![](https://i.imgur.com/hXX2Ifl.png)
   
         
   
-      - **Kamar**
+      - ##### **Kamar**
   
         ![](https://i.imgur.com/3O5YnZR.png)
   
         Demo : 
         Master Kamar : https://jam.dev/c/adecb312-c3ec-4c50-a08e-88c86213ffa3
   
-    - **Transaksi**
+    - #### **Transaksi**
   
-    - **Laporan**
+    - #### **Laporan**
   
-      - **Laporan Transaksi**
+      - ##### **Laporan Transaksi**
   
-    - **Akses Pengguna**
+    - #### **Akses Pengguna**
   
-      - **Daftar Pengguna**
-      - **Hak akses Pengguna**
+      - ##### **Daftar Pengguna**
+  
+      - ##### **Hak akses Pengguna**
   
 
 
