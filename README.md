@@ -68,13 +68,15 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
   
       ![](https://i.imgur.com/6FL2n6c.png)
   
+    Demo : Registrasi : https://jam.dev/c/adecb312-c3ec-4c50-a08e-88c86213ffa3
+  
   - Menu
   
     - Dashboard
   
       ![](https://i.imgur.com/ZVQmxGU.png)
   
-      
+      Demo : Reservasi Kamar : https://jam.dev/c/adecb312-c3ec-4c50-a08e-88c86213ffa3
   
     - Profil
   

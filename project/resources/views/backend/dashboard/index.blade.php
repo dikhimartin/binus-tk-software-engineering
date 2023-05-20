@@ -131,8 +131,7 @@
                     <div class="separator my-10"></div>
                     <img id="preview_room_asset" 
                         class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded mt-1" 
-                        height="300" width="100%" 
-                        src="http://localhost:8000/storage/room/P-1684384790-J4DNCnJ1UB.webp">
+                        height="300" width="100%">
                 </div>
                 <div class="card-body">
                     <!--begin::Info Kamar-->
