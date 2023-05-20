@@ -5,7 +5,7 @@ Demo : [https://finalexam.binusassignment.tech](https://finalexam.binusassignmen
 
 ## Penjelasan
 
-Saya membuat project ini, karena untuk melengkapi satu tugas UAS  di Universitas. Jadi saya diminta untuk membuat suatu website  dengan kriteria sebagai berikut :
+Saya membuat proyek ini untuk melengkapi tugas UAS. kemudian dalam salah satu soalnya diminta untuk membuat sebuah website dengan kriteria sebagai berikut:
 
 ```
 Soal Kasus: 
