@@ -58,14 +58,21 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
 - Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam website, antara lain :
   
   - Otentikasi dan Otorisasi
-  - Registrasi
+    - Login 
+      ![](https://i.imgur.com/dyPw8ZY.png)
+    - Registrasi
+      ![](https://i.imgur.com/6FL2n6c.png)
+  
   - Menu
     - Dashboard
     - Profil
     - Master Data
       - Jenis Kamar
+        ![](https://i.imgur.com/ZTv1mgp.png)
       - Fasilitas
+        ![](https://i.imgur.com/C0Cv20N.png)
       - Extra Charge
+        ![](https://i.imgur.com/hXX2Ifl.png)
       - Kamar
   
     - Transaksi
