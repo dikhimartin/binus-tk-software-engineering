@@ -1,6 +1,6 @@
 [![laravel](https://i.ibb.co/SmtP4vH/image-4.png)](https://laravel.com)
 
-Demo : [https://finalexam.binusassignment.tech/](https://finalexam.binusassignment.tech)
+Demo : [https://finalexam.binusassignment.tech](https://finalexam.binusassignment.tech)
 
 
 ## Penjelasan
@@ -30,14 +30,14 @@ Buatlah dengan Laravel :
 2. CRUD untuk Master Room dan RoomType;
 
 3. CRUD untuk Transaksi dan detailnya, Untuk ExtraCharge terdapat beberapa pilihan yang
-	disediakan yaitu :
-	A. Minuman soda (20.000)
-	B. Air Putih (15.000)
-	C. Jasa Laundry (100.000)
-	D. Snack (25.000)
-	Untuk setiap ExtraCharge berlaku per masing-masing kamar dan dapat terdapat quantity
-	disetiap pilihan;
-	
+  disediakan yaitu :
+  A. Minuman soda (20.000)
+  B. Air Putih (15.000)
+  C. Jasa Laundry (100.000)
+  D. Snack (25.000)
+  Untuk setiap ExtraCharge berlaku per masing-masing kamar dan dapat terdapat quantity
+  disetiap pilihan;
+  
 4. Hak akses Admin terbatas pada CRUD Master dan Fitur Laporan;
 
 5. Hak akses User dapat memilih Room serta lama menginap dan juga ExtraCharge dari
@@ -56,8 +56,26 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
 ## Module Aplikasi 
 
 - Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam website, antara lain :
-
+  - Otentikasi dan Otorisasi
+  - Registrasi
+  - Menu
+    - Dashboard
+    - Profil
+    - Master Data
+      - Jenis Kamar
+      - Fasilitas
+      - Extra Charge
+      - Kamar
   
+    - Transaksi
+    - Laporan
+      - Laporan Transaksi
+  
+    - Akses Pengguna
+      - Daftar Pengguna
+      - Hak akses Pengguna
+  
+
 
 
 ## Cara menjalankan aplikasi
