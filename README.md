@@ -1,11 +1,23 @@
 [![laravel](https://i.ibb.co/SmtP4vH/image-4.png)](https://laravel.com)
 
-Demo : [https://finalexam.binusassignment.tech](https://finalexam.binusassignment.tech)
+------
+
+
+
+| Keterangan |                                                              |
+| ---------- | ------------------------------------------------------------ |
+| Demo       | [https://finalexam.binusassignment.tech](https://finalexam.binusassignment.tech) |
+| Repository | https://github.com/dikhimartin/binus-final-exam-web-developer |
+
+## Ringkasan
+
+[TOC]
 
 
 ## Penjelasan
 
-Saya membuat proyek ini untuk melengkapi tugas UAS. kemudian dalam salah satu soalnya diminta untuk membuat sebuah website dengan kriteria sebagai berikut:
+Saya membuat proyek ini untuk melengkapi tugas **UAS 2301969484_TPCA_COMP6621036_WebProgramming**. 
+kemudian dalam salah satu soalnya diminta untuk membuat sebuah website dengan kriteria sebagai berikut:
 
 ```
 Soal Kasus: 
@@ -64,83 +76,84 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
 - Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam website, antara lain :
   
   
+  
+
   - ### **Otentikasi dan Otorisasi**
-  
+
     - #### **Login** 
-  
+
       ![](https://i.imgur.com/dyPw8ZY.png)
-  
+
     - #### **Registrasi**
-  
+
       ![](https://i.imgur.com/6FL2n6c.png)
-  
+
   - ### **Menu**
-  
+
     - #### **Dashboard**
-  
+
       ![](https://i.imgur.com/ZVQmxGU.png)
-  
+
       Demo : 
       Registrasi dan Reservasi Kamar : https://jam.dev/c/8a96664a-88e2-4dbd-b833-4aa4425cd0b1
-  
+
     - #### **Profil**
-  
+
       ![](https://i.imgur.com/uf4k7WS.png)
-  
+
       
-  
+
     - #### **Master Data**
-  
+
       - ##### **Jenis Kamar**
-  
+
         ![](https://i.imgur.com/gbFeSIp.png)
-  
+
         
-  
+
       - ##### **Fasilitas**
-  
+
         ![](https://i.imgur.com/d02uMsZ.png)
-  
+
         
-  
+
       - ##### **Extra Charge**
-  
+
         ![](https://i.imgur.com/hXX2Ifl.png)
-  
+
         
-  
+
       - ##### **Kamar**
-  
+
         ![](https://i.imgur.com/3O5YnZR.png)
-  
+
         Demo : 
         Master Kamar : https://jam.dev/c/adecb312-c3ec-4c50-a08e-88c86213ffa3
-  
+
     - #### **Transaksi**
-  
+
       ![](https://i.imgur.com/cGoOQjD.png)
-  
+
     - #### **Laporan**
-  
+
       - ##### **Laporan Transaksi**
-  
+
         ![](https://i.imgur.com/JqQDamz.png)
-  
+
         Demo : 
         Laporan : https://jam.dev/c/78e435ef-c03c-4fe5-9a7c-3ca53b8d2187
-  
+
     - #### **Akses Pengguna**
-  
+
       - ##### **Daftar Pengguna**
-  
+
         ![](https://i.imgur.com/sQRGV0h.png)
-  
+
         
-  
+
       - ##### **Hak akses Pengguna**
-  
+
         ![](https://i.imgur.com/Nyo0Ulf.png)
-  
 
 
 
