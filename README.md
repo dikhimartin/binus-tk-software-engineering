@@ -118,15 +118,28 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
   
     - #### **Transaksi**
   
+      ![](https://i.imgur.com/cGoOQjD.png)
+  
     - #### **Laporan**
   
       - ##### **Laporan Transaksi**
+  
+        ![](https://i.imgur.com/JqQDamz.png)
+  
+        Demo : 
+        Laporan : https://jam.dev/c/78e435ef-c03c-4fe5-9a7c-3ca53b8d2187
   
     - #### **Akses Pengguna**
   
       - ##### **Daftar Pengguna**
   
+        ![](https://i.imgur.com/sQRGV0h.png)
+  
+        
+  
       - ##### **Hak akses Pengguna**
+  
+        ![](https://i.imgur.com/Nyo0Ulf.png)
   
 
 
