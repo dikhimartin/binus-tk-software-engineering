@@ -78,13 +78,13 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
   
       - Jenis Kamar
   
-        ![](https://i.imgur.com/ZTv1mgp.png)
+        ![](https://i.imgur.com/gbFeSIp.png)
   
         
   
       - Fasilitas
   
-        ![](https://i.imgur.com/C0Cv20N.png)
+        ![](https://i.imgur.com/d02uMsZ.png)
   
         
   
