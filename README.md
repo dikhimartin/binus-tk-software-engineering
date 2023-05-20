@@ -66,7 +66,7 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
 
 Berikut ini rekaman untuk cara menjalankan aplikasinya :
 
-https://asciinema.org/a/582677
+https://asciinema.org/a/586044
 
 Buka browser pada URL  http://localhost:8000, untuk mengakses aplikasi.
 
