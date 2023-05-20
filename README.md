@@ -10,9 +10,13 @@
 | Repository | https://github.com/dikhimartin/binus-final-exam-web-developer |
 
 ## Navigasi :
-
-[TOC]
-
+- [Navigasi :](#navigasi-)
+- [Penjelasan :](#penjelasan-)
+- [Laporan Pengerjaan :](#laporan-pengerjaan-)
+- [Module Aplikasi :](#module-aplikasi-)
+- [Cara menjalankan aplikasi :](#cara-menjalankan-aplikasi-)
+    - [1. Native Server](#1-native-server)
+    - [2. Docker Server](#2-docker-server)
 
 ## Penjelasan :
 
