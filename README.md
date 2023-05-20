@@ -9,12 +9,12 @@
 | Demo       | [https://finalexam.binusassignment.tech](https://finalexam.binusassignment.tech) |
 | Repository | https://github.com/dikhimartin/binus-final-exam-web-developer |
 
-## Ringkasan
+## Navigasi :
 
 [TOC]
 
 
-## Penjelasan
+## Penjelasan :
 
 Saya membuat proyek ini untuk melengkapi tugas **UAS 2301969484_TPCA_COMP6621036_WebProgramming**. 
 kemudian dalam salah satu soalnya diminta untuk membuat sebuah website dengan kriteria sebagai berikut:
@@ -71,7 +71,7 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
 
 
 
-## Module Aplikasi 
+## Module Aplikasi :
 
 - Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam website, antara lain :
   
@@ -157,7 +157,7 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
 
 
 
-## Cara menjalankan aplikasi
+## Cara menjalankan aplikasi :
 
 #### 1. Native Server
 
