@@ -96,6 +96,11 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
   
       - Kamar
   
+        ![](https://i.imgur.com/3O5YnZR.png)
+  
+  
+        Demo : Master Kamar : https://jam.dev/c/adecb312-c3ec-4c50-a08e-88c86213ffa3
+  
     - Transaksi
   
     - Laporan
