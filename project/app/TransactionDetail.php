@@ -29,5 +29,9 @@ class TransactionDetail extends Model
         return $this->belongsTo('App\Room');
     }
 
+    public function transaction(){
+        return $this->belongsTo(Transaction::class);
+    }
+
 }
 

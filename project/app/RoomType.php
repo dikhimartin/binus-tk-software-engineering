@@ -17,4 +17,9 @@ class RoomType extends Model
     public $incrementing = false;
 
     protected $keyType = 'uuid';
+
+    public function rooms(){
+        return $this->hasMany(Room::class);
+    }
+
 }

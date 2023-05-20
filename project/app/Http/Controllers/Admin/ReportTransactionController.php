@@ -82,7 +82,31 @@ class ReportTransactionController extends Controller
     }
 
     public function chart(Request $request){
-        return $this->ok($request->all(), null);
+        $roomTypes = RoomType::with([
+            'rooms.transactionDetails.transaction' => function ($query) {
+                $query->selectRaw('*, 
+                    SUM(total_room_price) as total_room_price,
+                    SUM(total_extra_charge) as total_extra_charge,
+                    SUM(final_total) as final_total')
+                    ->groupBy('id');
+            }
+        ])->whereHas('rooms.transactionDetails')->get();
+
+        $result = $roomTypes->map(function ($roomType) {
+            $roomTypeData = $roomType->toArray();
+            $transactionData = $roomType->rooms->flatMap(function ($room) {
+                return $room->transactionDetails->pluck('transaction');
+            })->toArray();
+            
+            $roomTypeData['total_room_price'] = array_sum(array_column($transactionData, 'total_room_price'));
+            $roomTypeData['total_extra_charge'] = array_sum(array_column($transactionData, 'total_extra_charge'));
+            $roomTypeData['final_total'] = array_sum(array_column($transactionData, 'final_total'));
+
+            return $roomTypeData;
+        });
+                
+        // Return the result as JSON
+        return $this->ok($result, null);
     }
     
 }

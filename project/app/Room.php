@@ -73,6 +73,11 @@ class Room extends Model
         return $this->belongsTo(RoomType::class);
     }
 
+    public function transactionDetails(){
+        return $this->hasMany(TransactionDetail::class);
+    }
+
+
     // Query Builder version
     public function get_data(){
         $data = Room::select(

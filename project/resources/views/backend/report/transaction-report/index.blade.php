@@ -472,7 +472,13 @@
 					'X-CSRF-Token': $('input[name="_token"]').val()
 				},
 				success: function(response){
-					if (response.status.code === 200) {
+					if (response.status.code === 200 && response.data.length > 0) {
+						var data = response.data;
+						const categories = data.map(item => item.name);
+						const totalRoomPrice = data.map(item => parseInt(item.total_room_price));
+						const totalExtraCharge = data.map(item => parseInt(item.total_extra_charge));
+						const finalTotal = data.map(item => parseInt(item.final_total));
+
 						var title = `Laporan {{ __('main.transaction') }}`
 						if (startDate != "" && endDate != ""){
 							title = `Laporan {{ __('main.transaction') }} ${convertDateOnly(startDate)} - ${convertDateOnly(endDate)}`
@@ -488,13 +494,7 @@
 								text: `{{ __('main.room-type') }}`
 							},
 							xAxis: {
-								categories: [
-									'Deluxe',
-									'Executive',
-									'Superior',
-									'Family',
-									'Suite',
-								],
+								categories: categories,
 								crosshair: true
 							},
 							yAxis: {
@@ -505,9 +505,10 @@
 							},
 							tooltip: {
 								headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-								pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-									'<td style="padding:0"><b>{point.y:.1f} IDR</b></td></tr>',
-								footerFormat: '</table>',
+								pointFormatter: function () {
+									return '<tr><td style="color:' + this.series.color + ';padding:0">' + this.series.name + ': </td>' +
+									'<td style="padding:0"><b>' + Highcharts.numberFormat(this.y, 0, ",", ".") + ' IDR</b></td></tr>';
+								},
 								shared: true,
 								useHTML: true
 							},
@@ -518,16 +519,16 @@
 								}
 							},
 							series: [{
-								name: 'total_room_price',
-								data: [49.9, 71.5, 106.4, 129.2, 144.0]
+								name: `{{ __('main.total_room_price') }}`,
+								data: totalRoomPrice
 			
 							}, {
-								name: 'total_extra_charge',
-								data: [83.6, 78.8, 98.5, 93.4, 106.0]
+								name: `{{ __('main.total_extra_charge') }}`,
+								data: totalExtraCharge
 			
 							}, {
-								name: 'final_total',
-								data: [48.9, 38.8, 39.3, 41.4, 47.0]
+								name: `{{ __('main.total_transaction') }}`,
+								data: finalTotal
 							}]
 						});
 					}
