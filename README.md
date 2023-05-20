@@ -72,7 +72,14 @@ dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
   
     - Dashboard
   
+      ![](https://i.imgur.com/ZVQmxGU.png)
+  
+      
+  
     - Profil
+      ![](https://i.imgur.com/uf4k7WS.png)
+  
+      
   
     - Master Data
   
