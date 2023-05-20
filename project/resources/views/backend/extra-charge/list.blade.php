@@ -318,9 +318,12 @@
 
 				table = dt.$;
 
+
 				// Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
 				dt.on('draw', function () {
+					initToggleToolbar();
 					toggleToolbars();
+					handleDeleteRows();
 					KTMenu.createInstances();
 				});
 			}
@@ -333,11 +336,255 @@
 				});
 			}
 
+			// Filter Datatable
+			var handleFilterDatatable = () => {
+				// Select filter options
+				filterStatus = document.querySelectorAll('[data-kt-docs-table-filter="status"] [name="status"]');
+				const filterButton = document.querySelector('[data-kt-docs-table-filter="filter"]');
+
+				// Filter datatable on submit
+				filterButton.addEventListener('click', function () {
+					// Get filter values
+					let statusValue = '';
+
+					// Get status value
+					filterStatus.forEach(r => {
+						if (r.checked) {
+							statusValue = r.value;
+						}
+
+						// Reset status value if "All" is selected
+						if (statusValue === 'all') {
+							statusValue = '';
+						}
+					});
+
+					// Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
+					dt.search(statusValue).draw();
+				});
+			}
+
+			// Delete customer
+			var handleDeleteRows = () => {
+				// Select all delete buttons
+				const deleteButtons = document.querySelectorAll('[data-kt-docs-table-filter="delete_row"]');
+
+				deleteButtons.forEach(d => {
+					// Delete button on click
+					d.addEventListener('click', function (e) {
+						e.preventDefault();
+
+						// Select parent row
+						const parent = e.target.closest('tr');
+
+						// Get data
+						const id = parent.querySelector('input[type="checkbox"]').value;
+						const infoField = parent.querySelectorAll('td')[1].innerText;
+
+						if (id != undefined){
+							// SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
+							Swal.fire({
+								text: "{{ __('main.are_you_sure_want_to_delete' )}} " + infoField + "?",
+								icon: "warning",
+								showCancelButton: true,
+								buttonsStyling: false,
+								confirmButtonText: "{{ __('main.yes_deleted') }}",
+								cancelButtonText: "{{ __('main.no_cancel') }}",
+								customClass: {
+									confirmButton: "btn fw-bold btn-danger",
+									cancelButton: "btn fw-bold btn-active-light-primary"
+								}
+							}).then(function (result) {
+								if (result.value) {
+									$.ajax({
+										url : URL_API + '/' + id,
+										type: "DELETE",
+										dataType: "JSON",
+										headers: {
+											'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+										},												
+										success: function(response){
+											if (response.status.code === 200) {
+												Swal.fire({
+													text: "{{ __('main.you_have_deleted') }} " + infoField + "!.",
+													icon: "success",
+													buttonsStyling: false,
+													confirmButtonText: "Ok, got it!",
+													customClass: {
+														confirmButton: "btn fw-bold btn-primary",
+													}
+												}).then(function () {
+													// delete row data from server and re-draw datatable
+													dt.draw();
+												});
+											}
+										},
+										error: function (jqXHR, textStatus, errorThrown) {
+											if (jqXHR.responseJSON.status.message != undefined){
+												errorThrown = jqXHR.responseJSON.status.message;
+											}
+											SwalError(errorThrown);
+										}
+									});								
+								} else if (result.dismiss === 'cancel') {
+									SwalError(infoField + " {{ __('main.was_not_deleted') }}");
+								}
+							});
+						}
+					})
+				});
+			}
+
+			// Reset Filter
+			var handleResetForm = () => {
+				// Select reset button
+				const resetButton = document.querySelector('[data-kt-docs-table-filter="reset"]');
+
+				// Reset datatable
+				resetButton.addEventListener('click', function () {
+					// Reset status type
+					filterStatus[0].checked = true;
+
+					// Reset datatable --- official docs reference: https://datatables.net/reference/api/search()
+					dt.search('').draw();
+				});
+			}
+
+			// Init toggle toolbar
+			var initToggleToolbar = function () {
+				// Toggle selected action toolbar
+				// Select all checkboxes
+				const container = document.querySelector('#kt_datatable_server_side');
+				const checkboxes = container.querySelectorAll('[type="checkbox"]');
+
+				// Select elements
+				const deleteSelected = document.querySelector('[data-kt-docs-table-select="delete_selected"]');
+
+				// Toggle delete selected toolbar
+				checkboxes.forEach(c => {
+					// Checkbox on click event
+					c.addEventListener('click', function () {
+						setTimeout(function () {
+							toggleToolbars();
+						}, 50);
+					});
+				});
+
+				// Deleted selected rows
+				deleteSelected.addEventListener('click', function () {
+					// SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
+					var post_arr = [];
+					const allCheckboxes = container.querySelectorAll('tbody [type="checkbox"]');
+					allCheckboxes.forEach(c => {
+						if (c.checked) {
+							const value = c.value;
+							if (value !== undefined && value !== "" && !post_arr.includes(value)) {
+								post_arr.push(value);
+							}
+						}
+					});
+					if(post_arr.length > 0){
+						Swal.fire({
+							text: "{{ __('main.are_you_sure_you_want_to_delete_selected_data') }}",
+							icon: "warning",
+							showCancelButton: true,
+							buttonsStyling: false,
+							showLoaderOnConfirm: true,
+							confirmButtonText: "{{ __('main.yes_deleted') }}",
+							cancelButtonText: "{{ __('main.no_cancel') }}",
+							customClass: {
+								confirmButton: "btn fw-bold btn-danger",
+								cancelButton: "btn fw-bold btn-active-light-primary"
+							},
+						}).then(function (result) {
+							if (result.value) {
+								$.ajax({
+									url: URL_API + '/delete/batch',
+									type: 'POST',
+									data: { id: post_arr},
+									headers: {
+										'X-HTTP-Method-Override': "POST",
+										'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+									},								
+									success: function(response){
+										Swal.fire({
+											text: "{{ __('main.you_have_deleted_all_selected_data') }}",
+											icon: "success",
+											buttonsStyling: false,
+											confirmButtonText: "Ok, got it!",
+											customClass: {
+												confirmButton: "btn fw-bold btn-primary",
+											}
+										}).then(function () {
+											// delete row data from server and re-draw datatable
+											dt.draw();
+										});
+									},
+									error: function (jqXHR, textStatus, errorThrown) {
+										if (jqXHR.responseJSON.status.message != undefined){
+											errorThrown = jqXHR.responseJSON.status.message;
+										}
+										SwalError(errorThrown);
+									}
+								});
+	
+								// Remove header checked box
+								const headerCheckbox = container.querySelectorAll('[type="checkbox"]')[0];
+								headerCheckbox.checked = false;
+	
+							} else if (result.dismiss === 'cancel') {
+								SwalError(`{{ __('main.selected_data_was_not_deleted') }}`);
+							}
+						});
+					}
+				});
+
+
+			}
+
+			// Toggle toolbars
+			var toggleToolbars = function () {
+				// Define variables
+				const container = document.querySelector('#kt_datatable_server_side');
+				const toolbarBase = document.querySelector('[data-kt-docs-table-toolbar="base"]');
+				const toolbarSelected = document.querySelector('[data-kt-docs-table-toolbar="selected"]');
+				const selectedCount = document.querySelector('[data-kt-docs-table-select="selected_count"]');
+
+				// Select refreshed checkbox DOM elements
+				const allCheckboxes = container.querySelectorAll('tbody [type="checkbox"]');
+
+				// Detect checkboxes state & count
+				let checkedState = false;
+				let count = 0;
+
+				// Count checked boxes
+				allCheckboxes.forEach(c => {
+					if (c.checked) {
+						checkedState = true;
+						count++;
+					}
+				});
+
+				// Toggle toolbars
+				if (checkedState) {
+					selectedCount.innerHTML = count;
+					toolbarBase.classList.add('d-none');
+					toolbarSelected.classList.remove('d-none');
+				} else {
+					toolbarBase.classList.remove('d-none');
+					toolbarSelected.classList.add('d-none');
+				}
+			}
+
 			// Public methods
 			return {
 				init: function () {
 					initDatatable();
 					handleSearchDatatable();
+					initToggleToolbar();
+					handleFilterDatatable();
+					handleDeleteRows();
+					handleResetForm();
 				},
 				refresh: function () {
 					dt.draw();
