@@ -6,81 +6,48 @@
 
 | Keterangan |                                                              |
 | ---------- | ------------------------------------------------------------ |
-| Demo       | [https://finalexam.binusassignment.tech](https://finalexam.binusassignment.tech) |
-| Repository | https://github.com/dikhimartin/binus-final-exam-web-developer |
+| Demo       | [https://softwareengineering.binusassignment.tech/](https://softwareengineering.binusassignment.tech/) |
+| Repository | https://github.com/dikhimartin/binus-tk-software-engineering |
 
 ## Navigasi :
+
 - [Navigasi :](#navigasi-)
 - [Penjelasan :](#penjelasan-)
 - [Laporan Pengerjaan :](#laporan-pengerjaan-)
 - [Module Aplikasi :](#module-aplikasi-)
 - [Cara menjalankan aplikasi :](#cara-menjalankan-aplikasi-)
-    - [1. Native Server](#1-native-server)
-    - [2. Docker Server](#2-docker-server)
+  - [1. Native Server](#1-native-server)
+  - [2. Docker Server](#2-docker-server)
 
 ## Penjelasan :
 
-Saya membuat proyek ini untuk melengkapi tugas **UAS 2301969484_TPCA_COMP6621036_WebProgramming**. 
-kemudian dalam salah satu soalnya diminta untuk membuat sebuah website dengan kriteria sebagai berikut:
+Kami membuat proyek ini untuk melengkapi tugas mata kuliah **COMP6804036 - Software Engineering**. 
+kemudian dalam soal kasus diminta untuk membuat sebuah website dengan kriteria sebagai berikut:
 
 ```
 Soal Kasus: 
-Buatlah Database dengan table berikut ini :
-
-Tabel Room
-ID, RoomTypeID, RoomName, Area, Price, Facility
-
-Table RoomType
-ID, RoomType
-
-Table Transaction
-ID, TransCode, TransDate, CustName, TotalRoomPrice, TotalExtraCharge, FinalTotal
-
-Table DetailTransaction
-ID, TransID, RoomID, Days, SubTotalRoom, ExtraCharge
-
-
-Buatlah dengan Laravel :
-1. Authentikasi Login dengan hak akses User dan Admin;
-
-2. CRUD untuk Master Room dan RoomType;
-
-3. CRUD untuk Transaksi dan detailnya, Untuk ExtraCharge terdapat beberapa pilihan yang
-  disediakan yaitu :
-  A. Minuman soda (20.000)
-  B. Air Putih (15.000)
-  C. Jasa Laundry (100.000)
-  D. Snack (25.000)
-  Untuk setiap ExtraCharge berlaku per masing-masing kamar dan dapat terdapat quantity
-  disetiap pilihan;
-  
-4. Hak akses Admin terbatas pada CRUD Master dan Fitur Laporan;
-
-5. Hak akses User dapat memilih Room serta lama menginap dan juga ExtraCharge dari
-masing-masing kamar;
-
-6. Fitur Laporan menampilkan List Transaksi disertai dengan filter kategori room dan tanggal
-transaksi dari mulai sampai berakhir serta menampilkan semua data yang terdapat pada
-tabel transaksi dan detail transaksi;
-
-7. Tambahkan Fitur Grafik untuk melihat hasil booking room berdasarkan periode tertentu
-dengan tipe room, TotalRoomPrice, TotalExtraCharge, dan FinalTotal.
+Buatlah sebuah aplikasi software dan dokumentasikan dalam sebuah laporan. Laporan dibuat dalam satu dokumen berkelanjutan untuk Tugas kelompok 1,2,3, dan 4!
+Tugas sebagai berikut:
+    1. Project, usulkan suatu project software dengan topik tertentu (bebas) berbasis web/mobile.
+    2. Tentukan software proses model yang akan diterapkan dari proyek yang diusulkan dan jelaskan alasannya!
+    3. Lakukan Analisa masalah terdiri dari:
+      a. Analisa sistem berjalan/aplikasi sejenis!
+      b. Analisa kebutuhan!
+      c. Usulan Permasalahan!
 ```
-
-
 
 ## Laporan Pengerjaan : 
 
-![](https://i.imgur.com/28DtkEG.png)
+![](https://i.imgur.com/6NWMIpP.jpeg)
 
 
 
 ## Module Aplikasi :
 
 - Dari kriteria tersebut dapat di definisikan beberapa module yang ada dalam website, antara lain :
+
   
-  
-  
+
 
   - ### **Otentikasi dan Otorisasi**
 
@@ -193,13 +160,13 @@ Buka browser pada URL  http://localhost:8000, untuk mengakses aplikasi.
 - Cloning aplikasi source
 
   ```shell
-  git clone https://github.com/dikhimartin/binus-final-exam-web-developer.git
+  git clone https://github.com/dikhimartin/binus-tk-software-engineering
   ```
 
 - Masuk ke aplikasi source
 
   ```shell
-  cd binus-final-exam-web-developer
+  cd binus-tk-software-engineering
   ```
 
 - Copy file environtment
