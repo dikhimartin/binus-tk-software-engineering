@@ -66,7 +66,7 @@ Tugas sebagai berikut:
       ![](https://i.imgur.com/ZVQmxGU.png)
 
       Demo : 
-      Registrasi dan Reservasi Kamar : https://jam.dev/c/8a96664a-88e2-4dbd-b833-4aa4425cd0b1
+      Registrasi dan Reservasi Kamar : https://jam.dev/c/dfd639fc-d92a-4d6c-8919-d765ed56242f
 
     - #### **Profil**
 
@@ -99,7 +99,7 @@ Tugas sebagai berikut:
         ![](https://i.imgur.com/3O5YnZR.png)
 
         Demo : 
-        Master Kamar : https://jam.dev/c/adecb312-c3ec-4c50-a08e-88c86213ffa3
+        Master Kamar : https://jam.dev/c/4c3d7fd5-3a93-4cfa-a02e-61b09e9ea4d1
 
     - #### **Transaksi**
 
@@ -112,7 +112,7 @@ Tugas sebagai berikut:
         ![](https://i.imgur.com/JqQDamz.png)
 
         Demo : 
-        Laporan : https://jam.dev/c/78e435ef-c03c-4fe5-9a7c-3ca53b8d2187
+        Laporan : https://jam.dev/c/0a80a47f-7ac9-43ab-80a1-47adeff16233
 
     - #### **Akses Pengguna**
 
