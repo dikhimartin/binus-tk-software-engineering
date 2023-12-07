@@ -142,7 +142,7 @@ Soal Kasus 2 :
 
 Berikut ini rekaman untuk cara menjalankan aplikasinya :
 
-https://asciinema.org/a/625790
+https://asciinema.org/a/625795
 
 Buka browser pada URL  http://localhost:8000, untuk mengakses aplikasi.
 
