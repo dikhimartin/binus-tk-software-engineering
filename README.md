@@ -25,7 +25,7 @@ Kami membuat proyek ini untuk melengkapi tugas mata kuliah **COMP6804036 - Softw
 kemudian dalam soal kasus diminta untuk membuat sebuah website dengan kriteria sebagai berikut:
 
 ```
-Soal Kasus: 
+Soal Kasus 1: 
 Buatlah sebuah aplikasi software dan dokumentasikan dalam sebuah laporan. Laporan dibuat dalam satu dokumen berkelanjutan untuk Tugas kelompok 1,2,3, dan 4!
 Tugas sebagai berikut:
     1. Project, usulkan suatu project software dengan topik tertentu (bebas) berbasis web/mobile.
@@ -34,6 +34,14 @@ Tugas sebagai berikut:
       a. Analisa sistem berjalan/aplikasi sejenis!
       b. Analisa kebutuhan!
       c. Usulan Permasalahan!
+--------------------------------------------------------------------------------
+Soal Kasus 2 : 
+1. Definisi software yang diusulkan!
+2. Tentukan actor dan Fungsi-fungsi software!
+3. Buatlah perancangan:
+	a. Perancangan sistem menggunakan metode Unified Modeling Language (UML) yang terdiri dari: usecase diagram, usecase scenario, activity diagram, class diagram, dan sequence diagram!
+	b. Perancangan database menggunakan Entity Relationship Diagram!
+	c. Perancangan user interface!
 ```
 
 ## Laporan Pengerjaan : 
@@ -134,7 +142,7 @@ Tugas sebagai berikut:
 
 Berikut ini rekaman untuk cara menjalankan aplikasinya :
 
-https://asciinema.org/a/586044
+https://asciinema.org/a/625790
 
 Buka browser pada URL  http://localhost:8000, untuk mengakses aplikasi.
 
@@ -147,6 +155,10 @@ Buka browser pada URL  http://localhost:8000, untuk mengakses aplikasi.
   | 3    | User        | user       | user       |
 
 #### 2. Docker Server
+
+Berikut ini rekaman untuk cara menjalankan aplikasinya :
+
+https://asciinema.org/a/625790
 
 **Tech Stack :**
 
